@@ -2232,6 +2232,152 @@ function wooeshop_get_wishlist() {
 
 
 
+add_action( 'wp_ajax_load_wishlist_products', 'load_wishlist_products_cb' );
+add_action( 'wp_ajax_nopriv_load_wishlist_products', 'load_wishlist_products_cb' );
+
+function load_wishlist_products_cb() {
+    $product_ids = isset( $_POST['product_ids'] ) ? array_map( 'intval', (array) $_POST['product_ids'] ) : array();
+    $product_ids = array_filter( $product_ids );
+
+    if ( empty( $product_ids ) ) {
+        wp_send_json_success( array( 'html' => '', 'count' => 0 ) );
+    }
+
+    $args = array(
+        'post_type'      => 'product',
+        'post__in'       => $product_ids,
+        'posts_per_page' => -1,
+        'orderby'        => 'post__in',
+    );
+
+    $query = new WP_Query( $args );
+
+    ob_start();
+    if ( $query->have_posts() ) {
+        while ( $query->have_posts() ) {
+            $query->the_post();
+            global $product;
+            if ( ! $product || ! $product->is_visible() ) continue;
+
+            $product_id = $product->get_id();
+            $classAv = $product->is_in_stock() ? 'tag-available' : 'tag-order';
+            $textAv  = $product->is_in_stock() ? 'В наявності' : 'Під замовлення';
+            ?>
+            <section id="product-<?php echo $product_id; ?>" <?php wc_product_class( 'catalog-card', $product ); ?>>
+                <a href="<?php the_permalink(); ?>" class="catalog-card__image">
+                    <?php if ( has_post_thumbnail() ) : ?>
+                        <?php the_post_thumbnail(); ?>
+                    <?php else : ?>
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/catalog-card.png" alt="<?php the_title(); ?>" />
+                    <?php endif; ?>
+                </a>
+                <div class="catalog-card__tag tag-order <?php echo esc_attr($classAv); ?>">
+                    <span><?php echo esc_html($textAv); ?></span>
+                </div>
+                <div class="catalog-card__content">
+                    <div class="catalog-card__icons">
+                        <div class="catalog-card__tag tag-order <?php echo esc_attr($classAv); ?>">
+                            <span><?php echo esc_html($textAv); ?></span>
+                        </div>
+                        <div class="catalog-card__icon-right">
+                            <div class="catalog-card__icon-group">
+                                <img src="/wp-content/uploads/2025/07/Lapka-ta-vidsotok-e1751405070826.webp" alt="percentage">
+                            </div>
+                            <?php if ( has_term( 'Забронювати до пологів', 'product_tag', $product_id ) ) : ?>
+                                <div class="catalog-card__icon-single">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/pregnant-woman.png" alt="reserve before childbirth">
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <button class="remove-wishlist" data-product-id="<?php echo $product_id; ?>">
+                            <svg class="delete-icon"><use xlink:href="#delete"></use></svg>
+                            <span>Видалити</span>
+                        </button>
+                    </div>
+                    <div class="catalog-card__footer">
+                        <?php if ( $product->is_in_stock() ) : ?>
+                            <div class="catalog-card__tag">
+                                <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14 1L5.06257 10L1 5.90911" stroke="#5EB04C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>В наявності</span>
+                            </div>
+                        <?php endif; ?>
+                        <div class="catalog-card__mid">
+                            <a href="<?php the_permalink(); ?>">
+                                <h3 class="catalog-card__title"><?php the_title(); ?></h3>
+                            </a>
+                            <a href="#" class="catalog-card__bag add-to-cart-button" data-product_id="<?php echo $product_id; ?>">
+                                <svg class="bag"><use xlink:href="#bag"></use></svg>
+                            </a>
+                        </div>
+                        <div class="catalog-card__prices">
+                        <?php
+                        if ( $product->is_type( 'variable' ) ) {
+                            $available_variations = $product->get_available_variations();
+                            $variation_prices = array();
+                            foreach ( $available_variations as $variation ) {
+                                $vo = new WC_Product_Variation( $variation['variation_id'] );
+                                $p = $vo->get_price();
+                                if ( $p !== '' && $p !== null ) $variation_prices[] = $p;
+                            }
+                            if ( ! empty( $variation_prices ) ) {
+                                $min_price = min( $variation_prices );
+                                $max_price = max( $variation_prices );
+                                $variation_regular_prices = array_filter( array_map( function( $v ) {
+                                    $vo = new WC_Product_Variation( $v['variation_id'] );
+                                    $rp = $vo->get_regular_price();
+                                    return ( $rp !== '' && $rp !== null ) ? $rp : null;
+                                }, $available_variations ) );
+                                if ( ! empty( $variation_regular_prices ) ) {
+                                    $min_regular_price = min( $variation_regular_prices );
+                                    if ( $min_price != $min_regular_price ) {
+                                        echo '<div class="catalog-card__current-pirce">' . wc_price( $min_price ) . '</div>';
+                                        echo '<div class="catalog-card__old-pirce">' . wc_price( $min_regular_price ) . '</div>';
+                                    } else {
+                                        echo '<div class="catalog-card__current-pirce">' . wc_price( $min_price ) . ( $min_price != $max_price ? ' - ' . wc_price( $max_price ) : '' ) . '</div>';
+                                    }
+                                } else {
+                                    echo '<div class="catalog-card__current-pirce">' . wc_price( $min_price ) . '</div>';
+                                }
+                            }
+                        } else {
+                            if ( $product->get_sale_price() !== '' && $product->get_sale_price() !== null ) {
+                                echo '<div class="catalog-card__current-pirce">' . wc_price( $product->get_sale_price() ) . '</div>';
+                                echo '<div class="catalog-card__old-pirce">' . wc_price( $product->get_regular_price() ) . '</div>';
+                            } elseif ( $product->get_price() !== '' && $product->get_price() !== null ) {
+                                echo '<div class="catalog-card__current-pirce">' . wc_price( $product->get_price() ) . '</div>';
+                            }
+                        }
+                        ?>
+                        </div>
+                        <div class="catalog-card__buttons">
+                            <?php if ( $product->is_in_stock() ) : ?>
+                                <?php if ( $product->is_type( 'variable' ) ) : ?>
+                                    <a href="<?php echo esc_url( $product->add_to_cart_url() ); ?>" class="btn-black"><?php echo esc_html( $product->add_to_cart_text() ); ?>
+                                        <svg viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.14139 9V5C5.14139 2.79086 7.09281 1 9.5 1C11.9072 1 13.8586 2.79086 13.8586 5V9M3.1795 18H15.8205C17.1057 18 18.1118 16.9845 17.99 15.8104L17.1598 7.81038C17.0533 6.78391 16.1139 6 14.9903 6H4.00971C2.88615 6 1.94675 6.78391 1.84022 7.81038L1.01001 15.8104C0.888159 16.9846 1.89427 18 3.1795 18Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </a>
+                                <?php else : ?>
+                                    <a href="<?php echo esc_url( $product->add_to_cart_url() ); ?>" class="btn-black add_to_cart_button ajax_add_to_cart" data-product_id="<?php echo esc_attr( $product_id ); ?>" data-product_sku="<?php echo esc_attr( $product->get_sku() ); ?>" aria-label="<?php echo esc_attr( $product->add_to_cart_text() ); ?>" rel="nofollow">
+                                        <span>Додати в кошик</span>
+                                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.14139 9V5C5.14139 2.79086 7.09281 1 9.5 1C11.9072 1 13.8586 2.79086 13.8586 5V9M3.1795 18H15.8205C17.1057 18 18.1118 16.9845 17.99 15.8104L17.1598 7.81038C17.0533 6.78391 16.1139 6 14.9903 6H4.00971C2.88615 6 1.94675 6.78391 1.84022 7.81038L1.01001 15.8104C0.888159 16.9846 1.89427 18 3.1795 18Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </a>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <a href="<?php the_permalink(); ?>" class="btn-white">Детальніше</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <?php
+        }
+        wp_reset_postdata();
+    }
+    $html = ob_get_clean();
+
+    wp_send_json_success( array( 'html' => $html, 'count' => $query->found_posts ) );
+}
+
 // Делаем редирект со страницы корзины
 add_action( 'template_redirect', 'redirect_cart_to_home' );
 
