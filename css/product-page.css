@@ -2203,14 +2203,21 @@ availability-popup-overlay {
 }
 .product-tabs .delivery__body ul {
 	margin: 0 0 14px;
-	padding-left: 24px;
+	padding-left: 0;
 }
 .product-tabs .delivery__body li {
 	margin: 0 0 8px;
-	padding: 0 !important;
+	padding: 0 0 0 22px !important;
 	text-indent: 0 !important;
 	font-size: inherit !important;
 	line-height: 1.55;
+}
+.product-tabs .delivery__body ul li::before {
+	left: 0 !important;
+	top: 0.78em !important;
+	transform: translateY(-50%);
+	width: 7px;
+	height: 7px;
 }
 .product-tabs .delivery__body li:last-child {
 	margin-bottom: 0;
@@ -2469,7 +2476,6 @@ availability-popup-overlay {
         text-align: center;
     }
 }
-
 
 
 
