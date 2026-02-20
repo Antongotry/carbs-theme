@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Crabs — Розстрочка
+ * Template Name: Crabs — Оплата частинами
  */
 get_header();
 
@@ -11,14 +11,14 @@ $img_base = get_stylesheet_directory_uri() . '/assets/img/installment';
   <section class="crabs-installment">
     <div class="crabs-container">
 
-      <h1 class="crabs-installment__title"><?php the_title(); ?></h1>
+      <h1 class="crabs-installment__title">Оплата частинами</h1>
 
       <div class="crabs-installment__grid">
 
         <!-- Ліва колонка -->
         <article class="crabs-card">
 
-          <h2 class="crabs-card__title">Як оформити розстрочку</h2>
+          <h2 class="crabs-card__title">Як оформити оплату частинами</h2>
 
           <p class="crabs-card__lead">
             Ми зробили процес максимально простим, щоб ви могли оформити покупку без зайвих хвилювань і втрати часу.
@@ -34,8 +34,8 @@ $img_base = get_stylesheet_directory_uri() . '/assets/img/installment';
           <div class="crabs-card__block">
             <h3 class="crabs-card__h">Крок 2. Оберіть спосіб оплати</h3>
             <p class="crabs-card__p">
-              На сторінці оплати оберіть один з варіантів оплати:
-              оплата частинами від Monobank або оплата частинами від PrivatBank.
+              На сторінці оплати оберіть спосіб
+              «Оплата частинами ПриватБанк».
             </p>
 
             <!-- Маленький скрін біля кроку 2 -->
@@ -49,9 +49,9 @@ $img_base = get_stylesheet_directory_uri() . '/assets/img/installment';
             <p class="crabs-card__p">Ви будете перенаправлені у платіжну систему, де зможете:</p>
 
             <ul class="crabs-card__dashlist">
-              <li>Обрати кількість платежів (від 3 до 5),</li>
+              <li>Обрати доступну кількість платежів,</li>
               <li>Побачити суму кожного платежу,</li>
-              <li>Підтвердити оформлення розстрочки.</li>
+              <li>Підтвердити оформлення оплати частинами.</li>
             </ul>
 
             <!-- 3 скріни в ряд -->
@@ -69,13 +69,14 @@ $img_base = get_stylesheet_directory_uri() . '/assets/img/installment';
           <div class="crabs-card__block">
             <h3 class="crabs-card__h">Крок 4. Очікуйте відправку</h3>
             <p class="crabs-card__p">
-              Після підтвердження розстрочки ми одразу передаємо ваше замовлення на відправку.
+              Після підтвердження оплати частинами ми одразу передаємо ваше замовлення на відправку.
               Жодних додаткових дій з вашого боку не потрібно.
             </p>
           </div>
 
           <p class="crabs-card__p" style="margin-top:10px;">
-            Для оформлення розстрочки у вас має бути активний ліміт «Оплата частинами» у відповідному банку.
+            Для оформлення у вас має бути активний ліміт сервісу
+            «Оплата частинами» в ПриватБанку.
             Умови та графік платежів ви бачите до підтвердження, без прихованих деталей.
             Якщо під час оформлення виникнуть питання, ми завжди на зв’язку й допоможемо розібратися.
           </p>
@@ -112,16 +113,15 @@ $img_base = get_stylesheet_directory_uri() . '/assets/img/installment';
         <!-- Права колонка -->
         <article class="crabs-card">
 
-          <h2 class="crabs-card__title">Розстрочка</h2>
+          <h2 class="crabs-card__title">Оплата частинами ПриватБанк</h2>
 
           <p class="crabs-card__lead">
-            Щоб покупка була максимально комфортною, на сайті доступна розстрочка від:
+            Щоб покупка була максимально комфортною, на сайті доступний спосіб:
           </p>
 
           <ul class="crabs-card__dashlist crabs-installment__banks">
-            <li><strong>Monobank</strong> — оплата частинами</li>
-            <li><strong>ПриватБанк</strong> — оплата частинами</li>
-            <li><strong>Термін</strong> — від 3 до 5 місяців</li>
+            <li><strong>Оплата частинами ПриватБанк</strong> — доступна під час оформлення замовлення</li>
+            <li><strong>Кількість платежів</strong> — обирається під час підтвердження в сервісі банку</li>
           </ul>
 
           <p class="crabs-card__p" style="margin-top:18px;">
@@ -129,14 +129,13 @@ $img_base = get_stylesheet_directory_uri() . '/assets/img/installment';
           </p>
 
           <p class="crabs-card__p" style="margin-top:12px;">
-            Для оформлення потрібен активний ліміт на оплату частинами у вашому банку.
+            Для оформлення потрібен активний ліміт на «Оплата частинами» в ПриватБанку.
             Оформлення відбувається безпосередньо на сайті під час замовлення.
-            Після підтвердження умов у додатку вашого банку ми одразу передаємо товар на відправку.
-            Для зручності ви можете ознайомитися з покроковою інструкцією з оформлення розстрочки на окремій сторінці.
+            Після підтвердження умов у застосунку Приват24 ми одразу передаємо товар на відправку.
+            На цій сторінці ви можете ознайомитися з покроковою інструкцією оформлення.
           </p>
 
           <div class="crabs-installment__logos">
-            <img src="/wp-content/uploads/2025/12/lapa.webp" alt="Monobank">
             <img src="/wp-content/uploads/2025/12/part.webp" alt="ПриватБанк">
           </div>
 
