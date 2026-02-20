@@ -1,0 +1,175 @@
+/* БАЗА така ж, як у тебе на оплаті/доставці */
+.crabs-container{
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 24px;
+  padding-bottom:24px;
+}
+
+.crabs-returns{
+  padding: 60px 0 0px;
+}
+
+.crabs-returns__title{
+  margin: 0 0 30px !important;
+  font-size: clamp(28px, 2.6vw, 40px) !important;
+  line-height: 1.1;
+  font-weight: 500;
+  text-align: left !important;
+}
+
+.crabs-returns__grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* Карточки */
+.crabs-card{
+  background: #f6f6f6;
+  border-radius: 14px;
+  padding: 30px;
+}
+
+.crabs-card__title{
+  margin: 0 0 20px;
+  font-size: 25px !important;
+  font-weight: 500;
+}
+
+.crabs-card__lead{
+  margin: 0 0 30px;
+  color: #6b6b6b;
+  line-height: 1.55;
+}
+
+.crabs-card__block{
+  margin: 0 0 30px;
+}
+
+.crabs-card__h{
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #E93A53;
+}
+
+.crabs-card__p{
+  margin: 0;
+  color: #6b6b6b;
+  line-height: 1.55;
+}
+.crabs-card__bold{
+   font-weight:500; 
+}
+/* Лісти як у фігмі (з тире, не крапками) */
+.crabs-card__dashlist{
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  color: #6b6b6b;
+  line-height: 1.55;
+}
+
+.crabs-card__dashlist li{
+  position: relative;
+  padding-left: 18px;
+  margin: 6px 0;
+}
+
+.crabs-card__dashlist li::before{
+  content: "–";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #6b6b6b;
+}
+
+/* 1440 */
+@media (max-width: 1440px){
+  .crabs-container{ 
+      padding: 0 20px; 
+      padding-bottom:20px;
+      
+  }
+
+  .crabs-card{ 
+      padding: 35px; 
+      
+  }
+
+  .crabs-returns{ 
+      padding: 45px 0 0px; 
+      
+  }
+
+  .crabs-returns__title{
+    margin: 0 0 20px !important;
+    font-size: clamp(28px, 2.6vw, 35px) !important;
+  }
+
+  .crabs-card__lead{
+    margin: 0 0 25px;
+    font-size: 14px;
+  }
+}
+
+
+@media (max-width: 1024px){
+  .crabs-returns__title{
+    font-size: clamp(28px, 2.6vw, 28px) !important;
+  }
+
+  .crabs-card  { 
+      padding: 25px; 
+      
+  }
+
+.crabs-card__title{
+  font-size: 20px !important;
+}
+}
+
+
+@media (max-width: 900px){
+  .crabs-returns__grid{
+      grid-template-columns: 1fr; 
+      
+  }
+  
+}
+@media (max-width: 768px){
+    .crabs-card__h{
+  font-size: 14px;
+}
+}
+
+
+@media (max-width: 425px){
+.crabs-container {
+        padding: 0 10px ;
+        padding-bottom:20px;
+    }
+
+  .crabs-returns  {
+      padding: 40px 0 0px; 
+      
+  }
+
+  .crabs-returns__title{
+    margin: 0 0 18px !important;
+    font-size: clamp(28px, 2.6vw, 25px) !important;
+  }
+
+  .crabs-card  { 
+      padding: 20px; 
+      
+  }
+  .crabs-card__title{
+  font-size: 18px !important;
+}
+.crabs-card__h{
+  font-size: 14px;
+}
+}

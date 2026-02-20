@@ -1,0 +1,225 @@
+/* База як у твоїх сторінок */
+.crabs-container{
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 24px;
+    padding-bottom: 24px;
+}
+
+.crabs-installment{
+  padding: 60px 0 0px;
+}
+
+.crabs-installment__title{
+  margin: 0 0 30px!important;
+  font-size: clamp(28px, 2.6vw, 40px)!important;
+  line-height: 1.1;
+  font-weight: 500;
+  text-align: left !important;
+}
+
+.crabs-installment__grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.crabs-card{
+  background: #f6f6f6;
+  border-radius: 14px;
+  padding: 30px;
+}
+
+.crabs-card__title{
+  margin: 0 0 20px;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.crabs-card__lead{
+  margin: 0 0 30px;
+  color: #6b6b6b;
+  line-height: 1.55;
+}
+
+.crabs-card__block{
+  margin: 0 0 30px;
+}
+
+.crabs-card__h{
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #E93A53;
+}
+
+.crabs-card__p{
+  margin: 0;
+  color: #6b6b6b;
+  line-height: 1.55;
+}
+
+/* Лісти з тире */
+.crabs-card__dashlist{
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  color: #6b6b6b;
+  line-height: 1.55;
+}
+
+.crabs-card__dashlist li{
+  position: relative;
+  padding-left: 18px;
+  margin: 6px 0;
+}
+
+.crabs-card__dashlist li::before{
+  content: "–";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #6b6b6b;
+}
+
+/* Картинки */
+.crabs-installment__inline-shot{
+  margin: 14px 0 0;
+}
+
+.crabs-installment__inline-shot img{
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.crabs-installment__shots{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.crabs-installment__shot{
+  margin: 0;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  background: transparent;
+}
+
+.crabs-installment__shot img{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Контакти */
+.crabs-installment__contacts{
+  margin-top: 28px;
+}
+
+.crabs-installment__contacts-title{
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2b2b2b;
+}
+
+.crabs-installment__contacts-icons{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.crabs-icon-btn{
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #E93A53;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.crabs-icon-btn img{
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* Лого банків справа */
+.crabs-installment__logos{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.crabs-installment__logos img{
+  height: 49px;
+  width: auto;
+  display: block;
+}
+
+/* 1440 */
+@media (max-width: 1440px){
+  .crabs-container{ padding: 0 20px; 
+      padding-bottom: 24px;
+  }
+  .crabs-card{ padding: 35px; }
+  .crabs-installment{ padding: 45px 0 0px; }
+
+  .crabs-installment__title{
+    margin: 0 0 20px!important;
+    font-size: clamp(28px, 2.6vw, 35px)!important;
+  }
+
+  .crabs-card__lead{ margin: 0 0 25px; font-size:14px; }
+}
+
+/* 1024 */
+@media (max-width: 1024px){
+  .crabs-installment__title{
+    font-size: clamp(28px, 2.6vw, 28px)!important;
+  }
+
+  .crabs-card{ padding: 25px; }
+
+  .crabs-installment__shots{
+    grid-template-columns: 1fr;
+  }
+
+  .crabs-installment__inline-shot img{
+    max-width: 100%;
+  }
+}
+
+/* 900 */
+@media (max-width: 900px){
+  .crabs-installment__grid{ grid-template-columns: 1fr; }
+  .crabs-card{ padding: 22px; }
+  .crabs-installment__logos img{
+  height: 54px;
+  width: auto;
+  display: block;
+}
+}
+
+/* 425 */
+@media (max-width: 425px){
+  .crabs-container{ padding: 0 10px; 
+     padding-bottom: 20px; 
+  }
+  .crabs-installment{ padding: 40px 0 0px; }
+
+  .crabs-installment__title{
+    margin: 0 0 18px!important;
+    font-size: clamp(28px, 2.6vw, 25px)!important;
+  }
+
+  .crabs-card{ padding: 20px; }
+}

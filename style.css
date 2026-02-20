@@ -1,0 +1,162 @@
+.categories-horizontal-scroll-wrapper, .categories-horizontal-scroll-wrapper__categories-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    gap: 10px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #cccccc #f0f0f0;
+}
+
+.categories-horizontal-scroll-wrapper ::-webkit-scrollbar, .categories-horizontal-scroll-wrapper__categories-list::-webkit-scrollbar {
+    height: 8px;
+}
+
+.categories-horizontal-scroll-wrapper ::-webkit-scrollbar-track, .categories-horizontal-scroll-wrapper__categories-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 4px;
+}
+
+.categories-horizontal-scroll-wrapper ::-webkit-scrollbar-thumb, .categories-horizontal-scroll-wrapper__categories-list::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 4px;
+}
+
+.categories-horizontal-scroll-wrapper  > .category-item, .categories-horizontal-scroll-wrapper__categories-list > .category-item {
+    flex: 0 0 auto;
+    width: calc((100% - 30px) / 4);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+@media (max-width: 991px) {
+    .categories-horizontal-scroll-wrapper > .category-item {
+        width: calc((100% - 20px) / 3);
+    }
+}
+@media (max-width: 767px) {
+    .categories-horizontal-scroll-wrapper > .category-item {
+        width: calc((100% - 10px) / 2);
+    }
+}
+@media (max-width: 480px) {
+    .categories-horizontal-scroll-wrapper > .category-item {
+        width: 60%;
+    }
+}
+
+.category-item__card {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.category-item__link-main {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.photo-item {
+    background: #F8F7F7;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-item__icon {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.category-item__icon--default {
+    object-fit: contain;
+    padding: 15px;
+    box-sizing: border-box;
+    opacity: 0.6;
+}
+
+.category-item__name {
+    font-family: "Artegra Sans", sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    color: #3D3D3D;
+    line-height: 23px;
+    text-align: left;
+    padding: 0 10px 10px 10px;
+    margin-top: 20px;
+}
+
+.category__text{
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.categories-horizontal-scroll-wrapper__categories-list > .category-item {
+    flex: 0 0 auto;
+    width: 300px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.categories-horizontal-scroll-wrapper__categories-list .category-item .photo-item {
+    background: #F8F7F7;
+    width: 100%;
+    height: 250px;
+}
+.categories-horizontal-scroll-wrapper__categories-list .category-item .category-item__name {
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+
+@media (max-width: 768px) {
+    .categories-horizontal-scroll-wrapper__categories-list > .category-item {
+        flex: 0 0 auto;
+        width: 130px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .categories-horizontal-scroll-wrapper__categories-list .category-item .photo-item {
+        background: #F8F7F7;
+        width: 100%;
+        height: 120px;
+    }
+    .categories-horizontal-scroll-wrapper__categories-list .category-item .category-item__name {
+        margin-top: 10px;
+        font-size: 12px;
+    }
+     .categories-horizontal-scroll-wrapper__categories-list > .category-item {
+        width: 200px;
+	}
+	.categories-horizontal-scroll-wrapper__categories-list .category-item .photo-item{
+        height: 200px;
+    }
+    .category__text {
+        font-size: 23px;
+    }
+    .category-item__name{
+        margin-top:20px;
+        font-size:14px;
+    }
+}
