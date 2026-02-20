@@ -150,7 +150,7 @@ function crabs_project_enqueue_styles_scripts() {
     wp_enqueue_script( 'wooeshop-izitoast', get_stylesheet_directory_uri() . '/js/iziToast.min.js', array(), false, true );
     wp_enqueue_script( 'wooeshop-jquery-cookie', get_stylesheet_directory_uri() . '/js/jquery.cookie.js', array(), false, true );
 
-    wp_enqueue_script( 'wooeshop-main', get_stylesheet_directory_uri() . '/js/wishlist.js', array(), false, true );
+    wp_enqueue_script( 'wooeshop-main', get_stylesheet_directory_uri() . '/js/wishlist.js', array('jquery', 'wooeshop-jquery-cookie'), false, true );
 
 	wp_localize_script( 'wooeshop-main', 'wooeshop_wishlist_object', array(
 		'url'   => admin_url( 'admin-ajax.php' ),

@@ -98,118 +98,140 @@
 
 
 jQuery(document).ready(function($) {
-    // Инициализация и обновление количества товаров в избранном
     updateWishlistCount();
     updateCartCount();
 
-    // Обработчик на случай возврата назад в браузере
     window.addEventListener("pageshow", function(event) {
         if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-            // Если страница загружена из кэша, обновляем оба счетчика
             updateWishlistCount();
             updateCartCount();
         }
     });
 
-    // Функция для получения количества товаров в избранном из cookie
     function getWishlistCountFromCookie() {
-        let wishlist = $.cookie('wishlist');
-        if (wishlist === undefined || wishlist === null || wishlist.length === 0) {
-            return 0;
-        } else {
+        try {
+            let wishlist = $.cookie('wishlist');
+            if (wishlist === undefined || wishlist === null || wishlist.length === 0) {
+                return 0;
+            }
             wishlist = JSON.parse(wishlist);
-            return wishlist.length;
+            return Array.isArray(wishlist) ? wishlist.length : 0;
+        } catch(e) {
+            return 0;
         }
     }
 
-    // Функция для обновления количества товаров в избранном
-    function updateWishlistCount() {
-        let count = getWishlistCountFromCookie();
-        $('#wishlist-count').text(count); // Обновляем в хедере
-        $('#wishlist-count-content').text(count); // Обновляем в контентной части
+    function getWishlistArray() {
+        try {
+            let raw = $.cookie('wishlist');
+            if (raw === undefined || raw === null || raw.length === 0) {
+                return [];
+            }
+            let parsed = JSON.parse(raw);
+            return Array.isArray(parsed) ? parsed : [];
+        } catch(e) {
+            return [];
+        }
     }
 
-    // Функция для обновления количества товаров в корзине
+    function saveWishlist(wishlist) {
+        $.cookie('wishlist', JSON.stringify(wishlist), { expires: 30, path: '/' });
+    }
+
+    function updateWishlistCount() {
+        let count = getWishlistCountFromCookie();
+        $('#wishlist-count').text(count);
+        $('#wishlist-count-content').text(count);
+    }
+
     function updateCartCount() {
+        var ajaxUrl = null;
+        if (typeof wc_add_to_cart_params !== 'undefined' && wc_add_to_cart_params.ajax_url) {
+            ajaxUrl = wc_add_to_cart_params.ajax_url;
+        } else if (typeof wooeshop_wishlist_object !== 'undefined' && wooeshop_wishlist_object.url) {
+            ajaxUrl = wooeshop_wishlist_object.url;
+        }
+        if (!ajaxUrl) {
+            $('#mini-cart-spinner').hide();
+            return;
+        }
         $.ajax({
             type: 'POST',
-            url: wc_add_to_cart_params.ajax_url,
-            data: {
-                action: 'get_cart_count'
-            },
+            url: ajaxUrl,
+            data: { action: 'get_cart_count' },
             success: function(response) {
-                if (response.data.cart_count !== undefined) {
+                if (response && response.data && response.data.cart_count !== undefined) {
                     $('.cart-count').text(response.data.cart_count);
                 }
-                $('#mini-cart-spinner').hide(); // Скрываем спиннер после обновления
+                $('#mini-cart-spinner').hide();
+            },
+            error: function() {
+                $('#mini-cart-spinner').hide();
             }
         });
     }
 
-    // Функция для удаления товара из избранного
     function removeFromWishlist(productId) {
-        let wishlist = $.cookie('wishlist');
-        if (wishlist !== undefined) {
-            wishlist = JSON.parse(wishlist);
-            let index = wishlist.indexOf(productId);
-            if (index > -1) {
-                wishlist.splice(index, 1); // Удаляем товар из массива
-                $.cookie('wishlist', JSON.stringify(wishlist), { expires: 30, path: '/' });
-                updateWishlistCount(); // Обновляем количество товаров на странице
-				// Проверяем, находимся ли мы на странице вишлиста
-				if ($('body').hasClass('page-template-_page-wishlist')) {
-					$(`#product-${productId}`).remove(); // Удаляем карточку товара со страницы
-				}
-                iziToast.success({
-                    message: wooeshop_wishlist_object.remove,
-                });
+        productId = parseInt(productId, 10);
+        let wishlist = getWishlistArray();
+        let index = wishlist.indexOf(productId);
+        if (index > -1) {
+            wishlist.splice(index, 1);
+            saveWishlist(wishlist);
+            updateWishlistCount();
+            if ($('body').hasClass('page-template-_page-wishlist')) {
+                $('#product-' + productId).remove();
+                if (wishlist.length === 0) {
+                    $('.favourites__body').html(
+                        '<div class="empty-wishlist">' +
+                        '<p>Ваш список вподобаного пустий, будь ласка додайте товари</p>' +
+                        '<a href="/shop/" class="btn-black"><span>До каталогу</span></a></div>'
+                    );
+                }
+            }
+            if (typeof iziToast !== 'undefined' && typeof wooeshop_wishlist_object !== 'undefined') {
+                iziToast.success({ message: wooeshop_wishlist_object.remove });
             }
         }
     }
 
-    // Обработчик клика для добавления/удаления товаров из избранного
-    $('.wishlist-icon').on('click', function () {
+    $(document).on('click', '.wishlist-icon', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
         let $this = $(this);
-        let productId = $this.data('id');
-        let ajaxLoader = $this.closest('.product-card').find('.ajax-loader');
+        let productId = parseInt($this.data('id'), 10);
+        if (!productId) return;
+
+        let ajaxLoader = $this.closest('.product-card, .catalog-card').find('.ajax-loader');
         ajaxLoader.fadeIn();
 
-        let wishlist = $.cookie('wishlist');
-        $this.toggleClass('in-wishlist');
-        if (wishlist === undefined) {
-            wishlist = [productId];
-            $.cookie('wishlist', JSON.stringify(wishlist), { expires: 30, path: '/' });
-            iziToast.success({
-                message: wooeshop_wishlist_object.add,
-            });
+        let wishlist = getWishlistArray();
+        if (wishlist.includes(productId)) {
+            $this.removeClass('in-wishlist');
+            removeFromWishlist(productId);
         } else {
-            wishlist = JSON.parse(wishlist);
-            if (wishlist.includes(productId)) {
-                removeFromWishlist(productId); // Удаление через функцию
-            } else {
-                if (wishlist.length >= 8) {
-                    wishlist.shift();
-                }
-                wishlist.push(productId);
-                $.cookie('wishlist', JSON.stringify(wishlist), { expires: 30, path: '/' });
-                iziToast.success({
-                    message: wooeshop_wishlist_object.add,
-                });
+            if (wishlist.length >= 8) {
+                wishlist.shift();
+            }
+            wishlist.push(productId);
+            saveWishlist(wishlist);
+            $this.addClass('in-wishlist');
+            if (typeof iziToast !== 'undefined' && typeof wooeshop_wishlist_object !== 'undefined') {
+                iziToast.success({ message: wooeshop_wishlist_object.add });
             }
         }
 
         ajaxLoader.fadeOut();
-        updateWishlistCount(); // Обновляем количество в избранном
+        updateWishlistCount();
     });
 
-    // Обработчик клика для удаления товаров из избранного с использованием `.remove-wishlist`
-    $('body').on('click', '.remove-wishlist', function(e) {
+    $(document).on('click', '.remove-wishlist', function(e) {
         e.preventDefault();
         let productId = $(this).data('product-id');
-        removeFromWishlist(productId); // Удаление через функцию
+        removeFromWishlist(productId);
     });
-    
-    // Функция для показа спиннера
+
     function showSpinner() {
         $('#mini-cart-spinner').show();
     }
