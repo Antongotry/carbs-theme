@@ -55,7 +55,7 @@ $img_base = get_stylesheet_directory_uri() . '/assets/img/installment';
             </ul>
 
             <!-- 3 скріни в ряд -->
-            <div class="crabs-installment__shots">
+            <div class="crabs-installment__shots crabs-installment__shots--single">
               <figure class="crabs-installment__shot">
                 <img src="https://crabs.ua/wp-content/uploads/2026/02/Rectangle-2476_result.webp" alt="Крок 3 — екран">
               </figure>

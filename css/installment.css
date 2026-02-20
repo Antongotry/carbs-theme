@@ -102,6 +102,10 @@
   margin-top: 18px;
 }
 
+.crabs-installment__shots--single{
+  grid-template-columns: 1fr;
+}
+
 .crabs-installment__shot{
   margin: 0;
   background: #fff;
