@@ -36,107 +36,16 @@
     display:none;
 }
 
-.wc_payment_methods li.payment_method_mono_gateway input:checked + label::after{
-    top: 5px;
-}
-.wc_payment_methods li.payment_method_wayforpay input:checked + label::after{
-    /*top: 4px;*/
-}
-@media (max-width: 1121px){
-    #shipping_method_0_nova_poshta_shipping-4:checked + label::after{
-        top:1px;
-    }
+/* Radio dots: always vertically centered */
+.wc_payment_methods li input + label::after,
+.wc_payment_methods li input:checked + label::after {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
 }
 
-@media (max-width: 1120px){
-    .wc_payment_methods li.payment_method_monocheckout input:checked + label::after{
-     top: 1px;   
-    }
-    .wc_payment_methods li.payment_method_cod input:checked + label::after{
-     top: 0px;   
-    }
-     .wc_payment_methods li.payment_method_bacs input:checked + label::after{
-     top: 1px;   
-    }
-     .wc_payment_methods li.payment_method_cheque input:checked + label::after{
-     top: 1px;   
-    }
-}
-
-@media (max-width: 1108px){
-    .wc_payment_methods li.payment_method_mono_gateway input:checked + label::after{
-     top: 13px;   
-    }
-}
-
-@media (max-width: 1024px){
-    .wc_payment_methods li.payment_method_mono_gateway input:checked + label::after{
-     top: 5px;   
-    }
-     .wc_payment_methods li.payment_method_monocheckout input:checked + label::after{
-     top: 0px;   
-    }
-    .wc_payment_methods li.payment_method_bacs input:checked + label::after{
-     top: 0px;   
-    }
-     .wc_payment_methods li.payment_method_cheque input:checked + label::after{
-     top: 0px;   
-    }
-     #shipping_method_0_nova_poshta_shipping-4:checked + label::after{
-        top:0px;
-    }
-}
-
-@media (max-width: 768px){
-    .wc_payment_methods li.payment_method_monocheckout input:checked + label::after{
-     top: 1px;   
-    }
-     .wc_payment_methods li.payment_method_cod input:checked + label::after{
-     top: 1px;   
-    }
-    .wc_payment_methods li.payment_method_bacs input:checked + label::after{
-     top: 1px;   
-    }
-    .wc_payment_methods li.payment_method_cheque input:checked + label::after{
-     top: 1px;   
-    }
-    #shipping_method_0_nova_poshta_shipping-4:checked + label::after{
-        top:1px;
-    }
-}
-
-@media (max-width: 540px){
-     #shipping_method_0_local_pickup-3:checked + label::after{
-        top:9px;
-    }
-}
-
-@media (max-width: 535px){
-    .wc_payment_methods li.payment_method_mono_gateway input:checked + label::after{
-     top: 13px;   
-    }
-    #shipping_method_0_local_pickup-3:checked + label::after{
-        top:9px;
-    }
-}
-@media (max-width: 406px){
-     #shipping_method_0_nova_poshta_shipping-4:checked + label::after{
-        top:9px;
-    }
-}
-@media (max-width: 334px){
-    #shipping_method_0_local_pickup-3:checked + label::after{
-        top:17px;
-    }
-}
-
-@media (max-width: 315px){
-    .wc_payment_methods li.payment_method_mono_gateway input:checked + label::after{
-     top: 21px;   
-    }
-      .wc_payment_methods li.payment_method_cod input:checked + label::after{
-     top: 9px;   
-    }
+.wc_payment_methods li label::before {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
 }
 
 
@@ -1054,13 +963,14 @@ pointer-events: none;
 
 .woocommerce-shipping-methods li input + label::after,
 .wc_payment_methods li input + label::after {
-	width: 14px;
-	height: 14px;
+	width: 12px;
+	height: 12px;
 	content: "";
 	position: absolute;
-	left: 5px;
-	top: 1px;
-	border-radius: 40px
+	left: 4px;
+	top: 50%;
+	transform: translateY(-50%);
+	border-radius: 50%;
 }
 .wcus-checkout-fields h3{
 	display: none;
@@ -1090,20 +1000,14 @@ pointer-events: none;
 .wc_payment_methods li label::before {
 	content: "";
 	position: absolute;
-	width: 14px;
-	height: 14px;
-	border-radius: 50%;
+	left: 0;
 	top: 50%;
-	left: 12px;
-	background-color: transparent;
-	transform: translate(-50%, -50%);
-	transition: all 0.3s ease-in-out;
+	transform: translateY(-50%);
 	width: 20px;
 	height: 20px;
 	border-radius: 50%;
 	border: 1px solid #3d3d3d;
-	display: inline-block;
-	flex-shrink: 0;
+	background-color: transparent;
 	transition: all 0.3s ease-in-out;
 }
 .woocommerce-shipping-methods li label span,
@@ -1112,13 +1016,6 @@ pointer-events: none;
 	padding-left: 30px;
 }
 
-
-.wc_payment_methods li label::before{
-	top: 50%;
-}
-.wc_payment_methods li input + label::after{
-	top: 1px;
-}
 
 #wcus-order-total strong{
 	font-weight: inherit;
@@ -2715,26 +2612,12 @@ article.catalog-body.list section.catalog-card {
   left: 217px;
 }
 }
-  @media (max-width: 1120px){
-      .woocommerce-shipping-methods li input + label::after, .wc_payment_methods li input + label::after {
-      top: 9px;
-   }
- }
 
 
 @media (max-width: 1024px){
     article.catalog-body.list .catalog-card__tag.tag-available {
   position:static !important;
   
-}
-.woocommerce-shipping-methods li input + label::after, .wc_payment_methods li input + label::after {
-    width: 14px;
-    height: 14px;
-    content: "";
-    position: absolute;
-    left: 5px;
-    top: 0px;
-    border-radius: 40px;
 }
 }
 
@@ -2821,90 +2704,46 @@ article.catalog-body.list section.catalog-card {
     width: 15px;
     height: 15px;
     }
-        .woocommerce-shipping-methods li input + label::after, .wc_payment_methods li input + label::after {
-        width: 14px;
-        height: 14px;
-        content: "";
-        position: absolute;
-        left: 5.5px;
-        top: 1px;
-        border-radius: 40px;
-    }
-
 } 
 
-/* Checkout payment methods: fix radio alignment + replace wayforpay icon */
-.registration-form__group--payment .wc_payment_methods li {
-    align-items: center;
+
+/* wayforpay: replace icon with bank_result.webp, bigger + proportional spacing */
+.wc_payment_method.payment_method_wayforpay::before {
+    background-image: url('/wp-content/uploads/2026/02/bank_result.webp') !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    width: 70px !important;
+    height: 24px !important;
 }
 
-.registration-form__group--payment .wc_payment_methods li label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-height: 34px;
-    padding-left: 36px;
-}
-
-.registration-form__group--payment .wc_payment_methods li label::before {
-    left: 10px;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.registration-form__group--payment .wc_payment_methods li input + label::after,
-.registration-form__group--payment .wc_payment_methods li input:checked + label::after,
-.registration-form__group--payment .wc_payment_methods li.payment_method_wayforpay input:checked + label::after,
-.registration-form__group--payment .wc_payment_methods li.payment_method_mono_gateway input:checked + label::after,
-.registration-form__group--payment .wc_payment_methods li.payment_method_monocheckout input:checked + label::after,
-.registration-form__group--payment .wc_payment_methods li.payment_method_cod input:checked + label::after,
-.registration-form__group--payment .wc_payment_methods li.payment_method_bacs input:checked + label::after,
-.registration-form__group--payment .wc_payment_methods li.payment_method_cheque input:checked + label::after {
-    left: 5px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-}
-
-.registration-form__group--payment .wc_payment_methods li.payment_method_wayforpay label img {
-    content: url('https://crabs.ua/wp-content/uploads/2026/02/bank_result.webp');
-    width: 74px !important;
-    height: auto !important;
-    display: inline-block;
-    vertical-align: middle;
+.wc_payment_method.payment_method_wayforpay label {
+    padding-left: 110px !important;
 }
     
     
     
     
-    @media (max-width: 425px){
-        .cart__buttons .btn-black {
+@media (max-width: 425px) {
+    .cart__buttons .btn-black {
         width: 100%;
         height: 40px;
-        }
-        .btn-mono-custom  img{
-             width:50%;
-         }
-         .btn-black.open-cart {
+    }
+    .btn-mono-custom img {
+        width: 50%;
+    }
+    .btn-black.open-cart {
         padding: 10px 20px;
     }
     .cart_bottom {
-       bottom: -5px;
-        }
-        
-     .woocommerce-shipping-methods li input + label::after {
-        top: 9px;
+        bottom: -5px;
     }
-   .wc_payment_methods li input + label::after {
-        top: 0px;
-    
-    }
-
-
-.payment_box.payment_method_wayforpay p{
-    display:none;
 }
-/* На мобільних зазвичай вимикають */
+
+.payment_box.payment_method_wayforpay p {
+    display: none;
+}
+
 @media (max-width: 1024px) {
-  .product-gallery__sticky { position: static; }
-}
+    .product-gallery__sticky { position: static; }
 }
