@@ -40,7 +40,7 @@ $img_base = get_stylesheet_directory_uri() . '/assets/img/installment';
 
             <!-- Маленький скрін біля кроку 2 -->
             <figure class="crabs-installment__inline-shot">
-              <img src="/wp-content/uploads/2025/12/Rectangle-2474.webp" alt="Вибір способу оплати">
+              <img src="https://crabs.ua/wp-content/uploads/2026/02/Rectangle-2474_result.webp" alt="Вибір способу оплати">
             </figure>
           </div>
 
@@ -57,10 +57,7 @@ $img_base = get_stylesheet_directory_uri() . '/assets/img/installment';
             <!-- 3 скріни в ряд -->
             <div class="crabs-installment__shots">
               <figure class="crabs-installment__shot">
-                <img src="/wp-content/uploads/2025/12/Rectangle-2476.webp" alt="Крок 3 — екран 1">
-              </figure>
-              <figure class="crabs-installment__shot">
-                <img src="/wp-content/uploads/2025/12/Rectangle-2475.webp" alt="Крок 3 — екран 2">
+                <img src="https://crabs.ua/wp-content/uploads/2026/02/Rectangle-2476_result.webp" alt="Крок 3 — екран">
               </figure>
               
             </div>
