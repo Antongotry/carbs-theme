@@ -183,7 +183,7 @@ defined( 'ABSPATH' ) || exit;
 		</div>
 		<div class="orders__bottom-block">
 			<h4 class="orders__bottom-title orders__bottom-title--delivery"><?php esc_html_e( 'Доставка:', 'woocommerce' ); ?></h4>
-			<p class="orders__bottom-delivery"><?php esc_html_e( 'Згідно тарифів перевізника', 'woocommerce' ); ?></p>
+			<p class="orders__bottom-delivery"><?php esc_html_e( '1–2 дні. Згідно тарифів перевізника', 'woocommerce' ); ?></p>
 		</div>
 
 	</div>
