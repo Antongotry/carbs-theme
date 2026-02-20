@@ -771,8 +771,11 @@ add_filter('loop_shop_per_page', 'custom_loop_shop_per_page', 20);
 // Сортировка продуктов
 function custom_default_product_sorting( $query ) {
     if ( ! is_admin() && $query->is_main_query() && is_post_type_archive( 'product' ) ) {
-        //$query->set( 'orderby', 'date' );
-        $query->set( 'order', 'DESC' );
+        if ( ! isset( $_GET['orderby'] ) ) {
+            $query->set( 'meta_key', 'total_sales' );
+            $query->set( 'orderby', 'meta_value_num' );
+            $query->set( 'order', 'DESC' );
+        }
     }
 }
 add_action( 'pre_get_posts', 'custom_default_product_sorting' );
@@ -782,7 +785,7 @@ add_action( 'pre_get_posts', 'custom_default_product_sorting' );
 function load_more_products() {
     parse_str($_POST['filters'], $filter_args);
     $paged = isset($_POST['page']) ? intval($_POST['page']) + 1 : 2;
-    $orderby = isset($_POST['orderby']) ? sanitize_text_field($_POST['orderby']) : 'date';
+    $orderby = isset($_POST['orderby']) ? sanitize_text_field($_POST['orderby']) : 'popularity';
     $category = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : '';
 
     $base_meta_query = array(

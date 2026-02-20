@@ -64,13 +64,13 @@ do_action( 'woocommerce_before_main_content' ); ?>
                 <?php
                 // Получаем опции сортировки каталога
                 $catalog_orderby_options = array(
-                    'price'      => 'Спочатку найдешевші',
                     'popularity' => 'Популярні',
                     'rating'     => 'Рекомендовані',
                     'date'       => 'За новизною',
+                    'price'      => 'Спочатку найдешевші',
                     'price-desc' => 'Спочатку найдорожчі',
                 );
-                $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : 'menu_order';
+                $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : 'popularity';
                 ?>
                 <div class="select-body">
                     <div class="select">
