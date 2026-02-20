@@ -133,6 +133,63 @@ jQuery(document).ready(function($) {
         removeFromWishlist(productId);
     });
 
+    function loadWishlistPage() {
+        var $container = $('#wishlist-products-container');
+        if (!$container.length) return;
+
+        var wishlist = getWishlistArray();
+        $('#wishlist-count-content').text(wishlist.length);
+
+        if (wishlist.length === 0) {
+            $container.html(
+                '<div class="empty-wishlist">' +
+                '<p>Ваш список вподобаного пустий, будь ласка додайте товари</p>' +
+                '<a href="/shop/" class="btn-black"><span>До каталогу</span></a>' +
+                '</div>'
+            );
+            return;
+        }
+
+        var ajaxUrl = $container.data('ajax-url');
+        if (!ajaxUrl) {
+            if (typeof wooeshop_wishlist_object !== 'undefined' && wooeshop_wishlist_object.url) {
+                ajaxUrl = wooeshop_wishlist_object.url;
+            }
+        }
+        if (!ajaxUrl) return;
+
+        $.ajax({
+            type: 'POST',
+            url: ajaxUrl,
+            data: {
+                action: 'load_wishlist_products',
+                product_ids: wishlist
+            },
+            success: function(response) {
+                if (response && response.success && response.data && response.data.html) {
+                    $container.html(response.data.html);
+                    $('#wishlist-count-content').text(response.data.count);
+                } else {
+                    $container.html(
+                        '<div class="empty-wishlist">' +
+                        '<p>Ваш список вподобаного пустий, будь ласка додайте товари</p>' +
+                        '<a href="/shop/" class="btn-black"><span>До каталогу</span></a>' +
+                        '</div>'
+                    );
+                }
+            },
+            error: function() {
+                $container.html(
+                    '<div class="empty-wishlist">' +
+                    '<p>Помилка завантаження. Спробуйте оновити сторінку.</p>' +
+                    '</div>'
+                );
+            }
+        });
+    }
+
+    loadWishlistPage();
+
     function showSpinner() {
         $('#mini-cart-spinner').show();
     }
