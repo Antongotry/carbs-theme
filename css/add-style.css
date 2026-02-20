@@ -2832,6 +2832,46 @@ article.catalog-body.list section.catalog-card {
     }
 
 } 
+
+/* Checkout payment methods: fix radio alignment + replace wayforpay icon */
+.registration-form__group--payment .wc_payment_methods li {
+    align-items: center;
+}
+
+.registration-form__group--payment .wc_payment_methods li label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 34px;
+    padding-left: 36px;
+}
+
+.registration-form__group--payment .wc_payment_methods li label::before {
+    left: 10px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.registration-form__group--payment .wc_payment_methods li input + label::after,
+.registration-form__group--payment .wc_payment_methods li input:checked + label::after,
+.registration-form__group--payment .wc_payment_methods li.payment_method_wayforpay input:checked + label::after,
+.registration-form__group--payment .wc_payment_methods li.payment_method_mono_gateway input:checked + label::after,
+.registration-form__group--payment .wc_payment_methods li.payment_method_monocheckout input:checked + label::after,
+.registration-form__group--payment .wc_payment_methods li.payment_method_cod input:checked + label::after,
+.registration-form__group--payment .wc_payment_methods li.payment_method_bacs input:checked + label::after,
+.registration-form__group--payment .wc_payment_methods li.payment_method_cheque input:checked + label::after {
+    left: 5px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+.registration-form__group--payment .wc_payment_methods li.payment_method_wayforpay label img {
+    content: url('https://crabs.ua/wp-content/uploads/2026/02/bank_result.webp');
+    width: 74px !important;
+    height: auto !important;
+    display: inline-block;
+    vertical-align: middle;
+}
     
     
     
