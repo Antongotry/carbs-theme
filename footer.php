@@ -145,27 +145,6 @@
 									<a href="tel:<?php echo esc_html(get_theme_mod('footer_phone_1')); ?>"><?php echo esc_html(get_theme_mod('footer_phone_1')); ?></a>
 								</div>
 							</div>
-							<div class="footer__contact footer__contact-phone">
-								<div class="footer__icon">
-									<svg
-										 width="16"
-										 height="16"
-										 viewBox="0 0 16 16"
-										 fill="none"
-										 xmlns="http://www.w3.org/2000/svg"
-										 >
-										<path
-											  d="M14.9996 11.4819V13.5894C15.0028 14.3951 14.2784 15.0679 13.465 14.9945C6.44446 15 1 9.50499 1.00549 2.53159C0.932236 1.72251 1.60167 1.00082 2.40631 1.00007H4.51809C4.85971 0.996713 5.1909 1.11745 5.44992 1.33977C6.18634 1.97183 6.66001 4.11716 6.47776 4.96999C6.33547 5.63584 5.66427 6.10167 5.20794 6.5571C6.21002 8.31592 7.66919 9.7722 9.4315 10.7723C9.88783 10.3169 10.3546 9.647 11.0218 9.50499C11.8776 9.32283 14.0367 9.79717 14.6663 10.5387C14.8895 10.8016 15.0081 11.1373 14.9996 11.4819Z"
-											  stroke="#3D3D3D"
-											  stroke-linecap="round"
-											  stroke-linejoin="round"
-											  />
-									</svg>
-								</div>
-								<div class="footer__info">
-									<a href="tel:<?php echo esc_html(get_theme_mod('footer_phone_2')); ?>"><?php echo esc_html(get_theme_mod('footer_phone_2')); ?></a>
-								</div>
-							</div>
 						</div>
 						<div class="footer__social">
 							<a href="<?php echo esc_url(get_theme_mod('footer_social_instagram')); ?>"><i class="fab fa-instagram"></i> Instagram</a>
@@ -361,12 +340,6 @@
 				<div class="contact-icon"><img src="/wp-content/uploads/2024/10/cr-phone.svg" loading="lazy" alt="Phone icon"></div>
 				<a href="tel:0990084117" target="_blank" class="contact-link">
 					<p>+380 (99) 008-41-17</p>
-				</a>
-			</div>
-			<div class="contact-item">
-				<div class="contact-icon"><img src="/wp-content/uploads/2024/10/cr-phone.svg" loading="lazy" alt="Phone icon"></div>
-				<a href="tel:0683302030" target="_blank" class="contact-link">
-					<p>+380 (68) 330-20-30</p>
 				</a>
 			</div>
 			<div class="contact-item block-with-cols soc-block">

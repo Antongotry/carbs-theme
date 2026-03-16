@@ -1064,28 +1064,6 @@ function render_product_slider($category_slug, $tab_id, $gallery_class, $prev_bt
 						<a href="tel:<?php the_field('contacts_phone1') ?>"><?php the_field('contacts_phone1') ?></a>
 					</div>
 				</li>
-				<li>
-					<div class="contacts__icon">
-						<svg
-							 width="23"
-							 height="23"
-							 viewBox="0 0 23 23"
-							 fill="none"
-							 xmlns="http://www.w3.org/2000/svg"
-							 >
-							<path
-								  d="M21.9993 16.7228V19.8842C22.0043 21.0927 20.9176 22.1018 19.6975 21.9918C9.16669 22 1 13.7575 1.00824 3.29738C0.898354 2.08377 1.90251 1.00124 3.10947 1.0001H6.27714C6.78957 0.995069 7.28635 1.17617 7.67489 1.50965C8.77951 2.45774 9.49001 5.67573 9.21664 6.95499C9.00321 7.95376 7.99641 8.65251 7.31191 9.33565C8.81503 11.9739 11.0038 14.1583 13.6473 15.6584C14.3318 14.9753 15.0319 13.9705 16.0326 13.7575C17.3164 13.4842 20.5551 14.1958 21.4994 15.308C21.8343 15.7025 22.0122 16.206 21.9993 16.7228Z"
-								  stroke="#242424"
-								  stroke-width="2"
-								  stroke-linecap="round"
-								  stroke-linejoin="round"
-								  />
-						</svg>
-					</div>
-					<div class="contacts__info">
-						<a href="tel:<?php the_field('contacts_phone2') ?>"><?php the_field('contacts_phone2') ?></a>
-					</div>
-				</li>
 			</ul>
 			<div class="contacts__social">
 				<a href="<?php the_field('contacts_instagram') ?>" class="btn-black">Instagram</a>

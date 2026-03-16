@@ -315,19 +315,6 @@ function crabs_project_customize_register( $wp_customize ) {
         'type'     => 'text',
     ));
     
-    // Footer Phone 2
-    $wp_customize->add_setting('footer_phone_2', array(
-        'default'   => '',
-        'transport' => 'refresh',
-        'sanitize_callback' => 'sanitize_text_field',
-    ));
-    $wp_customize->add_control('footer_phone_2', array(
-        'label'    => __('Телефон 2', 'crabs'),
-        'section'  => 'footer_section',
-        'settings' => 'footer_phone_2',
-        'type'     => 'text',
-    ));
-    
     // Instagram
     $wp_customize->add_setting('footer_social_instagram', array(
         'default'   => '',
@@ -3415,6 +3402,5 @@ add_action('wp_enqueue_scripts', function () {
 });
 
 remove_action('wp_head', 'wp_site_icon', 99);
-
 
 
