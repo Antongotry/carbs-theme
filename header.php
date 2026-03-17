@@ -17,6 +17,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-WL3XH6DZ');</script>
 <!-- End Google Tag Manager -->
+<!-- Binotel Call Tracking -->
+<script type="text/javascript">
+  (function(d, w, s) {
+	var widgetHash = 'nbvnhla5yd3n43wajmxp', ctw = d.createElement(s); ctw.type = 'text/javascript'; ctw.async = true;
+	ctw.src = '//widgets.binotel.com/calltracking/widgets/'+ widgetHash +'.js';
+	var sn = d.getElementsByTagName(s)[0]; sn.parentNode.insertBefore(ctw, sn);
+  })(document, window, 'script');
+</script>
+<!-- End Binotel Call Tracking -->
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="profile" href="http://gmpg.org/xfn/11">
