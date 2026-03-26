@@ -3300,11 +3300,22 @@ add_action('wp_head', function() {
     echo "</style>";
 });
 
-// заміна назви "mono checkout" на потрібну
+// кастомні назви платіжних методів у checkout
 add_filter('woocommerce_gateway_title', function($title, $gateway_id){
-    if ($gateway_id === 'monocheckout') {
-        return 'Оплата частинами (Mono)';
+    if (is_admin() || !is_checkout()) {
+        return $title;
     }
+
+    $plain_title = preg_replace('/\s+/u', ' ', trim(wp_strip_all_tags((string) $title)));
+
+    if ($gateway_id === 'monocheckout' || $plain_title === 'Оплата частинами' || $plain_title === 'Оплата частинами (Mono)') {
+        return 'Оплата частинами до 5 платежів';
+    }
+
+    if ($plain_title === 'Оплата карткою, Apple Pay, Google Pay') {
+        return 'Оплата карткою, Apple Pay, державні виплати';
+    }
+
     return $title;
 }, 20, 2);
 
@@ -3402,5 +3413,4 @@ add_action('wp_enqueue_scripts', function () {
 });
 
 remove_action('wp_head', 'wp_site_icon', 99);
-
 
