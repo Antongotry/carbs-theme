@@ -3352,6 +3352,15 @@ add_filter('woocommerce_gateway_icon', function($icon, $gateway_id) {
     return $icon;
 }, 20, 2);
 
+// Прибираємо текстовий опис LiqPay у payment_box на checkout.
+add_filter('woocommerce_gateway_description', function($description, $gateway_id) {
+    if (!is_admin() && is_checkout() && $gateway_id === 'liqpay') {
+        return '';
+    }
+
+    return $description;
+}, 20, 2);
+
 // додавання og:image для категорій
 add_action('wp_head', function () {
     if (!is_tax('product_cat')) {
