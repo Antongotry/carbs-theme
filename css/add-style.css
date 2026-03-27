@@ -232,6 +232,26 @@ img[src*="plugins/Word-Press-Woocommerce-master/assets/img/w4p.png"] {
     vertical-align: middle;
     margin-bottom:23px;
  }
+
+/* single product current price */
+.shortstory__current-pirce {
+    font-size: 24px !important;
+    line-height: 1.1;
+}
+
+.shortstory__current-pirce .woocommerce-Price-amount,
+.shortstory__current-pirce .woocommerce-Price-amount bdi {
+    font-size: inherit !important;
+    line-height: inherit;
+}
+
+@media (max-width: 767px) {
+    .shortstory__current-pirce {
+        font-size: 16px !important;
+        line-height: 1.15;
+    }
+}
+
 .cart_bottom{
     border: 1px #e93a53 solid;
     padding: 6px 8px 4px 8px;
