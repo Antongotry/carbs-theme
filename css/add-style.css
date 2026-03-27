@@ -133,6 +133,17 @@ img[src*="plugins/Word-Press-Woocommerce-master/assets/img/w4p.png"] {
   }
 }
 
+/* laptop only: slightly smaller text and third icon */
+@media (max-width: 1300px) and (min-width: 1025px) {
+  .advantage-item span {
+    font-size: 14px;
+  }
+
+  .advantage-item:nth-child(3) img {
+    width: 105px;
+  }
+}
+
 @media (max-width: 1024px) {
   .advantage {
     padding: 18px 16px;
