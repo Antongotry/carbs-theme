@@ -136,18 +136,18 @@ img[src*="plugins/Word-Press-Woocommerce-master/assets/img/w4p.png"] {
 /* laptop only: slightly smaller text and third icon */
 @media (max-width: 1300px) and (min-width: 1025px) {
   .advantage-item span {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .advantage-item:nth-child(3) img {
-    width: 105px;
+    width: 97px;
   }
 }
 
 /* desktop/laptop only: move the second advantage a bit closer to the first */
 @media (min-width: 1025px) {
   .advantage-item:nth-child(2) {
-    transform: translateX(-22px);
+    transform: translateX(-32px);
     gap: 0;
   }
 }
