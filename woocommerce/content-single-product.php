@@ -804,28 +804,6 @@ foreach ($attributes as $attribute) {
 							<span>Оплата частинами<br>до 5 платежів</span>
 						</div>
 					</div>
-    				<div class="viza-group">
-    				    <div class="viza-image-block">
-    							<img loading="lazy" src="/wp-content/uploads/2025/09/Visa_Logo.webp" alt="карта оплати">
-    					</div>
-    					<div class="viza-image-block">
-    							<img loading="lazy" src="/wp-content/uploads/2025/09/732ee0f50e080402fa77a45888cf5466.webp" alt="карта оплати">
-    					</div>
-    					<div class="viza-image-block">
-    							<img loading="lazy" src="/wp-content/uploads/2025/09/MasterCard_Logo.svg.webp" alt="карта оплати">
-    					</div>
-    					 <div class="viza-image-block">
-    							<img loading="lazy" src="/wp-content/uploads/2025/10/Plata-by-mono.webp" alt="карта оплати">
-    					</div>
-    					<!--<div class="viza-image-block">-->
-    					<!--		<img loading="lazy" src="/wp-content/uploads/2025/10/Apple_Pay.webp" alt="карта оплати">-->
-    					<!--</div>-->
-    					
-    					<div class="viza-image-block">
-    							<img loading="lazy" src="/wp-content/uploads/2025/10/Lapka-ta-dfihrama.webp" alt="карта оплати">
-    					</div>
-    					
-    				</div>
 			    </div>
 			    
 			    
