@@ -84,9 +84,9 @@ img[src*="plugins/Word-Press-Woocommerce-master/assets/img/w4p.png"] {
 
 .advantage-items {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr 1fr 1.2fr;
   align-items: center;
-  gap: 22px;
+  gap: clamp(10px, 1.4vw, 18px);
 }
 
 .advantage-item {
@@ -119,6 +119,11 @@ img[src*="plugins/Word-Press-Woocommerce-master/assets/img/w4p.png"] {
 }
 
 @media (max-width: 1300px) {
+  .advantage-items {
+    grid-template-columns: 1fr 1fr 1.15fr;
+    gap: clamp(8px, 1.2vw, 14px);
+  }
+
   .advantage-item span {
     font-size: 15px;
   }
