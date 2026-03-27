@@ -189,17 +189,20 @@ img[src*="plugins/Word-Press-Woocommerce-master/assets/img/w4p.png"] {
 
 @media (max-width: 767px) {
   .advantage {
-    padding: 10px 6px;
+    padding: 10px 8px;
   }
 
   .advantage-items {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 6px;
+    column-gap: 12px;
+    row-gap: 6px;
+    justify-items: stretch;
   }
 
   .advantage-item {
     display: grid;
     grid-template-rows: 44px auto;
+    width: 100%;
     justify-items: center;
     align-content: start;
     text-align: center;
