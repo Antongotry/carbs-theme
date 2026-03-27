@@ -790,43 +790,20 @@ foreach ($attributes as $attribute) {
                 <?php endif; ?>
 
 				<div class="advantage">
-    					<div class="showroom-group">
-                         <div class="delivery-later">
-    						<div class="later-images">
-    							<img loading="lazy" src="/wp-content/uploads/2025/10/Group-860.webp" alt="доставка" width="40" height="27">
-    						</div>
-    						 	<span class="delivery-later-text">Безкоштовна доставка</span>
-    					</div>
-                        
-                        
-                        <div class="baby-later">
-    						<div class="later-images">
-    							<img loading="lazy" src="/wp-content/uploads/2025/10/Group-863.webp" alt="пакунок малюка" width="29" height="27">
-    						</div>
-    						 	<span class="baby-later-text">Оплата пакунком малюка</span>
-    					</div>
-                        
-                        
-                        <div class="mama-later">
-    				    
-                            <div class="later-images">
-    							<img loading="lazy" src="/wp-content/uploads/2025/10/Vector-317.webp" alt="бронювання" width="29" height="34">
-    						</div>
-    						<a href="##" class="mama-later-text shortstory__check before-birth open-before-birth-popup">Бронювання до пологів </a>
-                            
-                       
-                        </div>
-    
-    					
-    
-                        <a href="##" class="shortstory__check before-birth-web-screen open-before-birth-popup">
-                            <svg width="19" height="23" viewBox="0 0 19 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1 9.51782V3.48C1 3.48 2.85455 3.55891 5.25 2.86C7.64545 2.16109 9.5 1 9.5 1C9.5 1 11.0938 2.085 13.75 2.86C16.4062 3.635 18 3.48 18 3.48V10.1189C18 12.7128 17.751 15.3879 16.1266 17.4102C15.7298 17.9042 15.2519 18.4322 14.6773 18.98C12.2385 21.305 9.5 22.08 9.5 22.08C9.5 22.08 6.56364 21.1164 4.32273 18.98C3.92664 18.6024 3.57584 18.2312 3.26549 17.8722C1.3092 15.6097 1 12.5088 1 9.51782Z" stroke="#E93A53" stroke-width="1.5"/>
-                                <path d="M3.71973 9.12831V6.08002C3.71973 6.08002 4.98082 6.13348 6.60973 5.66002C8.23864 5.18657 9.49973 4.40002 9.49973 4.40002V18.68C9.49973 18.68 7.503 18.0272 5.97918 16.58C4.00819 14.7081 3.71973 11.8465 3.71973 9.12831Z" stroke="#E93A53" stroke-width="1.5"/>
-                            </svg>
-                            <span>Забронювати до пологів</span>
-                        </a>
-    				</div>
+					<div class="advantage-items">
+						<div class="advantage-item">
+							<img loading="lazy" src="https://crabs.ua/wp-content/uploads/2026/03/icon-1_result.webp" alt="Безкоштовна доставка" width="40">
+							<span>Безкоштовна доставка</span>
+						</div>
+						<div class="advantage-item">
+							<img loading="lazy" src="https://crabs.ua/wp-content/uploads/2026/03/icon-2_result.webp" alt="Держ. виплати" width="52">
+							<span>Держ. виплати<br>(7000 ₴, 50 000 ₴)</span>
+						</div>
+						<div class="advantage-item">
+							<img loading="lazy" src="https://crabs.ua/wp-content/uploads/2026/03/icon-3_result.webp" alt="Оплата частинами" width="115">
+							<span>Оплата частинами<br>до 5 платежів</span>
+						</div>
+					</div>
     				<div class="viza-group">
     				    <div class="viza-image-block">
     							<img loading="lazy" src="/wp-content/uploads/2025/09/Visa_Logo.webp" alt="карта оплати">

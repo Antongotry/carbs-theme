@@ -82,6 +82,57 @@ img[src*="plugins/Word-Press-Woocommerce-master/assets/img/w4p.png"] {
    padding:30px 30px 30px 30px;
 }
 
+.advantage-items {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+
+.advantage-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+.advantage-item img {
+  height: auto;
+  flex-shrink: 0;
+}
+
+.advantage-item span {
+  font-family: 'Artegra Sans';
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1.15;
+  color: #242424;
+}
+
+@media (max-width: 1300px) {
+  .advantage-item span {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .advantage-items {
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .advantage-item {
+    gap: 10px;
+  }
+
+  .advantage-item span {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+}
+
 .advantage-title{
     font-family: Artegra Sans;
     font-weight: 500;
