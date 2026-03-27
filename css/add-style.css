@@ -148,6 +148,7 @@ img[src*="plugins/Word-Press-Woocommerce-master/assets/img/w4p.png"] {
 @media (min-width: 1025px) {
   .advantage-item:nth-child(2) {
     transform: translateX(-22px);
+    gap: 0;
   }
 }
 
