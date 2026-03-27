@@ -147,7 +147,7 @@ img[src*="plugins/Word-Press-Woocommerce-master/assets/img/w4p.png"] {
 /* desktop/laptop only: move the second advantage a bit closer to the first */
 @media (min-width: 1025px) {
   .advantage-item:nth-child(2) {
-    transform: translateX(-10px);
+    transform: translateX(-22px);
   }
 }
 
