@@ -3308,6 +3308,10 @@ add_filter('woocommerce_gateway_title', function($title, $gateway_id){
 
     $plain_title = preg_replace('/\s+/u', ' ', trim(wp_strip_all_tags((string) $title)));
 
+    if ($gateway_id === 'liqpay') {
+        return 'Оплата карткою, Apple Pay, державні виплати';
+    }
+
     if ($gateway_id === 'monocheckout' || $plain_title === 'Оплата частинами' || $plain_title === 'Оплата частинами (Mono)') {
         return 'Оплата частинами до 5 платежів';
     }
@@ -3318,6 +3322,21 @@ add_filter('woocommerce_gateway_title', function($title, $gateway_id){
 
     return $title;
 }, 20, 2);
+
+// Показуємо LiqPay першим у списку методів оплати в checkout
+add_filter('woocommerce_available_payment_gateways', function($gateways) {
+    if (is_admin() || !is_checkout() || empty($gateways) || !is_array($gateways)) {
+        return $gateways;
+    }
+
+    if (isset($gateways['liqpay'])) {
+        $liqpay = $gateways['liqpay'];
+        unset($gateways['liqpay']);
+        $gateways = ['liqpay' => $liqpay] + $gateways;
+    }
+
+    return $gateways;
+}, 20);
 
 // додавання og:image для категорій
 add_action('wp_head', function () {
@@ -3413,4 +3432,3 @@ add_action('wp_enqueue_scripts', function () {
 });
 
 remove_action('wp_head', 'wp_site_icon', 99);
-
