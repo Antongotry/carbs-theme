@@ -3330,6 +3330,11 @@ add_filter('woocommerce_available_payment_gateways', function($gateways) {
     }
 
     if (isset($gateways['liqpay'])) {
+        // При активном LiqPay убираем дублирующий карточный метод.
+        if (isset($gateways['mono_gateway'])) {
+            unset($gateways['mono_gateway']);
+        }
+
         $liqpay = $gateways['liqpay'];
         unset($gateways['liqpay']);
         $gateways = ['liqpay' => $liqpay] + $gateways;
@@ -3337,6 +3342,15 @@ add_filter('woocommerce_available_payment_gateways', function($gateways) {
 
     return $gateways;
 }, 20);
+
+// Прибираємо фірмову іконку LiqPay у checkout, щоб лишився тільки наш кастомний вигляд.
+add_filter('woocommerce_gateway_icon', function($icon, $gateway_id) {
+    if (!is_admin() && is_checkout() && $gateway_id === 'liqpay') {
+        return '';
+    }
+
+    return $icon;
+}, 20, 2);
 
 // додавання og:image для категорій
 add_action('wp_head', function () {
