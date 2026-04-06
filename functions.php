@@ -794,7 +794,9 @@ function load_more_products() {
                 )),
                 'orderby' => array(
                     'stock_clause' => 'ASC',
-                    'price_clause' => 'ASC'
+                    'menu_order' => 'ASC',
+                    'price_clause' => 'ASC',
+                    'ID' => 'DESC'
                 )
             );
             break;
@@ -810,7 +812,9 @@ function load_more_products() {
                 )),
                 'orderby' => array(
                     'stock_clause' => 'ASC',
-                    'price_clause' => 'DESC'
+                    'menu_order' => 'ASC',
+                    'price_clause' => 'DESC',
+                    'ID' => 'DESC'
                 )
             );
             break;
@@ -826,7 +830,9 @@ function load_more_products() {
                 )),
                 'orderby' => array(
                     'stock_clause' => 'ASC',
-                    'sales_clause' => 'DESC'
+                    'menu_order' => 'ASC',
+                    'sales_clause' => 'DESC',
+                    'ID' => 'DESC'
                 )
             );
             break;
@@ -842,7 +848,9 @@ function load_more_products() {
                 )),
                 'orderby' => array(
                     'stock_clause' => 'ASC',
-                    'rating_clause' => 'DESC'
+                    'menu_order' => 'ASC',
+                    'rating_clause' => 'DESC',
+                    'ID' => 'DESC'
                 )
             );
             break;
@@ -853,7 +861,9 @@ function load_more_products() {
                 'meta_query' => $base_meta_query,
                 'orderby' => array(
                     'stock_clause' => 'ASC',
-                    'date' => 'DESC'
+                    'menu_order' => 'ASC',
+                    'date' => 'DESC',
+                    'ID' => 'DESC'
                 )
             );
             break;
@@ -987,11 +997,12 @@ function load_more_products() {
 }
 add_filter('posts_orderby', 'custom_orderby_stock_status', 10, 2);
 function custom_orderby_stock_status($orderby, $query) {
-    if (!is_admin() && $query->is_main_query()) {
+    if (!is_admin() && $query->is_main_query() && (is_shop() || is_product_category() || is_product_tag())) {
         global $wpdb;
         $orderby = "
             (SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = {$wpdb->posts}.ID AND meta_key = '_stock_status') ASC,
-            (SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = {$wpdb->posts}.ID AND meta_key = '_price')+0 ASC
+            (SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = {$wpdb->posts}.ID AND meta_key = '_price')+0 ASC,
+            {$wpdb->posts}.ID DESC
         ";
     }
     return $orderby;
