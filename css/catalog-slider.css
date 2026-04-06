@@ -1,0 +1,64 @@
+
+
+.cat-swiper-btn[disabled] {
+  opacity:.35;
+  cursor:not-allowed;
+}
+
+
+.cat-swiper {
+  position: relative;
+}
+
+.cat-swiper-nav {
+  position: absolute;
+  top: 40%;
+  right: 10px; /* можна left:10px для попередньої */
+  transform: translateY(-50%);
+  z-index: 5;
+  display: flex;
+  gap: 6px;
+  justify-content: space-between;
+  width: 98%;
+}
+
+.cat-swiper-btn {
+     width: 40px;
+    height: 40px;
+    border-radius: 10%;
+    border: none;
+    background: #3d3d3d;
+    color: white;
+    cursor: pointer;
+}
+
+/* приховати стрілки на мобільних */
+@media (max-width: 768px){
+  .cat-swiper-nav{ display:none!important; }
+}
+
+
+/* Працює тільки на desktop (там, де є слайдер) */
+@media (min-width: 768px){
+  /* контейнер Swiper */
+  .cat-swiper{ overflow: hidden; }
+
+  /* прибираємо “скролові” стилі від теми */
+  .cat-swiper .categories-horizontal-scroll-wrapper__categories-list{
+    overflow: visible !important;
+    flex-wrap: nowrap !important;
+    scroll-snap-type: none !important;
+  }
+
+  /* головне: картки не повинні розтягуватися на 100% */
+  .cat-swiper .swiper-slide{
+    width: auto !important;        /* ширина = контенту/картці */
+    flex: 0 0 auto !important;     /* забороняємо розтяг */
+  }
+
+  /* інколи тема задає ширину дітям – знімаємо */
+  .cat-swiper .swiper-slide > *{
+    width: auto !important;
+    flex: 0 0 auto !important;
+  }
+}

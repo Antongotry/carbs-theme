@@ -1,0 +1,158 @@
+.crabs-container{
+ max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 24px;
+     padding-bottom: 24px;
+}
+
+.crabs-paydel{
+     padding: 60px 0 0px;
+}
+
+.crabs-paydel__title{
+   margin: 0 0 30px!important;
+  font-size: clamp(28px, 2.6vw, 40px)!important;
+  line-height: 1.1;
+    font-weight: 500;
+    text-align: left !important;
+}
+
+.crabs-paydel__grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.crabs-card{
+  background: #f6f6f6;
+  border-radius: 14px;
+  padding: 30px;
+}
+
+.crabs-card__title{
+  margin: 0 0 20px;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.crabs-card__lead{
+  margin: 0 0 30px;
+  color: #6b6b6b;
+  line-height: 1.55;
+}
+
+.crabs-card__block{
+  margin: 0 0 30px;
+}
+
+.crabs-card__h{
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #E93A53;
+ /* червоний як на прикладі */
+}
+
+.crabs-card__p{
+  margin: 0;
+  color: #6b6b6b;
+  line-height: 1.55;
+}
+
+.crabs-card__list{
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: #6b6b6b;
+  line-height: 1.55;
+}
+
+.crabs-card__logos,
+.crabs-card__paylogos{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.crabs-card__logos{
+    max-width:84px;
+}
+
+.crabs-card__paylogos img{
+ height: auto;
+    max-width: 100%;
+    display: block;
+}
+
+@media (max-width: 1441px){
+    .crabs-container{
+    padding: 0 20px;
+    padding-bottom:20px;
+}
+.crabs-card{
+  padding: 35px;
+}
+    
+    .crabs-paydel{
+     padding: 45px 0 0px;
+}
+   
+.crabs-paydel__title{
+   margin: 0 0 20px!important;
+  font-size: clamp(28px, 2.6vw, 35px)!important;
+}
+.crabs-card__lead{
+  margin: 0 0 25px;
+  font-size:14px;
+}
+.crabs-card__lead{
+  margin: 0 0 25px;
+  }
+}
+
+@media (max-width: 1025px){
+    .crabs-paydel__title{
+  font-size: clamp(28px, 2.6vw, 28px)!important;
+}
+.crabs-card{
+  padding: 25px;
+}
+.crabs-card__logos{
+    max-width:63px;
+}
+.crabs-card__paylogos img{
+    height: 33px;
+    width: auto;
+}
+}
+
+@media (max-width: 900px){
+  .crabs-paydel__grid{ 
+      grid-template-columns: 1fr; 
+      
+  }
+  .crabs-card{ 
+      padding: 22px;
+      }
+}
+
+@media (max-width: 426px){
+    .crabs-container{
+    padding: 0 10px;
+     padding-bottom: 20px;
+}
+    .crabs-paydel {
+        padding: 40px 0 0px;
+    }
+    .crabs-paydel__title{
+     margin: 0 0 18px!important;
+  font-size: clamp(28px, 2.6vw, 25px)!important;
+}
+.crabs-card{
+  padding: 20px;
+}
+}
+
+
