@@ -5073,6 +5073,36 @@ svg.bag {
     max-width: 26px;
     max-height: 26px;
   }
+
+  /* Каталог / wishlist: плашки поверх фото (без --inline) — колонка на телефоні */
+  .catalog-card__image .catalog-card__credit-badges:not(.catalog-card__credit-badges--inline) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    top: 10px;
+    left: 10px;
+  }
+
+  .catalog-card__image .catalog-card__credit-badges:not(.catalog-card__credit-badges--inline) .catalog-card__credit-badge--ds3 {
+    width: 30px;
+    height: 26px;
+    max-width: 30px;
+    max-height: 26px;
+  }
+
+  .catalog-card__image .catalog-card__credit-badges:not(.catalog-card__credit-badges--inline) .catalog-card__credit-badge--ds2 {
+    width: 25px;
+    height: 27px;
+    max-width: 25px;
+    max-height: 27px;
+  }
+
+  .catalog-card__image .catalog-card__credit-badges:not(.catalog-card__credit-badges--inline) .catalog-card__credit-badge--ds1 {
+    width: 26px;
+    height: 26px;
+    max-width: 26px;
+    max-height: 26px;
+  }
 }
 
 .shortstory {
