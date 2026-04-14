@@ -111,14 +111,22 @@ function sf_child_theme_dequeue_style() {
 
 // Enqueue child theme styles and scripts
 function crabs_project_enqueue_styles_scripts() {
+	$theme_dir = get_stylesheet_directory();
+	$style_min = $theme_dir . '/css/style.min.css';
+	$add_style = $theme_dir . '/css/add-style.css';
+	$izi       = $theme_dir . '/css/iziToast.min.css';
+	$css_ver   = file_exists( $style_min ) ? (string) filemtime( $style_min ) : wp_get_theme()->get( 'Version' );
+	$add_ver   = file_exists( $add_style ) ? (string) filemtime( $add_style ) : $css_ver;
+	$izi_ver   = file_exists( $izi ) ? (string) filemtime( $izi ) : $css_ver;
+
     // External stylesheets
     wp_enqueue_style( 'swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', array(), null );
     wp_enqueue_style( 'baguettebox-css', 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.css', array(), null );
 
-    // Child theme stylesheet
-    wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/css/style.min.css', array(), null );
-    wp_enqueue_style( 'additional-styles', get_stylesheet_directory_uri() . '/css/add-style.css', array(), null );
-    wp_enqueue_style( 'wooeshop-izitoast', get_stylesheet_directory_uri() . '/css/iziToast.min.css' );
+    // Child theme stylesheet (filemtime змушує клієнтів підтягнути новий CSS після деплою)
+    wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/css/style.min.css', array(), $css_ver );
+    wp_enqueue_style( 'additional-styles', get_stylesheet_directory_uri() . '/css/add-style.css', array(), $add_ver );
+    wp_enqueue_style( 'wooeshop-izitoast', get_stylesheet_directory_uri() . '/css/iziToast.min.css', array(), $izi_ver );
 
     // External scripts
     wp_enqueue_script( 'jquery' ); // Подключение jQuery
@@ -130,9 +138,14 @@ function crabs_project_enqueue_styles_scripts() {
         add_action( 'wp_footer', 'masked_script', 999);
     }
 
+	$app_js    = $theme_dir . '/js/app.min.js';
+	$cust_js   = $theme_dir . '/js/custom-scripts.js';
+	$app_ver   = file_exists( $app_js ) ? (string) filemtime( $app_js ) : $css_ver;
+	$cust_ver  = file_exists( $cust_js ) ? (string) filemtime( $cust_js ) : $css_ver;
+
     // Custom script files
-    wp_enqueue_script( 'app-js', get_stylesheet_directory_uri() . '/js/app.min.js', array('jquery'), null, true );
-    wp_enqueue_script( 'custom-js', get_stylesheet_directory_uri() . '/js/custom-scripts.js', array('jquery'), null, true );
+    wp_enqueue_script( 'app-js', get_stylesheet_directory_uri() . '/js/app.min.js', array('jquery'), $app_ver, true );
+    wp_enqueue_script( 'custom-js', get_stylesheet_directory_uri() . '/js/custom-scripts.js', array('jquery'), $cust_ver, true );
 
     // Localize the script with new data
     global $wp_query;
