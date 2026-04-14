@@ -6067,7 +6067,7 @@ svg.bag {
 	height: 100%;
 	object-fit: cover;
 }
-.catalog-card__credit-badges{position:absolute;top:25px;left:25px;z-index:2;display:flex;flex-direction:row;align-items:flex-end;gap:9px;pointer-events:none}.catalog-card__credit-badge{display:block;flex-shrink:0;object-fit:contain}.catalog-card__credit-badge--ds3{width:42px;height:37px;max-width:42px;max-height:37px}.catalog-card__credit-badge--ds2{width:35px;height:37px;max-width:35px;max-height:37px}.catalog-card__credit-badge--ds1{width:35px;height:35px;max-width:35px;max-height:35px}
+.catalog-card__credit-badges{position:absolute;top:25px;left:25px;z-index:2;display:flex;flex-direction:row;align-items:flex-end;gap:9px;pointer-events:none}.catalog-card__credit-badge{display:block;flex-shrink:0;object-fit:contain}.catalog-card__credit-badge--ds3{width:42px;height:37px;max-width:42px;max-height:37px}.catalog-card__credit-badge--ds2{width:35px;height:37px;max-width:35px;max-height:37px}.catalog-card__credit-badge--ds1{width:35px;height:35px;max-width:35px;max-height:35px}.catalog-card__credit-badges--inline{position:static;top:auto;left:auto;z-index:auto;pointer-events:auto}
 .catalog-card__content {
 	display: flex;
 	justify-content: space-between;
@@ -7098,7 +7098,7 @@ display: none;
 	align-items: center;
 	gap: 5px;
 }
-.card-main__icon-right img {
+.card-main__icon-right img:not(.catalog-card__credit-badge) {
 	width: 50px;
 	height: 50px;
 }
@@ -7123,7 +7123,7 @@ display: none;
 	.card-main__icon-right {
 		gap: 5px;
 	}
-	.card-main__icon-right img {
+	.card-main__icon-right img:not(.catalog-card__credit-badge) {
 		width: 38px;
 		height: 38px;
 	}
@@ -7177,7 +7177,7 @@ display: none;
 	.card-main__icon-right {
 		gap: 7px;
 	}
-	.card-main__icon-right img {
+	.card-main__icon-right img:not(.catalog-card__credit-badge) {
 		width: 27px;
 		height: 27px;
 	}
@@ -7275,7 +7275,7 @@ display: none;
 	display: flex;
 	align-items: center;
 }
-.shortstory__icons img {
+.shortstory__icons img:not(.catalog-card__credit-badge) {
 	width: 32px;
 	height: 32px;
 }
@@ -7602,7 +7602,7 @@ display: none;
 	.shortstory__icons {
 		gap: 7px;
 	}
-	.shortstory__icons img {
+	.shortstory__icons img:not(.catalog-card__credit-badge) {
 		width: 27px;
 		height: 27px;
 	}
@@ -7763,7 +7763,7 @@ display: none;
 	align-items: center;
 	gap: 8px;
 }
-.relate-slider__icon-right img {
+.relate-slider__icon-right img:not(.catalog-card__credit-badge) {
 	width: 30px;
 	height: 30px;
 }
@@ -12491,7 +12491,7 @@ a.btn-black {
 	height: auto;
 }
 
-.catalog-card__credit-badges{position:absolute;top:25px;left:25px;z-index:2;display:flex;flex-direction:row;align-items:flex-end;gap:9px;pointer-events:none}.catalog-card__credit-badge{display:block;flex-shrink:0;object-fit:contain}.catalog-card__credit-badge--ds3{width:42px;height:37px;max-width:42px;max-height:37px}.catalog-card__credit-badge--ds2{width:35px;height:37px;max-width:35px;max-height:37px}.catalog-card__credit-badge--ds1{width:35px;height:35px;max-width:35px;max-height:35px}
+.catalog-card__credit-badges{position:absolute;top:25px;left:25px;z-index:2;display:flex;flex-direction:row;align-items:flex-end;gap:9px;pointer-events:none}.catalog-card__credit-badge{display:block;flex-shrink:0;object-fit:contain}.catalog-card__credit-badge--ds3{width:42px;height:37px;max-width:42px;max-height:37px}.catalog-card__credit-badge--ds2{width:35px;height:37px;max-width:35px;max-height:37px}.catalog-card__credit-badge--ds1{width:35px;height:35px;max-width:35px;max-height:35px}.catalog-card__credit-badges--inline{position:static;top:auto;left:auto;z-index:auto;pointer-events:auto}
 
 .catalog-card__icon-right {
 	position: absolute;

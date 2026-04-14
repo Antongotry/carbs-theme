@@ -10,8 +10,7 @@
                 <span><?php echo ($product->is_in_stock() ? 'В наявності' : 'Немає в наявності'); ?></span>
             </div>
             <div class="relate-slider__icon-right">
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/percentage.png" alt="percentage"  width="35" height="35">
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/paw.png" alt="paw"  width="35" height="35">
+                <?php crabs_catalog_credit_badges( true ); ?>
             </div>
             <a href="#" class="relate-slider__icon-heart">
                 <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">

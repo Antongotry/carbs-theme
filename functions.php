@@ -3034,12 +3034,18 @@ add_action('wp_enqueue_scripts', function () {
 
 
 /**
- * Кредитні / розстрочка плашки на фото картки товару в каталозі.
+ * Кредитні / розстрочка плашки (каталог — поверх фото; $inline — у рядку біля тексту/іконок).
+ *
+ * @param bool $inline Чи не використовувати absolute-позиціювання (сторінка товару, слайдери).
  */
-function crabs_catalog_credit_badges() {
+function crabs_catalog_credit_badges( $inline = false ) {
 	$base = trailingslashit( content_url( '/uploads/2026/04/' ) );
+	$wrapper_class = 'catalog-card__credit-badges';
+	if ( $inline ) {
+		$wrapper_class .= ' catalog-card__credit-badges--inline';
+	}
 	?>
-	<div class="catalog-card__credit-badges" aria-hidden="true">
+	<div class="<?php echo esc_attr( $wrapper_class ); ?>" aria-hidden="true">
 		<img class="catalog-card__credit-badge catalog-card__credit-badge--ds3" src="<?php echo esc_url( $base . 'ds3_result.webp' ); ?>" alt="" width="42" height="37" loading="lazy" decoding="async">
 		<img class="catalog-card__credit-badge catalog-card__credit-badge--ds2" src="<?php echo esc_url( $base . 'ds2_result.webp' ); ?>" alt="" width="35" height="37" loading="lazy" decoding="async">
 		<img class="catalog-card__credit-badge catalog-card__credit-badge--ds1" src="<?php echo esc_url( $base . 'ds1_result.webp' ); ?>" alt="" width="35" height="35" loading="lazy" decoding="async">

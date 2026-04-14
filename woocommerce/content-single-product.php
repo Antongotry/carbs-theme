@@ -195,8 +195,7 @@ foreach ($attributes as $attribute) {
 		<div class="card-main__column">
 			<div class="card-main__icons">
 				<div class="card-main__icon-right mob">
-					<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/percentage.png" alt="percentage"  width="35" height="35">
-					<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/paw.png" alt="paw" width="35" height="35">
+					<?php crabs_catalog_credit_badges( true ); ?>
 				</div>
 			</div>
 
@@ -362,8 +361,7 @@ foreach ($attributes as $attribute) {
 				</div>
 				<div class="shortstory__instalments">
 					<div class="shortstory__icons">
-						<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/percentage.png" alt="percentage"  width="35" height="35">
-											<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/paw.png" alt="paw"  width="35" height="35">
+						<?php crabs_catalog_credit_badges( true ); ?>
 					</div>
 					<span><?php _e('Оплачуйте частинами від 5000 грн в місяць без вістотків', 'crabs_project'); ?></span>
 					<?php
@@ -1544,8 +1542,7 @@ foreach ($attributes as $attribute) {
 
 									<div class="card-swiper-slider__icons">
 										<div class="card-swiper-slider__icon-right">
-											<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/percentage.png" alt="percentage"  width="35" height="35">
-											<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/paw.png" alt="paw"  width="35" height="35">
+											<?php crabs_catalog_credit_badges( true ); ?>
 										</div>
 										<button class="card-swiper-slider__icon-heart wishlist-icon <?php echo wooeshop_in_wishlist2($current_product->get_id()) ? 'in-wishlist' : '' ?>" data-id="<?php echo $current_product->get_id(); ?>">
 
@@ -1935,8 +1932,7 @@ foreach ($attributes as $attribute) {
 
                                                     <div class="card-swiper-slider__icons">
                                                         <div class="card-swiper-slider__icon-right">
-                                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/percentage.png" alt="percentage"  width="35" height="35">
-                                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/paw.png" alt="paw"  width="35" height="35">
+                                                            <?php crabs_catalog_credit_badges( true ); ?>
                                                         </div>
                                                         <button class="card-swiper-slider__icon-heart wishlist-icon <?php echo wooeshop_in_wishlist2($current_product->get_id()) ? 'in-wishlist' : '' ?>" data-id="<?php echo $current_product->get_id(); ?>">
                                                             <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
