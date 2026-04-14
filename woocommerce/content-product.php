@@ -25,19 +25,16 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 }
 ?>
 <section <?php wc_product_class( 'catalog-card', $product ); ?>>
-    <div class="catalog-card__icon-right">
-        <div class="catalog-card__icon-group">
-            <img src="/wp-content/uploads/2025/07/Lapka-ta-vidsotok-e1751405070826.webp" alt="percentage">
-        </div>
-        <?php if ( has_term( 'Забронювати до пологів', 'product_tag', $product->get_id() ) ) : ?>
-            <div class="catalog-card__icon-single">
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/pregnant-woman.png" alt="reserve before childbirth">
-            </div>
-        <?php endif; ?>
-
-    </div>
+	<?php if ( has_term( 'Забронювати до пологів', 'product_tag', $product->get_id() ) ) : ?>
+		<div class="catalog-card__icon-right">
+			<div class="catalog-card__icon-single">
+				<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/pregnant-woman.png" alt="reserve before childbirth">
+			</div>
+		</div>
+	<?php endif; ?>
 
 	<a href="<?php the_permalink(); ?>" class="catalog-card__image">
+		<?php crabs_catalog_credit_badges(); ?>
 		<?php if ( has_post_thumbnail() ) : ?>
 		<?php the_post_thumbnail(); ?>
 		<?php else : ?>

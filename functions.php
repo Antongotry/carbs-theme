@@ -2263,6 +2263,7 @@ function load_wishlist_products_cb() {
             ?>
             <section id="product-<?php echo $product_id; ?>" <?php wc_product_class( 'catalog-card', $product ); ?>>
                 <a href="<?php the_permalink(); ?>" class="catalog-card__image">
+                    <?php crabs_catalog_credit_badges(); ?>
                     <?php if ( has_post_thumbnail() ) : ?>
                         <?php the_post_thumbnail(); ?>
                     <?php else : ?>
@@ -2277,16 +2278,13 @@ function load_wishlist_products_cb() {
                         <div class="catalog-card__tag tag-order <?php echo esc_attr($classAv); ?>">
                             <span><?php echo esc_html($textAv); ?></span>
                         </div>
+                        <?php if ( has_term( 'Забронювати до пологів', 'product_tag', $product_id ) ) : ?>
                         <div class="catalog-card__icon-right">
-                            <div class="catalog-card__icon-group">
-                                <img src="/wp-content/uploads/2025/07/Lapka-ta-vidsotok-e1751405070826.webp" alt="percentage">
-                            </div>
-                            <?php if ( has_term( 'Забронювати до пологів', 'product_tag', $product_id ) ) : ?>
                                 <div class="catalog-card__icon-single">
                                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/pregnant-woman.png" alt="reserve before childbirth">
                                 </div>
-                            <?php endif; ?>
                         </div>
+                        <?php endif; ?>
                         <button class="remove-wishlist" data-product-id="<?php echo $product_id; ?>">
                             <svg class="delete-icon"><use xlink:href="#delete"></use></svg>
                             <span>Видалити</span>
@@ -3035,6 +3033,20 @@ add_action('wp_enqueue_scripts', function () {
 
 
 
+/**
+ * Кредитні / розстрочка плашки на фото картки товару в каталозі.
+ */
+function crabs_catalog_credit_badges() {
+	$base = trailingslashit( content_url( '/uploads/2026/04/' ) );
+	?>
+	<div class="catalog-card__credit-badges" aria-hidden="true">
+		<img class="catalog-card__credit-badge catalog-card__credit-badge--ds3" src="<?php echo esc_url( $base . 'ds3_result.webp' ); ?>" alt="" width="42" height="37" loading="lazy" decoding="async">
+		<img class="catalog-card__credit-badge catalog-card__credit-badge--ds2" src="<?php echo esc_url( $base . 'ds2_result.webp' ); ?>" alt="" width="35" height="37" loading="lazy" decoding="async">
+		<img class="catalog-card__credit-badge catalog-card__credit-badge--ds1" src="<?php echo esc_url( $base . 'ds1_result.webp' ); ?>" alt="" width="35" height="35" loading="lazy" decoding="async">
+	</div>
+	<?php
+}
+
 function crabs_render_stock_badge( $product = null ) {
     if ( ! $product ) $product = wc_get_product( get_the_ID() );
     if ( ! $product ) return;
@@ -3472,3 +3484,344 @@ add_action('wp_enqueue_scripts', function () {
 });
 
 remove_action('wp_head', 'wp_site_icon', 99);
+
+// ========================
+// ПЛАТІЖНІ СИСТЕМИ → CRM
+// ========================
+
+// 1. Зберігаємо paytype та payment_id з колбеку LiqPay (до перевірки підпису плагіном)
+add_action('handle_callback', function ($post_data) {
+    $data      = isset($post_data['data'])      ? $post_data['data']      : null;
+    $signature = isset($post_data['signature']) ? $post_data['signature'] : null;
+
+    if (!$data || !$signature) {
+        return;
+    }
+
+    $gateways = WC()->payment_gateways()->payment_gateways();
+    if (empty($gateways['liqpay'])) {
+        return;
+    }
+
+    $gw          = $gateways['liqpay'];
+    $private_key = $gw->get_option('private_key');
+
+    $expected = base64_encode(sha1($private_key . $data . $private_key, true));
+    if (!hash_equals($expected, $signature)) {
+        return;
+    }
+
+    $decoded = json_decode(base64_decode($data), true);
+    if (empty($decoded)) {
+        return;
+    }
+
+    $order_id = isset($decoded['order_id']) ? intval($decoded['order_id']) : 0;
+    if (!$order_id) {
+        return;
+    }
+
+    $order = wc_get_order($order_id);
+    if (!$order) {
+        return;
+    }
+
+    if (isset($decoded['paytype'])) {
+        $order->update_meta_data('_liqpay_paytype', sanitize_text_field($decoded['paytype']));
+    }
+    if (isset($decoded['payment_id'])) {
+        $order->update_meta_data('_liqpay_payment_id', sanitize_text_field($decoded['payment_id']));
+    }
+    $order->save();
+}, 1);
+
+// 2. Зберігаємо bank/payment_system із колбеку WayForPay + оновлюємо payment в KeyCRM
+add_action('woocommerce_api_wc_wayforpay', function () {
+    $raw  = file_get_contents('php://input');
+    $data = json_decode($raw, true);
+
+    // Логуємо весь callback для діагностики
+    wc_get_logger()->info('WFP callback raw: ' . wp_json_encode($data), ['source' => 'crabs-wfp']);
+
+    if (empty($data) || !isset($data['orderReference'])) {
+        return;
+    }
+
+    $parts    = explode('_woo_w4p_', $data['orderReference']);
+    $order_id = isset($parts[0]) ? intval($parts[0]) : 0;
+    if (!$order_id) {
+        return;
+    }
+
+    $order = wc_get_order($order_id);
+    if (!$order) {
+        return;
+    }
+
+    $bank      = !empty($data['issuerBankName']) ? sanitize_text_field($data['issuerBankName']) : '';
+    $system    = !empty($data['paymentSystem'])  ? sanitize_text_field($data['paymentSystem'])  : '';
+    // regularPaymentPayParts — кількість місяців у розстрочці (Mono/Privat частини)
+    $pay_parts = isset($data['regularPaymentPayParts']) ? intval($data['regularPaymentPayParts']) : 0;
+
+    // Нормалізуємо bank: якщо issuerBankName порожній/Unknown — беремо з paymentSystem
+    $bank_normalized = $bank;
+    if (!$bank_normalized || mb_stripos($bank_normalized, 'unknown') !== false) {
+        $system_map = [
+            // Monobank
+            'paypartsmono'    => 'Monobank',
+            'monobank'        => 'Monobank',
+            'mono'            => 'Monobank',
+            // PrivatBank
+            'payparts'      => 'PrivatBank',
+            'paypartspb'      => 'PrivatBank',
+            'paypartsprivat'  => 'PrivatBank',
+            'privatbank'      => 'PrivatBank',
+            'privat'          => 'PrivatBank',
+            // A-Bank
+            'paypartsabank'   => 'A-Bank',
+            'paypartsa-bank'  => 'A-Bank',
+            'abank'           => 'A-Bank',
+            'a-bank'          => 'A-Bank',
+            'instantabank'    => 'A-Bank',
+            // Банк Глобус
+            'paypartsglobus'  => 'Globus',
+            'globusbank'      => 'Globus',
+            'globus'          => 'Globus',
+            'globusplus'      => 'Globus',
+        ];
+        $system_lower = mb_strtolower($system);
+        foreach ($system_map as $key => $label) {
+            if (mb_strpos($system_lower, $key) !== false) {
+                $bank_normalized = $label;
+                break;
+            }
+        }
+    }
+
+    if ($bank_normalized) {
+        $order->update_meta_data('_wfp_issuer_bank', $bank_normalized);
+    }
+    if ($system) {
+        $order->update_meta_data('_wfp_payment_system', $system);
+    }
+    if ($pay_parts > 0) {
+        $order->update_meta_data('_wfp_pay_parts', $pay_parts);
+    }
+    $order->save();
+
+    // Якщо транзакція успішна — оновлюємо payment type в KeyCRM
+    $approved_statuses = ['Approved', 'approved'];
+    if (!isset($data['transactionStatus']) || !in_array($data['transactionStatus'], $approved_statuses)) {
+        return;
+    }
+
+    $keycrm_order_id = $order->get_meta('_keycrm_order_id', true);
+    if (!$keycrm_order_id) {
+        return;
+    }
+
+    if (!class_exists('WC_Keycrm_Proxy')) {
+        if (!class_exists('WC_Integration_Keycrm')) {
+            return;
+        }
+        require_once WC_Integration_Keycrm::checkCustomFile('include/api/class-wc-keycrm-proxy.php');
+    }
+    $keycrm_settings = get_option('woocommerce_integration-keycrm_settings', []);
+    $api_url = $keycrm_settings['api_url'] ?? '';
+    $api_key = $keycrm_settings['api_key'] ?? '';
+    if (!$api_url || !$api_key) {
+        return;
+    }
+    $api_client = new WC_Keycrm_Proxy($api_url, $api_key);
+
+    // Визначаємо payment_method_id по назві банку
+    $type_id = null;
+    if ($bank_normalized) {
+        $bank_lower = mb_strtolower($bank_normalized);
+        $bank_map   = [
+            'mono'    => 22,
+            'а-банк'  => 32,
+            'a-bank'  => 32,
+            'abank'   => 32,
+            'глобус'  => 33,
+            'globus'  => 33,
+            'приват'  => 21,
+            'privat'  => 21,
+        ];
+        foreach ($bank_map as $keyword => $id) {
+            if (mb_strpos($bank_lower, $keyword) !== false) {
+                $type_id = $id;
+                break;
+            }
+        }
+    }
+
+    // Отримуємо поточний payment з CRM
+    $crm_response = $api_client->ordersGet($keycrm_order_id);
+    if (!$crm_response || !$crm_response->isSuccessful()) {
+        return;
+    }
+
+    $paid_at    = current_time('mysql');
+    $payment_id = $crm_response['payments'][0]['id'] ?? null;
+
+    if ($type_id && $payment_id) {
+        // Знаємо банк і є існуючий payment — DELETE старий (з дефолтним банком) + POST новий з правильним
+        wp_remote_request(
+            rtrim($api_url, '/') . "/order/{$keycrm_order_id}/payment/{$payment_id}",
+            [
+                'method'  => 'DELETE',
+                'headers' => ['X-Api-Key' => $api_key],
+                'timeout' => 15,
+            ]
+        );
+        $api_client->ordersPaymentCreate([
+            'order'  => ['id' => $keycrm_order_id],
+            'type'   => (string) $type_id,
+            'amount' => $order->get_total(),
+            'status' => 'paid',
+            'paidAt' => $paid_at,
+        ]);
+    } elseif ($payment_id) {
+        // Банк невідомий (напр. звичайна картка) — просто оновлюємо статус існуючого payment
+        $api_client->ordersPaymentUpdate($keycrm_order_id, $payment_id, [
+            'status' => 'paid',
+        ]);
+    } else {
+        // Payment взагалі нема — створюємо новий
+        $api_client->ordersPaymentCreate([
+            'order'  => ['id' => $keycrm_order_id],
+            'type'   => (string) ($type_id ?: 9),
+            'amount' => $order->get_total(),
+            'status' => 'paid',
+            'paidAt' => $paid_at,
+        ]);
+    }
+}, 5);
+
+// 3. Хелпер: LiqPay paytype → KeyCRM payment_method_id
+function crabs_liqpay_type_id($paytype) {
+    if ($paytype === 'moment_part') {
+        return 22; // Mono
+    }
+    if ($paytype === 'payparts') {
+        return 21; // Privat
+    }
+    return 9; // картка / Apple Pay / Google Pay
+}
+
+// 4. Фільтр: вставляємо/правимо оплату перед відправкою в KeyCRM
+add_filter('keycrm_process_order', function ($order_data, $wc_order) {
+    $payment_method = $wc_order->get_payment_method();
+
+    // --- LiqPay ---
+    if ($payment_method === 'liqpay') {
+        $paytype = $wc_order->get_meta('_liqpay_paytype', true);
+        $type_id = crabs_liqpay_type_id($paytype);
+
+        // Якщо payments порожній/відсутній — вставляємо вручну
+        if (empty($order_data['payments'])) {
+            $order_data['payments'] = [
+                [
+                    'externalId' => $wc_order->get_id() . '-' . uniqid(),
+                    'type'       => (string) $type_id,
+                    'amount'     => $wc_order->get_total(),
+                    'status'     => getPaymentStatus_kcrm($wc_order),
+                    'paidAt'     => getPaymentDate_kcrm($wc_order),
+                    'order'      => ['externalId' => $wc_order->get_id()],
+                ],
+            ];
+        } else {
+            // Оновлюємо type у вже існуючому payment
+            foreach ($order_data['payments'] as &$payment) {
+                $payment['type'] = (string) $type_id;
+            }
+            unset($payment);
+        }
+
+        // Коментар менеджеру
+        $label   = $paytype ?: 'card';
+        $comment = "[LiqPay: {$label}]";
+        $order_data['managerComment'] = trim(($order_data['managerComment'] ?? '') . ' ' . $comment);
+    }
+
+    // --- WayForPay ---
+    // Залишаємо дефолтний payment від KeyCRM плагіну (type з налаштувань).
+    // При Approved callback банк буде виправлений — старий payment видалиться і створиться новий.
+
+    return $order_data;
+}, 10, 2);
+
+// 5. Після успішної оплати LiqPay — оновлюємо payment_method_id та статус у KeyCRM
+// Хук woocommerce_order_status_processing — надійніше ніж woocommerce_payment_complete,
+// бо LiqPay викликає update_status('processing') перед payment_complete(), через що
+// payment_complete() бачить замовлення вже в 'processing' і не кидає стандартний хук.
+add_action('woocommerce_order_status_processing', function ($order_id, $order) {
+    if ($order->get_payment_method() !== 'liqpay') {
+        return;
+    }
+
+    if (!class_exists('WC_Keycrm_Proxy')) {
+        if (!class_exists('WC_Integration_Keycrm')) {
+            return;
+        }
+        require_once WC_Integration_Keycrm::checkCustomFile('include/api/class-wc-keycrm-proxy.php');
+    }
+    $keycrm_settings = get_option('woocommerce_integration-keycrm_settings', []);
+    $api_url = $keycrm_settings['api_url'] ?? '';
+    $api_key = $keycrm_settings['api_key'] ?? '';
+    if (!$api_url || !$api_key) {
+        return;
+    }
+    $api_client = new WC_Keycrm_Proxy($api_url, $api_key);
+
+    $paytype = $order->get_meta('_liqpay_paytype', true);
+    $type_id = crabs_liqpay_type_id($paytype);
+
+    // Беремо KeyCRM order ID з мети — зберігається плагіном одразу після ordersCreate
+    $keycrm_order_id = $order->get_meta('_keycrm_order_id', true);
+    if (!$keycrm_order_id) {
+        return;
+    }
+
+    // Отримуємо замовлення з KeyCRM по ВНУТРІШНЬОМУ ID (by=externalId не підтримується API)
+    $crm_response = $api_client->ordersGet($keycrm_order_id);
+    if (!$crm_response || !$crm_response->isSuccessful()) {
+        return;
+    }
+
+    $payment_id = $crm_response['payments'][0]['id'] ?? null;
+    $paid_at = current_time('mysql');
+
+    if ($payment_id) {
+        // Оновлюємо існуючий платіж
+        $api_client->ordersPaymentUpdate($keycrm_order_id, $payment_id, [
+            'status'       => 'paid',
+            'payment_date' => $paid_at,
+        ]);
+    } else {
+        // Платіж відсутній — створюємо новий
+        $api_client->ordersPaymentCreate([
+            'order'  => ['id' => $keycrm_order_id, 'externalId' => $order_id],
+            'type'   => (string) $type_id,
+            'amount' => $order->get_total(),
+            'status' => 'paid',
+            'paidAt' => $paid_at,
+        ]);
+    }
+}, 15, 2);
+
+// 6. Підстрахування: якщо WayForPay-замовлення не потрапило в CRM при checkout — ретрай
+add_action('woocommerce_payment_complete', function ($order_id) {
+    $order = wc_get_order($order_id);
+    if (!$order || $order->get_payment_method() !== 'wayforpay') {
+        return;
+    }
+    if ($order->get_meta('_keycrm_order_id', true)) {
+        return;
+    }
+    if (class_exists('WC_Keycrm_Orders')) {
+        $keycrm_orders = new WC_Keycrm_Orders();
+        $keycrm_orders->processOrder($order);
+    }
+}, 20);

@@ -1726,10 +1726,12 @@ foreach ($attributes as $attribute) {
 								<div>
 									<?php if (has_post_thumbnail()) : ?>
 									<a class="card-swiper-slider__image" href="<?php the_permalink(); ?>">
+										<?php crabs_catalog_credit_badges(); ?>
 										<?php the_post_thumbnail('full', array('alt' => get_the_title())); ?>
 									</a>
 									<?php else : ?>
 									<a class="card-swiper-slider__image" href="<?php the_permalink(); ?>">
+										<?php crabs_catalog_credit_badges(); ?>
 										<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/card.jpg" alt="slide-photo" />
 									</a>
 									<?php endif; ?>
@@ -1741,11 +1743,6 @@ foreach ($attributes as $attribute) {
 
 										<div class="card-swiper-slider__icons">
                                             <div class="catalog-card__icon-right">
-                                                <div class="catalog-card__icon-group">
-                                                <img  src="<?php echo esc_url( content_url( '/uploads/2025/07/Lapka-ta-vidsotok-e1751405070826.webp' ) ); ?>"  alt="percentage"  loading="lazy">
-
-                                                    
-                                                </div>
                                                 <div class="catalog-card__icon-single">
                                                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/pregnant-woman.png" alt="reserve before childbirth">
                                                 </div>
