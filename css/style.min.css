@@ -5764,7 +5764,7 @@ svg.bag {
 	height: 487px;
 	border-radius: 5px;
 }
-.catalog-main article.active .catalog-card__image img {
+.catalog-main article.active .catalog-card__image img:not(.catalog-card__credit-badge) {
 	border-radius: 5px;
 	width: 100%;
 	height: 100%;
@@ -6061,13 +6061,13 @@ svg.bag {
 	border-radius: 10px;
 	position: relative;
 }
-.catalog-card__image img {
+.catalog-card__image img:not(.catalog-card__credit-badge) {
 	border-radius: 10px;
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 }
-.catalog-card__credit-badges{position:absolute;top:25px;left:25px;z-index:2;display:flex;flex-direction:row;align-items:flex-end;gap:9px;pointer-events:none}.catalog-card__credit-badge{display:block;flex-shrink:0;object-fit:contain}.catalog-card__credit-badge--ds3{width:42px;height:37px}.catalog-card__credit-badge--ds2{width:35px;height:37px}.catalog-card__credit-badge--ds1{width:35px;height:35px}
+.catalog-card__credit-badges{position:absolute;top:25px;left:25px;z-index:2;display:flex;flex-direction:row;align-items:flex-end;gap:9px;pointer-events:none}.catalog-card__credit-badge{display:block;flex-shrink:0;object-fit:contain}.catalog-card__credit-badge--ds3{width:42px;height:37px;max-width:42px;max-height:37px}.catalog-card__credit-badge--ds2{width:35px;height:37px;max-width:35px;max-height:37px}.catalog-card__credit-badge--ds1{width:35px;height:35px;max-width:35px;max-height:35px}
 .catalog-card__content {
 	display: flex;
 	justify-content: space-between;
@@ -6851,7 +6851,7 @@ svg.bag {
 		height: 280px;
 		margin-right: 0;
 	}
-	.catalog-card__image img {
+	.catalog-card__image img:not(.catalog-card__credit-badge) {
 		border-radius: 10px;
 		width: 100%;
 		height: 100%;
@@ -12485,13 +12485,13 @@ a.btn-black {
 	position: relative;
 }
 
-.catalog-card__image img {
+.catalog-card__image img:not(.catalog-card__credit-badge) {
 	display: block;
 	width: 100%;
 	height: auto;
 }
 
-.catalog-card__credit-badges{position:absolute;top:25px;left:25px;z-index:2;display:flex;flex-direction:row;align-items:flex-end;gap:9px;pointer-events:none}.catalog-card__credit-badge{display:block;flex-shrink:0;object-fit:contain}.catalog-card__credit-badge--ds3{width:42px;height:37px}.catalog-card__credit-badge--ds2{width:35px;height:37px}.catalog-card__credit-badge--ds1{width:35px;height:35px}
+.catalog-card__credit-badges{position:absolute;top:25px;left:25px;z-index:2;display:flex;flex-direction:row;align-items:flex-end;gap:9px;pointer-events:none}.catalog-card__credit-badge{display:block;flex-shrink:0;object-fit:contain}.catalog-card__credit-badge--ds3{width:42px;height:37px;max-width:42px;max-height:37px}.catalog-card__credit-badge--ds2{width:35px;height:37px;max-width:35px;max-height:37px}.catalog-card__credit-badge--ds1{width:35px;height:35px;max-width:35px;max-height:35px}
 
 .catalog-card__icon-right {
 	position: absolute;
@@ -13492,7 +13492,7 @@ a.shortstory__check.before-birth-web-screen.open-before-birth-popup{
 	.popular-slider .popular-btn-prev {
         left: 28px;
     }
-    .catalog-card__image img {
+    .catalog-card__image img:not(.catalog-card__credit-badge) {
     width: 100%;
     height: 100%;
     }

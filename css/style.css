@@ -3623,7 +3623,7 @@ svg.bag {
   border-radius: 5px;
   background: #f8f7f7;
 }
-.catalog-main article.active .catalog-card__image img {
+.catalog-main article.active .catalog-card__image img:not(.catalog-card__credit-badge) {
   border-radius: 5px;
   width: 100%;
   height: 100%;
@@ -3925,7 +3925,7 @@ svg.bag {
   border-radius: 10px;
   position: relative;
 }
-.catalog-card__image img {
+.catalog-card__image img:not(.catalog-card__credit-badge) {
   border-radius: 10px;
   width: 100%;
   height: 100%;
@@ -4714,7 +4714,7 @@ svg.bag {
     margin-right: 0;
     background: #f8f7f7;
   }
-  .catalog-card__image img {
+  .catalog-card__image img:not(.catalog-card__credit-badge) {
     border-radius: 10px;
     width: 100%;
     height: 100%;
@@ -8001,7 +8001,7 @@ svg.bag {
   position: relative;
 }
 
-.catalog-card__image img {
+.catalog-card__image img:not(.catalog-card__credit-badge) {
   display: block;
   width: 100%;
   height: auto;
@@ -8028,16 +8028,22 @@ svg.bag {
 .catalog-card__credit-badge--ds3 {
   width: 42px;
   height: 37px;
+  max-width: 42px;
+  max-height: 37px;
 }
 
 .catalog-card__credit-badge--ds2 {
   width: 35px;
   height: 37px;
+  max-width: 35px;
+  max-height: 37px;
 }
 
 .catalog-card__credit-badge--ds1 {
   width: 35px;
   height: 35px;
+  max-width: 35px;
+  max-height: 35px;
 }
 
 .catalog-card__icon-right {
