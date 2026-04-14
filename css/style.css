@@ -5064,62 +5064,65 @@ svg.bag {
   }
 }
 
-@media (max-width: 768px) {
+/* Телефони: до 767px — плашки лише колонкою, менші відступи й іконки */
+@media (max-width: 767px) {
   .card-main__icon-right.mob .catalog-card__credit-badges {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 3px;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    align-items: flex-start !important;
+    gap: 2px !important;
   }
 
   .card-main__icon-right.mob .catalog-card__credit-badge--ds3 {
-    width: 30px !important;
-    height: 26px !important;
-    max-width: 30px !important;
-    max-height: 26px !important;
+    width: 22px !important;
+    height: 19px !important;
+    max-width: 22px !important;
+    max-height: 19px !important;
   }
 
   .card-main__icon-right.mob .catalog-card__credit-badge--ds2 {
-    width: 25px !important;
-    height: 27px !important;
-    max-width: 25px !important;
-    max-height: 27px !important;
+    width: 18px !important;
+    height: 19px !important;
+    max-width: 18px !important;
+    max-height: 19px !important;
   }
 
   .card-main__icon-right.mob .catalog-card__credit-badge--ds1 {
-    width: 26px !important;
-    height: 26px !important;
-    max-width: 26px !important;
-    max-height: 26px !important;
+    width: 18px !important;
+    height: 18px !important;
+    max-width: 18px !important;
+    max-height: 18px !important;
   }
 
-  /* Каталог / wishlist: плашки поверх фото (без --inline) — колонка на телефоні */
+  /* Каталог / wishlist: плашки поверх фото (без --inline) */
   .catalog-card__image .catalog-card__credit-badges:not(.catalog-card__credit-badges--inline) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 3px;
-    top: 10px;
-    left: 10px;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    align-items: flex-start !important;
+    gap: 2px !important;
+    top: 8px !important;
+    left: 8px !important;
   }
 
   .catalog-card__image .catalog-card__credit-badges:not(.catalog-card__credit-badges--inline) .catalog-card__credit-badge--ds3 {
-    width: 30px !important;
-    height: 26px !important;
-    max-width: 30px !important;
-    max-height: 26px !important;
+    width: 22px !important;
+    height: 19px !important;
+    max-width: 22px !important;
+    max-height: 19px !important;
   }
 
   .catalog-card__image .catalog-card__credit-badges:not(.catalog-card__credit-badges--inline) .catalog-card__credit-badge--ds2 {
-    width: 25px !important;
-    height: 27px !important;
-    max-width: 25px !important;
-    max-height: 27px !important;
+    width: 18px !important;
+    height: 19px !important;
+    max-width: 18px !important;
+    max-height: 19px !important;
   }
 
   .catalog-card__image .catalog-card__credit-badges:not(.catalog-card__credit-badges--inline) .catalog-card__credit-badge--ds1 {
-    width: 26px !important;
-    height: 26px !important;
-    max-width: 26px !important;
-    max-height: 26px !important;
+    width: 18px !important;
+    height: 18px !important;
+    max-width: 18px !important;
+    max-height: 18px !important;
   }
 }
 

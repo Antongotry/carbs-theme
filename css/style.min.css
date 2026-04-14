@@ -14315,4 +14315,16 @@ body.menu-open {
 .contact-icon:hover:before {
 	background: var(--primary);
 }
+
+/* Телефони ≤767px: каталог + PDP mob — плашки строго колонкою, менші (перебиває блок @media 768px у цьому файлі) */
+@media (max-width:767px){
+.card-main__icon-right.mob .catalog-card__credit-badges{flex-direction:column!important;flex-wrap:nowrap!important;align-items:flex-start!important;gap:2px!important}
+.card-main__icon-right.mob .catalog-card__credit-badge--ds3{width:22px!important;height:19px!important;max-width:22px!important;max-height:19px!important}
+.card-main__icon-right.mob .catalog-card__credit-badge--ds2{width:18px!important;height:19px!important;max-width:18px!important;max-height:19px!important}
+.card-main__icon-right.mob .catalog-card__credit-badge--ds1{width:18px!important;height:18px!important;max-width:18px!important;max-height:18px!important}
+.catalog-card__image .catalog-card__credit-badges:not(.catalog-card__credit-badges--inline){flex-direction:column!important;flex-wrap:nowrap!important;align-items:flex-start!important;gap:2px!important;top:8px!important;left:8px!important}
+.catalog-card__image .catalog-card__credit-badges:not(.catalog-card__credit-badges--inline) .catalog-card__credit-badge--ds3{width:22px!important;height:19px!important;max-width:22px!important;max-height:19px!important}
+.catalog-card__image .catalog-card__credit-badges:not(.catalog-card__credit-badges--inline) .catalog-card__credit-badge--ds2{width:18px!important;height:19px!important;max-width:18px!important;max-height:19px!important}
+.catalog-card__image .catalog-card__credit-badges:not(.catalog-card__credit-badges--inline) .catalog-card__credit-badge--ds1{width:18px!important;height:18px!important;max-width:18px!important;max-height:18px!important}
+}
    
