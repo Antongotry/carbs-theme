@@ -5046,6 +5046,35 @@ svg.bag {
   }
 }
 
+@media (max-width: 768px) {
+  .card-main__icon-right.mob .catalog-card__credit-badges {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+
+  .card-main__icon-right.mob .catalog-card__credit-badge--ds3 {
+    width: 30px;
+    height: 26px;
+    max-width: 30px;
+    max-height: 26px;
+  }
+
+  .card-main__icon-right.mob .catalog-card__credit-badge--ds2 {
+    width: 25px;
+    height: 27px;
+    max-width: 25px;
+    max-height: 27px;
+  }
+
+  .card-main__icon-right.mob .catalog-card__credit-badge--ds1 {
+    width: 26px;
+    height: 26px;
+    max-width: 26px;
+    max-height: 26px;
+  }
+}
+
 .shortstory {
   background: #f8f7f7;
   border-radius: 10px;

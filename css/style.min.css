@@ -13249,6 +13249,7 @@ a.shortstory__check.before-birth-web-screen.open-before-birth-popup{
 	.card-main__icons {
 			padding-bottom: 0 !important;
 	}
+	.card-main__icon-right.mob .catalog-card__credit-badges{flex-direction:column;align-items:flex-start;gap:3px}.card-main__icon-right.mob .catalog-card__credit-badge--ds3{width:30px;height:26px;max-width:30px;max-height:26px}.card-main__icon-right.mob .catalog-card__credit-badge--ds2{width:25px;height:27px;max-width:25px;max-height:27px}.card-main__icon-right.mob .catalog-card__credit-badge--ds1{width:26px;height:26px;max-width:26px;max-height:26px}
     
     .form-col-25 > * {
 		width: calc(100% - 0px);
