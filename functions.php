@@ -15,7 +15,7 @@ function get_dynamic_version()
  * Опційно в wp-config: define( 'CRABS_ASSETS_STAMP', '5' );
  */
 if ( ! defined( 'CRABS_ASSETS_STAMP' ) ) {
-	define( 'CRABS_ASSETS_STAMP', '4' );
+	define( 'CRABS_ASSETS_STAMP', '6' );
 }
 
 // Принудительная инициализация WooCommerce на кастомных страницах
