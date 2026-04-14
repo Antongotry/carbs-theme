@@ -3034,6 +3034,24 @@ add_action('wp_enqueue_scripts', function () {
 
 
 /**
+ * Банер «оплата частинами» зверху сітки товарів у #catalog-body.
+ */
+function crabs_catalog_installment_banner() {
+	$base = trailingslashit( content_url( '/uploads/2026/04/' ) );
+	$alt  = __( 'Оплачуйте частинами до 5 платежів без відсотків', 'crabs_project' );
+	?>
+	<div class="catalog-body__installment-banner">
+		<picture>
+			<source media="(min-width: 1920px)" srcset="<?php echo esc_url( $base . '1920_result.webp' ); ?>" type="image/webp">
+			<source media="(min-width: 1440px)" srcset="<?php echo esc_url( $base . '1440_result.webp' ); ?>" type="image/webp">
+			<source media="(min-width: 1024px)" srcset="<?php echo esc_url( $base . '1024_result.webp' ); ?>" type="image/webp">
+			<img src="<?php echo esc_url( $base . '375_result.webp' ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="eager" decoding="async">
+		</picture>
+	</div>
+	<?php
+}
+
+/**
  * Кредитні / розстрочка плашки (каталог — поверх фото; $inline — у рядку біля тексту/іконок).
  *
  * @param bool $inline Чи не використовувати absolute-позиціювання (сторінка товару, слайдери).

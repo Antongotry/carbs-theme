@@ -3709,6 +3709,24 @@ svg.bag {
   display: flex;
   flex-direction: column;
 }
+
+.catalog-body__installment-banner {
+  width: 100%;
+  flex-shrink: 0;
+  margin-bottom: 20px;
+}
+
+.catalog-body__installment-banner picture,
+.catalog-body__installment-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.catalog-body__installment-banner img {
+  border-radius: 10px;
+}
+
 .catalog-main__btn {
   display: -webkit-box;
   display: -moz-box;
