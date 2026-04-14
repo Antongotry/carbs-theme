@@ -10,6 +10,14 @@ function get_dynamic_version()
 }
 // Динамическая версия стилей и скриптов - End
 
+/**
+ * Ручний «постріл» кешу CSS/JS: збільшуйте число після деплою, якщо CDN/хост не бачить новий filemtime.
+ * Опційно в wp-config: define( 'CRABS_ASSETS_STAMP', '5' );
+ */
+if ( ! defined( 'CRABS_ASSETS_STAMP' ) ) {
+	define( 'CRABS_ASSETS_STAMP', '4' );
+}
+
 // Принудительная инициализация WooCommerce на кастомных страницах
 function ensure_woocommerce_loaded() {
     if (function_exists('WC')) {
@@ -115,9 +123,15 @@ function crabs_project_enqueue_styles_scripts() {
 	$style_min = $theme_dir . '/css/style.min.css';
 	$add_style = $theme_dir . '/css/add-style.css';
 	$izi       = $theme_dir . '/css/iziToast.min.css';
-	$css_ver   = file_exists( $style_min ) ? (string) filemtime( $style_min ) : wp_get_theme()->get( 'Version' );
-	$add_ver   = file_exists( $add_style ) ? (string) filemtime( $add_style ) : $css_ver;
-	$izi_ver   = file_exists( $izi ) ? (string) filemtime( $izi ) : $css_ver;
+	$css_fm    = file_exists( $style_min ) ? (string) filemtime( $style_min ) : '0';
+	$add_fm    = file_exists( $add_style ) ? (string) filemtime( $add_style ) : '0';
+	$izi_fm    = file_exists( $izi ) ? (string) filemtime( $izi ) : '0';
+	$theme_ver = wp_get_theme()->get( 'Version' );
+	$theme_ver = $theme_ver ? (string) $theme_ver : '1';
+	// Штамп + filemtime + тема — окремий ?ver= навіть якщо mtime на сервері «залип»
+	$css_ver   = CRABS_ASSETS_STAMP . '-' . $theme_ver . '-' . $css_fm;
+	$add_ver   = CRABS_ASSETS_STAMP . '-' . $theme_ver . '-' . $add_fm;
+	$izi_ver   = CRABS_ASSETS_STAMP . '-' . $theme_ver . '-' . $izi_fm;
 
     // External stylesheets
     wp_enqueue_style( 'swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', array(), null );
@@ -140,8 +154,10 @@ function crabs_project_enqueue_styles_scripts() {
 
 	$app_js    = $theme_dir . '/js/app.min.js';
 	$cust_js   = $theme_dir . '/js/custom-scripts.js';
-	$app_ver   = file_exists( $app_js ) ? (string) filemtime( $app_js ) : $css_ver;
-	$cust_ver  = file_exists( $cust_js ) ? (string) filemtime( $cust_js ) : $css_ver;
+	$app_fm    = file_exists( $app_js ) ? (string) filemtime( $app_js ) : '0';
+	$cust_fm   = file_exists( $cust_js ) ? (string) filemtime( $cust_js ) : '0';
+	$app_ver   = CRABS_ASSETS_STAMP . '-' . $theme_ver . '-' . $app_fm;
+	$cust_ver  = CRABS_ASSETS_STAMP . '-' . $theme_ver . '-' . $cust_fm;
 
     // Custom script files
     wp_enqueue_script( 'app-js', get_stylesheet_directory_uri() . '/js/app.min.js', array('jquery'), $app_ver, true );
@@ -176,6 +192,36 @@ function crabs_project_enqueue_styles_scripts() {
 
 }
 add_action( 'wp_enqueue_scripts', 'crabs_project_enqueue_styles_scripts' );
+
+/**
+ * Другий query-параметр з filemtime (деякі CDN кешують лише path або ігнорують ?ver= з HTML-кешу).
+ */
+function crabs_style_loader_extra_bust( $src, $handle ) {
+	static $map = null;
+	if ( null === $map ) {
+		$base = get_stylesheet_directory();
+		$map  = array(
+			'child-style'       => $base . '/css/style.min.css',
+			'additional-styles' => $base . '/css/add-style.css',
+			'wooeshop-izitoast' => $base . '/css/iziToast.min.css',
+			'catalog-slider'    => $base . '/css/catalog-slider.css',
+		);
+	}
+	if ( ! isset( $map[ $handle ] ) || ! is_string( $src ) || strpos( $src, 'data:' ) === 0 ) {
+		return $src;
+	}
+	$path = $map[ $handle ];
+	if ( ! is_readable( $path ) ) {
+		return $src;
+	}
+	$mtime = filemtime( $path );
+	if ( false === strpos( $src, '_cb=' ) ) {
+		$sep = ( false !== strpos( $src, '?' ) ) ? '&' : '?';
+		return $src . $sep . '_cb=' . rawurlencode( (string) $mtime );
+	}
+	return $src;
+}
+add_filter( 'style_loader_src', 'crabs_style_loader_extra_bust', 99, 2 );
 
 function masked_script() {
     if ( wp_script_is( 'jquery', 'done' ) ) {
@@ -3036,11 +3082,17 @@ add_action('wp_enqueue_scripts', function () {
 
 
 add_action('wp_enqueue_scripts', function () {
+	$rel = '/css/catalog-slider.css';
+	$abs = get_stylesheet_directory() . $rel;
+	$fm  = file_exists( $abs ) ? (string) filemtime( $abs ) : '0';
+	$tv  = wp_get_theme()->get( 'Version' );
+	$tv  = $tv ? (string) $tv : '1';
+	$ver = CRABS_ASSETS_STAMP . '-' . $tv . '-' . $fm;
   wp_enqueue_style(
     'catalog-slider',
-    get_stylesheet_directory_uri() . '/css/catalog-slider.css',
+    get_stylesheet_directory_uri() . $rel,
     [],
-    null
+    $ver
   );
 });
 
