@@ -8611,6 +8611,7 @@ display: none;
 .card-swiper-slider__icon-heart {
 	display: none;
 }
+body.single-product .card-swiper-slider__gallary.related .catalog-card__credit-badges,body.single-product .card-swiper-slider__gallary.look .catalog-card__credit-badges{display:none!important}body.single-product .card-swiper-slider__gallary.related .catalog-card__icon-right,body.single-product .card-swiper-slider__gallary.look .catalog-card__icon-right{display:none!important}
 .card-swiper-slider .btn-swiper {
 	top: -48px;
 }

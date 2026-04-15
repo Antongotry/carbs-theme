@@ -6916,6 +6916,15 @@ svg.bag {
 .card-swiper-slider__image {
   position: relative;
 }
+/* Сторінка товару: «Разом купують» (.related) та «Ви переглядали» (.look) — без кредитних плашок і правих іконок */
+body.single-product .card-swiper-slider__gallary.related .catalog-card__credit-badges,
+body.single-product .card-swiper-slider__gallary.look .catalog-card__credit-badges {
+  display: none !important;
+}
+body.single-product .card-swiper-slider__gallary.related .catalog-card__icon-right,
+body.single-product .card-swiper-slider__gallary.look .catalog-card__icon-right {
+  display: none !important;
+}
 .card-swiper-slider__image > img {
   border-radius: 5px;
   width: 100%;
