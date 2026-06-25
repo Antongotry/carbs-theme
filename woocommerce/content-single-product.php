@@ -795,7 +795,7 @@ foreach ($attributes as $attribute) {
 						</div>
 						<div class="advantage-item">
 							<img loading="lazy" src="https://crabs.ua/wp-content/uploads/2026/03/icon-2_result.webp" alt="Держ. виплати" width="52">
-							<span>Держ. виплати<br>(7000 ₴, 50 000 ₴)</span>
+							<span>Держ. виплати<br>(7000 ₴, 50 000 ₴),<br>пакунок малюка</span>
 						</div>
 						<div class="advantage-item">
 							<img loading="lazy" src="https://crabs.ua/wp-content/uploads/2026/03/icon-3_result.webp" alt="Оплата частинами" width="115">

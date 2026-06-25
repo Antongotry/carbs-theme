@@ -172,7 +172,8 @@ function crabs_project_enqueue_styles_scripts() {
         'current_page' => max(1, get_query_var('paged')),
         'max_page' => $wp_query->max_num_pages,
         'review_nonce' => wp_create_nonce('review_nonce'),
-        'current_category' => $current_category  // Передаем текущую категорию
+        'current_category' => $current_category,  // Передаем текущую категорию
+        'current_orderby' => isset($_GET['orderby']) ? sanitize_text_field($_GET['orderby']) : 'default'  // Реальная сортировка страницы 1
     ));
 
 
@@ -834,6 +835,7 @@ function load_more_products() {
     $orderby = isset($_POST['orderby']) ? sanitize_text_field($_POST['orderby']) : 'popularity';
     $category = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : '';
 
+
     $base_meta_query = array(
         'stock_clause' => array(
             'key'     => '_stock_status',
@@ -915,7 +917,6 @@ function load_more_products() {
             break;
 
         case 'date':
-        default:
             $orderby_query = array(
                 'meta_query' => $base_meta_query,
                 'orderby' => array(
@@ -925,6 +926,17 @@ function load_more_products() {
                     'ID' => 'DESC'
                 )
             );
+            break;
+
+        case 'default':
+        default:
+            // Дефолтная сортировка страницы 1 задаётся через posts_orderby фильтр:
+            // _stock_status ASC, _price+0 ASC, ID DESC
+            // Применяем тот же SQL через временный фильтр
+            $orderby_query = array(
+                'meta_query' => $base_meta_query,
+            );
+            add_filter('posts_orderby', 'crabs_load_more_default_orderby', 10, 2);
             break;
     }
 
@@ -1054,6 +1066,16 @@ function load_more_products() {
     endif;
     wp_die();
 }
+function crabs_load_more_default_orderby($orderby, $query) {
+    global $wpdb;
+    remove_filter('posts_orderby', 'crabs_load_more_default_orderby', 10);
+    return "
+        (SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = {$wpdb->posts}.ID AND meta_key = '_stock_status') ASC,
+        (SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = {$wpdb->posts}.ID AND meta_key = '_price')+0 ASC,
+        {$wpdb->posts}.ID DESC
+    ";
+}
+
 add_filter('posts_orderby', 'custom_orderby_stock_status', 10, 2);
 function custom_orderby_stock_status($orderby, $query) {
     if (!is_admin() && $query->is_main_query() && (is_shop() || is_product_category() || is_product_tag())) {
@@ -3129,13 +3151,15 @@ function crabs_catalog_credit_badges( $inline = false ) {
 	}
 	?>
 	<div class="<?php echo esc_attr( $wrapper_class ); ?>" aria-hidden="true">
-		<img class="catalog-card__credit-badge catalog-card__credit-badge--ds3" src="<?php echo esc_url( $base . 'ds3_result.webp' ); ?>" alt="" width="42" height="37" loading="lazy" decoding="async">
-		<img class="catalog-card__credit-badge catalog-card__credit-badge--ds2" src="<?php echo esc_url( $base . 'ds2_result.webp' ); ?>" alt="" width="35" height="37" loading="lazy" decoding="async">
-		<img class="catalog-card__credit-badge catalog-card__credit-badge--ds1" src="<?php echo esc_url( $base . 'ds1_result.webp' ); ?>" alt="" width="35" height="35" loading="lazy" decoding="async">
+        <img src="https://crabs.ua/wp-content/themes/carbs-theme/img/paw.png" alt="paw" loading="lazy">
+		<img src="https://crabs.ua/wp-content/themes/carbs-theme/img/percentage.png" alt="percentage" loading="lazy">
 	</div>
 	<?php
+    
 }
-
+// <img class="catalog-card__credit-badge catalog-card__credit-badge--ds3" src="<?php echo esc_url( $base . 'ds3_result.webp' ); ?/>" alt="" width="42" height="37" loading="lazy" decoding="async">
+// <img class="catalog-card__credit-badge catalog-card__credit-badge--ds2" src="<?php echo esc_url( $base . 'ds2_result.webp' ); ?/>" alt="" width="35" height="37" loading="lazy" decoding="async">
+// <img class="catalog-card__credit-badge catalog-card__credit-badge--ds1" src="<?php echo esc_url( $base . 'ds1_result.webp' ); ?/>" alt="" width="35" height="35" loading="lazy" decoding="async">
 function crabs_render_stock_badge( $product = null ) {
     if ( ! $product ) $product = wc_get_product( get_the_ID() );
     if ( ! $product ) return;
@@ -3188,12 +3212,30 @@ function crabs_render_stock_badge( $product = null ) {
         }
     }
 
+    // Якщо WooCommerce вважає "В наявності" — перевіряємо кількість з XML-кешу (як на сторінці товару: qty <= 1 → Закінчується)
+    if ( $status_class === 'tag-available' ) {
+        $sku = $product->get_sku();
+        if ( $sku ) {
+            $xml_data = get_transient( 'xml_priceprom_cache' );
+            if ( $xml_data ) {
+                $xml    = json_decode( $xml_data );
+                $offers = isset( $xml->shop->offers->offer ) ? $xml->shop->offers->offer
+                        : ( isset( $xml->offer ) ? $xml->offer : [] );
+                foreach ( $offers as $offer ) {
+                    if ( (string) $offer->vendorCode === $sku ) {
+                        if ( (int) $offer->quantity_in_stock <= 1 ) {
+                            $status_class = 'tag-lowstock';
+                            $status_text  = 'Закінчується';
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     echo '<div class="catalog-card__tag tag-order ' . esc_attr($status_class) . '">'
         . esc_html($status_text)
-        . ( $status_class === 'tag-lowstock'
-            ? ' <button type="button" class="stock-info-btn" aria-label="Що означає статус">i</button>'
-              . '<div class="stock-tooltip" role="tooltip">' . esc_html($tooltip_text) . '</div>'
-            : '' )
         . '</div>';
 }
 
@@ -3435,7 +3477,7 @@ add_filter('woocommerce_gateway_title', function($title, $gateway_id){
     }
 
     if ($plain_title === 'Оплата карткою, Apple Pay, Google Pay') {
-        return 'Оплата карткою, Apple Pay, державні виплати (7000 грн, 50000 грн)';
+        return 'Оплата карткою, Apple Pay, державні виплати (7000 грн, 50000 грн), пакунок малюка';
     }
 
     return $title;

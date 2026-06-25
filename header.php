@@ -90,8 +90,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			</div>
 			<div class="header__column">
 
-        <a href="/konstruktor/model-cybex-priam" class="header__constructor"><?php _e('Збери свій Cybex', 'crabs_project'); ?></a>
-
         <div class="search-form">
           <a href="##" class="header__search">
             <svg

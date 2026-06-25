@@ -26,14 +26,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if ($form_type === 'one_click') {
 
 		$product_id   = sanitize_text_field($_POST['product_id'] ?? '');
-		$product_name = sanitize_text_field($_POST['product_name'] ?? '');
+		$product_name = sanitize_text_field($_POST['product_title'] ?? '');
 		$product_sku  = sanitize_text_field($_POST['product_sku'] ?? '');
 		$product_url  = esc_url_raw($_POST['product_url'] ?? '');
 		$product_price = sanitize_text_field($_POST['product_price'] ?? '');
+		$surname      = sanitize_text_field($_POST['surname'] ?? '');
+		$full_name    = trim("$name $surname");
 
 		$message  = "Заявка на покупку в один клік:\n\n";
 		$message .= "Сайт: " . $_SERVER['HTTP_HOST'] . "\n";
 		$message .= "Ім'я: $name\n";
+		$message .= "Прізвище: $surname\n";
 		$message .= "Телефон: $phone\n";
 		$message .= "ID товару: $product_id\n";
 		$message .= "Назва товару: $product_name\n";
@@ -48,14 +51,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             "manager_id" => 3,
             "buyer_comment" => "Замовлення в один клік.\nТовар: $product_name\nSKU: $product_sku\nURL: $product_url",
             "buyer" => [
-                "full_name" => $name,
+                "full_name" => $full_name,
                 "phone"     => $phone
             ],
             "products" => [
                 [
-                    "sku" => $product_sku,
+                    "sku"      => $product_sku,
+                    "name"     => $product_name,
                     "quantity" => 1,
-                    "price" => (float)$product_price
+                    "price"    => (float)$product_price
                 ]
             ]
         ];

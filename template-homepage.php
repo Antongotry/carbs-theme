@@ -533,25 +533,25 @@ function render_product_slider($category_slug, $tab_id, $gallery_class, $prev_bt
 <!-- New -->
 
 <!-- container -->
-<div class="container">
-	<div class="set">
-		<div class="set__column">
-			<h2 class="set__title"><?php the_field('title_section6') ?></h2>
-			<p class="set__subtitle"><?php the_field('subtitle_section6') ?></p>
-			<a href="/konstruktor/"><?php _e('Зібрати комплект', 'crubs_project') ?></a>
-		</div>
-		<div class="set__image">
-			<picture>
-				<source
-						srcset="<?php echo esc_url(get_field('image_phone_section6')); ?>"
-						media="(max-width: 1023.98px)"
-						/>
-				<img src="<?php echo esc_url(get_field('image_desk_section6')); ?>" alt="main-picture" loading="lazy"/>
-			</picture>
-		</div>
+<!--<div class="container">-->
+<!--	<div class="set">-->
+<!--		<div class="set__column">-->
+<!--			<h2 class="set__title"><?php the_field('title_section6') ?></h2>-->
+<!--			<p class="set__subtitle"><?php the_field('subtitle_section6') ?></p>-->
+<!--			<a href="/konstruktor/"><?php _e('Зібрати комплект', 'crubs_project') ?></a>-->
+<!--		</div>-->
+<!--		<div class="set__image">-->
+<!--			<picture>-->
+<!--				<source-->
+<!--						srcset="<?php echo esc_url(get_field('image_phone_section6')); ?>"-->
+<!--						media="(max-width: 1023.98px)"-->
+<!--						/>-->
+<!--				<img src="<?php echo esc_url(get_field('image_desk_section6')); ?>" alt="main-picture" loading="lazy"/>-->
+<!--			</picture>-->
+<!--		</div>-->
 
-	</div>
-</div>
+<!--	</div>-->
+<!--</div>-->
 <!-- container -->
 
 <!-- reservation -->

@@ -104,7 +104,9 @@ jQuery(document).ready(function($) {
 	$('#load-more').on('click', function(e) {
 		e.preventDefault();
 		var button = $(this);
-		var orderby = $('select[name="orderby"]').val();  // Получаем выбранный параметр сортировки
+		// Используем сортировку страницы 1, переданную с сервера.
+		// При смене сортировки страница перезагружается, current_orderby обновляется автоматически.
+		var orderby = load_more_params.current_orderby || 'default';
 		button.addClass('loading');
 
 		var filterParams = window.location.search.substring(1);
@@ -115,7 +117,6 @@ jQuery(document).ready(function($) {
 			orderby: orderby,
 			filters: filterParams,
 		};
-
 		if (currentCategory) {
 			data.category = currentCategory;  // Передаем категорию в запрос, если она есть
 		}

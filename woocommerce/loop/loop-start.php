@@ -23,4 +23,4 @@ if ( ! defined( 'ABSPATH' ) ) {
           
 	<div class="catalog-main__body">
 		<article id="catalog-body" class="catalog-body">
-		<?php crabs_catalog_installment_banner(); ?>
+		<?php // crabs_catalog_installment_banner(); ?>

@@ -79,7 +79,8 @@ if ( function_exists( 'is_product' ) && is_product() ) {
 
           <input class="form-input" type="text" name="name"
                  placeholder="Ім’я*" required>
-
+          <input class="form-input" type="text" name="surname"
+                 placeholder="Прізвище">
           <input class="form-input" type="tel" name="phone"
                  placeholder="+38(0__)___-__-__" required>
         </div>

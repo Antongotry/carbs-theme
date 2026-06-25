@@ -200,7 +200,7 @@
 			</a>
 			<?php endif; ?>
 			
-				<a class="btn btn-gray mob" href="/konstruktor/model-cybex-priam"><span>Збери свій Cybex</span></a>
+				<!--<a class="btn btn-gray mob" href="/konstruktor/model-cybex-priam"><span>Збери свій Cybex</span></a>-->
 			
 			<div class="side-menu category-list">
 				<div class="h3">Категорії</div>
