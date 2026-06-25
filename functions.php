@@ -3151,8 +3151,8 @@ function crabs_catalog_credit_badges( $inline = false ) {
 	}
 	?>
 	<div class="<?php echo esc_attr( $wrapper_class ); ?>" aria-hidden="true">
-        <img src="https://crabs.ua/wp-content/themes/carbs-theme/img/paw.png" alt="paw" loading="lazy">
-		<img src="https://crabs.ua/wp-content/themes/carbs-theme/img/percentage.png" alt="percentage" loading="lazy">
+        <img src="<?php echo crabs_credit_badge_src( 'paw.png' ); ?>" alt="paw">
+		<img src="<?php echo crabs_credit_badge_src( 'percentage.png' ); ?>" alt="percentage">
 	</div>
 	<?php
     
@@ -3160,6 +3160,30 @@ function crabs_catalog_credit_badges( $inline = false ) {
 // <img class="catalog-card__credit-badge catalog-card__credit-badge--ds3" src="<?php echo esc_url( $base . 'ds3_result.webp' ); ?/>" alt="" width="42" height="37" loading="lazy" decoding="async">
 // <img class="catalog-card__credit-badge catalog-card__credit-badge--ds2" src="<?php echo esc_url( $base . 'ds2_result.webp' ); ?/>" alt="" width="35" height="37" loading="lazy" decoding="async">
 // <img class="catalog-card__credit-badge catalog-card__credit-badge--ds1" src="<?php echo esc_url( $base . 'ds1_result.webp' ); ?/>" alt="" width="35" height="35" loading="lazy" decoding="async">
+/**
+ * Inline a small theme icon (img/*) as a base64 data-URI so the browser never
+ * fetches it over the network. The decorative credit badges were lazy <img> tags
+ * pointing at img/paw.png + img/percentage.png; transient CDN/network drops made
+ * them render as broken-image squares on the catalog (Юля, 24.06). A data-URI
+ * can't fail to load. Cached per request; falls back to the normal URL if the
+ * file is unreadable on disk.
+ */
+function crabs_credit_badge_src( $file ) {
+	static $cache = array();
+	if ( ! isset( $cache[ $file ] ) ) {
+		$path = get_stylesheet_directory() . '/img/' . $file;
+		$data = @file_get_contents( $path );
+		if ( false === $data ) {
+			$cache[ $file ] = trailingslashit( get_stylesheet_directory_uri() ) . 'img/' . $file;
+		} else {
+			$ext  = strtolower( pathinfo( $file, PATHINFO_EXTENSION ) );
+			$mime = 'svg' === $ext ? 'image/svg+xml' : ( 'webp' === $ext ? 'image/webp' : 'image/' . $ext );
+			$cache[ $file ] = 'data:' . $mime . ';base64,' . base64_encode( $data );
+		}
+	}
+	return $cache[ $file ];
+}
+
 function crabs_render_stock_badge( $product = null ) {
     if ( ! $product ) $product = wc_get_product( get_the_ID() );
     if ( ! $product ) return;

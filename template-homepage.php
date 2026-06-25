@@ -35,6 +35,14 @@ function render_product_slider($category_slug, $tab_id, $gallery_class, $prev_bt
                 'operator' => 'NOT IN',
             ),
         ),
+        // Exclude products without a featured image so the slider never outputs an empty <img src="">
+        'meta_query' => array(
+            array(
+                'key'     => '_thumbnail_id',
+                'value'   => '',
+                'compare' => '!=',
+            ),
+        ),
     );
 
     // WP Query
@@ -67,9 +75,9 @@ function render_product_slider($category_slug, $tab_id, $gallery_class, $prev_bt
 					<div class="new-slider__icons">
 						<div class="new-slider__icon-right">
 							<?php if ($product->is_on_sale()) : ?>
-							<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/percentage.png" alt="percentage" loading="lazy" />
+							<img src="<?php echo crabs_credit_badge_src( 'percentage.png' ); ?>" alt="percentage" />
 							<?php endif; ?>
-							<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/paw.png" alt="paw" loading="lazy" />
+							<img src="<?php echo crabs_credit_badge_src( 'paw.png' ); ?>" alt="paw" />
 						</div>
 					</div>
 				</a>
@@ -623,10 +631,10 @@ function render_product_slider($category_slug, $tab_id, $gallery_class, $prev_bt
 						<div class="new-slider__icons">
 							<div class="new-slider__icon-right">
 								<?php if ($product->is_on_sale()) : ?>
-								<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/percentage.png" alt="percentage" loading="lazy" />
+								<img src="<?php echo crabs_credit_badge_src( 'percentage.png' ); ?>" alt="percentage" />
 								<?php endif; ?>
-									<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/percentage.png" alt="percentage" loading="lazy"/>
-									<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/paw.png" alt="paw" loading="lazy"/>
+									<img src="<?php echo crabs_credit_badge_src( 'percentage.png' ); ?>" alt="percentage"/>
+									<img src="<?php echo crabs_credit_badge_src( 'paw.png' ); ?>" alt="paw"/>
 							</div>
 						</div>
 					</a>
