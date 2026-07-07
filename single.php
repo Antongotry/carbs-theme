@@ -85,7 +85,7 @@ while ( have_posts() ) :
                                     <a href="<?php the_permalink(); ?>" class="blog-card__image">
                                         <picture>
                                             <source media="(min-width: 1024px)" srcset="<?php the_post_thumbnail_url('large'); ?>" />
-                                            <img src="<?php the_post_thumbnail_url('medium'); ?>" alt="<?php the_title_attribute(); ?>" width="355" height="355" />
+                                            <img loading="lazy" src="<?php the_post_thumbnail_url('medium'); ?>" alt="<?php the_title_attribute(); ?>" width="355" height="355" />
                                         </picture>
                                     </a>
                                     <div class="clause-card__text">

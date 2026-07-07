@@ -12,7 +12,7 @@ get_header(); ?>
 
 <section class="outcome outcome--success">
     <div class="container">
-        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/icons/success.svg" alt="success" class="outcome__img"/>
+        <img loading="lazy" src="<?php echo get_stylesheet_directory_uri(); ?>/img/icons/success.svg" alt="success" class="outcome__img"/>
         <h2 class="title outcome__title">
             Ваше замовлення успішно сформоване та очікує підтвердження
         </h2>
@@ -97,7 +97,7 @@ jQuery(document).ready(function($) {
             $('#product-list').append(
                 '<div class="product__item">' +
                     '<div class="product__image">' +
-                        '<img src="' + product.image + '" alt="' + product.name + '">' + // Используем URL изображения из cookies
+                        '<img loading="lazy" src="' + product.image + '" alt="' + product.name + '">' + // Используем URL изображения из cookies
                     '</div>' +
                     '<div class="product__info">' +
                         '<div class="product__details">' +

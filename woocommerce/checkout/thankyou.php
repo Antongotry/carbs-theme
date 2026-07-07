@@ -116,7 +116,7 @@ defined( 'ABSPATH' ) || exit;
 				?>
 				<div class="product__item">
 					<div class="product__image">
-						<img src="<?php echo esc_url($product_image[0]); ?>" alt="<?php echo esc_attr($product_name); ?>" />
+						<img loading="lazy" src="<?php echo esc_url($product_image[0]); ?>" alt="<?php echo esc_attr($product_name); ?>" />
 					</div>
 					<div class="product__info">
 						<div class="product__details">

@@ -49,7 +49,7 @@ if ( function_exists( 'is_product' ) && is_product() ) {
     <!-- Відображення товару в «шапці» модалки -->
     <?php if ( $product_id ) : ?>
       <div class="quick-order-product">
-        <img class="quick-order-product__img"
+        <img loading="lazy" class="quick-order-product__img"
              src="<?php echo esc_url( $product_img ); ?>"
              alt="<?php echo esc_attr( $product_title ); ?>">
         <div class="quick-order-product__title">
@@ -132,7 +132,7 @@ if ( function_exists( 'is_product' ) && is_product() ) {
     <!-- Відображення товару в «шапці» модалки -->
     <?php if ( $product_id ) : ?>
       <div class="quick-order-product">
-        <img class="quick-order-product__img"
+        <img loading="lazy" class="quick-order-product__img"
              src="<?php echo esc_url( $product_img ); ?>"
              alt="<?php echo esc_attr( $product_title ); ?>">
         <div class="quick-order-product__title">

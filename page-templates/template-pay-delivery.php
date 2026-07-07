@@ -69,7 +69,7 @@ get_header();
           <!-- Лого/іконка (за бажанням) -->
           <div class="crabs-card__logos">
             <!-- Постав своє SVG/PNG -->
-            <img src="/wp-content/uploads/2025/12/nova-poshta.webp" alt="Нова Пошта"> 
+            <img loading="lazy" src="/wp-content/uploads/2025/12/nova-poshta.webp" alt="Нова Пошта"> 
           </div>
         </article>
 
@@ -117,10 +117,10 @@ get_header();
 
           <div class="crabs-card__paylogos">
             <!-- Підстав свої SVG/PNG -->
-            <img src="/wp-content/uploads/2025/12/image-11.webp" alt="MonoPay"> 
-            <img src="/wp-content/uploads/2025/12/image-16.webp" alt="Apple Pay"> 
-            <img src="/wp-content/uploads/2025/12/image-13.webp" alt="WayForPay"> 
-            <img src="/wp-content/uploads/2025/12/image-15.webp" alt="Google Pay"> 
+            <img loading="lazy" src="/wp-content/uploads/2025/12/image-11.webp" alt="MonoPay"> 
+            <img loading="lazy" src="/wp-content/uploads/2025/12/image-16.webp" alt="Apple Pay"> 
+            <img loading="lazy" src="/wp-content/uploads/2025/12/image-13.webp" alt="WayForPay"> 
+            <img loading="lazy" src="/wp-content/uploads/2025/12/image-15.webp" alt="Google Pay"> 
           </div>
         </article>
 

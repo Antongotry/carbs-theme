@@ -1312,7 +1312,7 @@ function display_photos_meta_box($post) {
     if (!empty($photo_urls)) {
         foreach ($photo_urls as $index => $photo_url) {
             echo '<div class="photo-item">';
-            echo '<img src="' . $photo_url . '" alt="Фото отзыва" style="max-width:100%; height:auto;"><br>';
+            echo '<img loading="lazy" src="' . $photo_url . '" alt="Фото отзыва" style="max-width:100%; height:auto;"><br>';
             echo '<button class="button delete-photo" data-photo-index="' . $index . '">Удалить</button>';
             echo '</div>';
         }
@@ -1494,7 +1494,7 @@ function display_product_reviews($atts) {
             <div class="reviews-slider__top">
                 <div class="reviews-slider__autor">
                     <div class="reviews-slider__avatar">
-                        <img src="<?php echo esc_url($avatar_url ? $avatar_url : get_stylesheet_directory_uri() . '/img/Лого-4.png'); ?>" alt="avatar" />
+                        <img loading="lazy" src="<?php echo esc_url($avatar_url ? $avatar_url : get_stylesheet_directory_uri() . '/img/Лого-4.png'); ?>" alt="avatar" />
                     </div>
                     <h3><?php echo $first_name; ?></h3>
                 </div>
@@ -1514,7 +1514,7 @@ function display_product_reviews($atts) {
                     <?php foreach ($photo_urls as $photo_url) : ?>
                         <div class="reviews-slider__image">
                         <a href="<?php echo $photo_url; ?>">
-                            <img src="<?php echo $photo_url; ?>" alt="product" />
+                            <img loading="lazy" src="<?php echo $photo_url; ?>" alt="product" />
                         </a>
                         </div>
                     <?php endforeach; ?>
@@ -1574,7 +1574,7 @@ function load_more_reviews() {
                     <div class="feedback-card__left">
                         <div class="feedback-card__autor">
                             <div class="feedback-card__avatar">
-                                <img src="<?php echo !empty($photo_urls) ? $photo_urls[0] : get_stylesheet_directory_uri() . '/img/photo.png'; ?>" alt="avatar" />
+                                <img loading="lazy" src="<?php echo !empty($photo_urls) ? $photo_urls[0] : get_stylesheet_directory_uri() . '/img/photo.png'; ?>" alt="avatar" />
                             </div>
                             <h3><?php echo $first_name; ?></h3>
                         </div>
@@ -1596,7 +1596,7 @@ function load_more_reviews() {
                     <?php foreach ($photo_urls as $photo_url) : ?>
                         <div class="feedback-card__image">
                             <a href="<?php echo $photo_url; ?>">
-                                <img src="<?php echo $photo_url; ?>" alt="product" />
+                                <img loading="lazy" src="<?php echo $photo_url; ?>" alt="product" />
                             </a>
                         </div>
                     <?php endforeach; ?>
@@ -2111,7 +2111,7 @@ function quick_view_shortcode($atts) {
 
         } else {
 
-            echo '<div class="quick-view__picture"><img src="'. $thumbnail_url.'" alt="" /></div>';
+            echo '<div class="quick-view__picture"><img loading="lazy" src="'. $thumbnail_url.'" alt="" /></div>';
         }
 
 
@@ -2138,7 +2138,7 @@ function quick_view_shortcode($atts) {
                                 if ($thumbnail_id) {
                                     echo wp_get_attachment_image( $thumbnail_id, 'full' );
                                 } else {
-                                    echo '<img src="' . get_stylesheet_directory_uri() . '/img/default-attribute.jpg" alt="default image" />';
+                                    echo '<img loading="lazy" src="' . get_stylesheet_directory_uri() . '/img/default-attribute.jpg" alt="default image" />';
                                 }
                                 ?>
                                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2352,7 +2352,7 @@ function load_wishlist_products_cb() {
                     <?php if ( has_post_thumbnail() ) : ?>
                         <?php the_post_thumbnail(); ?>
                     <?php else : ?>
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/catalog-card.png" alt="<?php the_title(); ?>" />
+                        <img loading="lazy" src="<?php echo get_stylesheet_directory_uri(); ?>/img/catalog-card.png" alt="<?php the_title(); ?>" />
                     <?php endif; ?>
                 </a>
                 <div class="catalog-card__tag tag-order <?php echo esc_attr($classAv); ?>">
@@ -2366,7 +2366,7 @@ function load_wishlist_products_cb() {
                         <?php if ( has_term( 'Забронювати до пологів', 'product_tag', $product_id ) ) : ?>
                         <div class="catalog-card__icon-right">
                                 <div class="catalog-card__icon-single">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/pregnant-woman.png" alt="reserve before childbirth">
+                                    <img loading="lazy" src="<?php echo get_stylesheet_directory_uri(); ?>/img/pregnant-woman.png" alt="reserve before childbirth">
                                 </div>
                         </div>
                         <?php endif; ?>
@@ -2612,7 +2612,7 @@ function display_user_bookings() {
                                 ?>
                                 <div class="product__item">
                                     <div class="product__image">
-                                        <img src="<?php echo esc_url($booking->image_url); ?>" alt="<?php echo esc_attr($booking->product_name); ?>">
+                                        <img loading="lazy" src="<?php echo esc_url($booking->image_url); ?>" alt="<?php echo esc_attr($booking->product_name); ?>">
                                     </div>
                                     <div class="product__info">
                                         <div class="product__details">
@@ -2854,9 +2854,9 @@ if (!function_exists('my_theme_render_categories')) {
                     <a href="<?php echo esc_url(get_term_link($cat->slug, 'product_cat')); ?>" class="category-item__link-main">
                         <div class="photo-item">
                             <?php if ($image_data): ?>
-                                <img src="<?php echo esc_url($image_data[0]); ?>" alt="<?php echo esc_attr($cat->name); ?>" class="category-item__icon">
+                                <img loading="lazy" src="<?php echo esc_url($image_data[0]); ?>" alt="<?php echo esc_attr($cat->name); ?>" class="category-item__icon">
                             <?php else: ?>
-                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/default-category-photo.svg');?>" alt="<?php echo esc_attr($cat->name); ?>" class="category-item__icon category-item__icon--default">
+                                <img loading="lazy" src="<?php echo esc_url(get_template_directory_uri() . '/assets/default-category-photo.svg');?>" alt="<?php echo esc_attr($cat->name); ?>" class="category-item__icon category-item__icon--default">
                             <?php endif; ?>
                         </div>
                         <span class="category-item__name"><?php echo esc_html($cat->name); ?></span>
@@ -2937,7 +2937,7 @@ function get_cart_upsells_ajax_handler() {
                                 </a>
                             <?php else : ?>
                                 <a class="card-swiper-slider__image" href="<?php the_permalink(); ?>">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/card.jpg" alt="slide-photo" />
+                                    <img loading="lazy" src="<?php echo get_stylesheet_directory_uri(); ?>/img/card.jpg" alt="slide-photo" />
                                 </a>
                             <?php endif; ?>
 
@@ -3155,8 +3155,8 @@ function crabs_catalog_credit_badges( $inline = false ) {
 	}
 	?>
 	<div class="<?php echo esc_attr( $wrapper_class ); ?>" aria-hidden="true">
-        <img src="<?php echo crabs_credit_badge_src( 'paw.png' ); ?>" alt="paw">
-		<img src="<?php echo crabs_credit_badge_src( 'percentage.png' ); ?>" alt="percentage">
+        <img loading="lazy" src="<?php echo crabs_credit_badge_src( 'paw.png' ); ?>" alt="paw">
+		<img loading="lazy" src="<?php echo crabs_credit_badge_src( 'percentage.png' ); ?>" alt="percentage">
 	</div>
 	<?php
     
@@ -3166,7 +3166,7 @@ function crabs_catalog_credit_badges( $inline = false ) {
 // <img class="catalog-card__credit-badge catalog-card__credit-badge--ds1" src="<?php echo esc_url( $base . 'ds1_result.webp' ); ?/>" alt="" width="35" height="35" loading="lazy" decoding="async">
 /**
  * Inline a small theme icon (img/*) as a base64 data-URI so the browser never
- * fetches it over the network. The decorative credit badges were lazy <img> tags
+ * fetches it over the network. The decorative credit badges were lazy <img loading="lazy"> tags
  * pointing at img/paw.png + img/percentage.png; transient CDN/network drops made
  * them render as broken-image squares on the catalog (Юля, 24.06). A data-URI
  * can't fail to load. Cached per request; falls back to the normal URL if the

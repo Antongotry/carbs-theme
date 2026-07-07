@@ -101,7 +101,7 @@ $is_constructor_page = true;
                                                         if ($thumbnail_id) {
                                                             echo wp_get_attachment_image( $thumbnail_id, 'full' );
                                                         // } else {
-                                                        //     echo '<img src="' . get_stylesheet_directory_uri() . '/img/default-attribute.jpg" alt="default image" />';
+                                                        //     echo '<img loading="lazy" src="' . get_stylesheet_directory_uri() . '/img/default-attribute.jpg" alt="default image" />';
                                                          }
                                                         ?>
                                                         

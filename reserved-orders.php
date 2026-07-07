@@ -104,7 +104,7 @@ $last_booking_expiration_date = !empty($bookings) ? $bookings[0]->expiration_dat
                                     <span class="reserved-orders__label">Назва</span>
                                     <div class="reserved-orders__details">
                                         <div class="reserved-orders__image">
-                                            <img src="<?php echo esc_url($booking->image_url); ?>" alt="<?php echo esc_attr($booking->product_name); ?>" />
+                                            <img loading="lazy" src="<?php echo esc_url($booking->image_url); ?>" alt="<?php echo esc_attr($booking->product_name); ?>" />
                                         </div>
                                         <div class="reserved-orders__info">
                                             <p class="reserved-orders__name">

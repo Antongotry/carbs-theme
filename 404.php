@@ -9,7 +9,7 @@ get_header(); ?>
 
 <section class="outcome outcome--error">
                     <div class="container">
-                        <img
+                        <img loading="lazy"
                             src="<?php echo get_stylesheet_directory_uri(); ?>/img/icons/error.svg"
                             alt="error"
                             class="outcome__img"

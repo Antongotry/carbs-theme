@@ -15,7 +15,7 @@
 		<div class="footer__top">
 			<div class="footer__left">
 				<a href="/" class="footer__logo">
-					<img src="/wp-content/uploads/2024/06/logo_footer.png" alt="logo" />
+					<img loading="lazy" src="/wp-content/uploads/2024/06/logo_footer.png" alt="logo" />
 				</a>
 				<div class="footer__text">
 					<?php echo nl2br(esc_html(get_theme_mod('footer_text_under_logo'))); ?>
@@ -160,17 +160,17 @@
 			</div>
 			<div class="footer__credits">
 				<div class="footer__credit">
-					<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/privat.svg" alt="privar" />
+					<img loading="lazy" src="<?php echo get_stylesheet_directory_uri(); ?>/img/privat.svg" alt="privar" />
 				</div>
 				<div class="footer__credit">
-					<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/visa.svg" alt="privar" />
+					<img loading="lazy" src="<?php echo get_stylesheet_directory_uri(); ?>/img/visa.svg" alt="privar" />
 				</div>
 				<div class="footer__credit">
-					<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/mastercard.svg" alt="privar" />
+					<img loading="lazy" src="<?php echo get_stylesheet_directory_uri(); ?>/img/mastercard.svg" alt="privar" />
 				</div>
 			</div>
 			<div class="footer__studio">
-				<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/prime.png" alt="prime" />
+				<img loading="lazy" src="<?php echo get_stylesheet_directory_uri(); ?>/img/prime.png" alt="prime" />
 				<span> <?php _e('Розробка Prime Studio', 'crabs_project') ?> </span>
 			</div>
 		</div>
@@ -263,7 +263,7 @@
 				<div class="category-item level-<?php echo $level; ?> products-count-<?php echo $product_count; ?>">
 					<div class="category-header">
 						<?php if ($image): ?>
-						<img src="<?php echo esc_url($image[0]); ?>" alt="<?php echo esc_attr($cat->name); ?>" class="category-icon">
+						<img loading="lazy" src="<?php echo esc_url($image[0]); ?>" alt="<?php echo esc_attr($cat->name); ?>" class="category-icon">
 						<?php endif; ?>
 						<span class="category-name"><?php echo $cat->name; ?></span>
 						<?php 
@@ -274,7 +274,7 @@
 							));
 							if (!empty($child_categories)): 
 						?>
-						<img src="/wp-content/uploads/2024/10/cr-arrow-right.svg" alt="Open" class="category-arrow">
+						<img loading="lazy" src="/wp-content/uploads/2024/10/cr-arrow-right.svg" alt="Open" class="category-arrow">
 						<?php endif; ?>
 					</div>
 					<?php if (!empty($child_categories)): ?>
@@ -419,7 +419,7 @@
 
 
         </div>
-		<div id="mini-cart-spinner" style="display:none;"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/spinner_def.gif" /></div>
+		<div id="mini-cart-spinner" style="display:none;"><img loading="lazy" src="<?php echo get_stylesheet_directory_uri(); ?>/img/spinner_def.gif" /></div>
 		<div id="closeCart" class="close-popup" data-close="login">
 			<svg viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M32 1L1 32M1 1L32 32" stroke="#E93A53" stroke-width="2"></path>
@@ -456,7 +456,7 @@
 
 
 	if ( $image ) : ?>
-					<img src="<?php echo esc_url( $image[0] ); ?>" data-id="<?php echo esc_attr( $product_id ); ?>">
+					<img loading="lazy" src="<?php echo esc_url( $image[0] ); ?>" data-id="<?php echo esc_attr( $product_id ); ?>">
 					<?php endif; ?>
 				</a>
 				<a href="##" class="showroom__subtitle"
@@ -559,7 +559,7 @@
     			</div>
     		</a>
     		<a href="https://www.instagram.com/crabs.ua/" target="_blank" rel="nofollow">
-    			<div class="floating-contact-icon contact-icon-instagram"><img src="/wp-content/themes/carbs-theme/img/icons/instagram-white.svg" alt="Instagram" width="32" height="32"></div>
+    			<div class="floating-contact-icon contact-icon-instagram"><img loading="lazy" src="/wp-content/themes/carbs-theme/img/icons/instagram-white.svg" alt="Instagram" width="32" height="32"></div>
     		</a>
     		<a href="viber://chat?number=380990084117" data-social="viber" rel="nofollow" target="_blank">
                 <div class="floating-contact-icon contact-icon-viber"><img src="/wp-content/themes/carbs-theme/img/icons/viber-white.svg" width="32" height="32" loading="lazy" alt="Viber icon"></div>

@@ -18,7 +18,7 @@ $product_id = $product->get_id();
         <?php if ( has_post_thumbnail() ) : ?>
             <?php the_post_thumbnail(); ?>
         <?php else : ?>
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/catalog-card.png" alt="<?php the_title(); ?>" />
+            <img loading="lazy" src="<?php echo get_stylesheet_directory_uri(); ?>/img/catalog-card.png" alt="<?php the_title(); ?>" />
         <?php endif; ?>
     </a>
     <div class="catalog-card__content">
@@ -28,7 +28,7 @@ $product_id = $product->get_id();
             <?php if ( has_term( 'Забронювати до пологів', 'product_tag', $product->get_id() ) ) : ?>
             <div class="catalog-card__icon-right">
                     <div class="catalog-card__icon-single">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/pregnant-woman.png" alt="reserve before childbirth">
+                        <img loading="lazy" src="<?php echo get_stylesheet_directory_uri(); ?>/img/pregnant-woman.png" alt="reserve before childbirth">
                     </div>
             </div>
             <?php endif; ?>

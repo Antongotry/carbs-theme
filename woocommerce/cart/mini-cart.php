@@ -254,7 +254,7 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
                     class="mono-checkout"
                     aria-label="Оформити через mono checkout">
                     <span class="mono-checkout__text">Оформити через</span>
-                    <img src="https://www.crabs.ua/wp-content/uploads/2025/09/image-17.webp" alt="logo" />
+                    <img loading="lazy" src="https://www.crabs.ua/wp-content/uploads/2025/09/image-17.webp" alt="logo" />
                     
              </a> -->
                 <!--<a href="#"-->
@@ -262,7 +262,7 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
                 <!--     data-mono-action="buy_cart"-->
                 <!--     aria-label="Оформити через mono checkout">-->
                 <!--      Оформити через -->
-                <!--      <img src="https://www.crabs.ua/wp-content/uploads/2025/09/monocheck2.webp"-->
+                <!--      <img loading="lazy" src="https://www.crabs.ua/wp-content/uploads/2025/09/monocheck2.webp"-->
                 <!--        alt="mono checkout" class="btn-mono-custom__logo">-->
                 <!--</a>-->
             
@@ -284,7 +284,7 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
 
 	<div class="empty-cart-content">
 	<div class="middle-cart-box">
-		<img src="/wp-content/themes/carbs-theme/img/empty-cart.svg" alt="Empty Cart">
+		<img loading="lazy" src="/wp-content/themes/carbs-theme/img/empty-cart.svg" alt="Empty Cart">
 		<p>Ваш кошик пустий, будь ласка додайте товари</p>
 	</div>
 	<div class="bottom-cart-box">

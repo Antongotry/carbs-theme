@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
 
 <section class="outcome outcome--success">
 	<div class="container">
-		<img
+		<img loading="lazy"
 			src="<?php echo get_stylesheet_directory_uri(); ?>/img/icons/success.svg"
 			alt="success"
 			class="outcome__img"

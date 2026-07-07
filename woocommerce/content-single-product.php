@@ -182,7 +182,7 @@ foreach ($attributes as $attribute) {
         </svg>
         </button>
         <div class="modal__icon" aria-hidden="true">
-        <img src="/wp-content/uploads/2025/10/Vector-291_red-1.svg" alt="icon" width="100" height="100">
+        <img loading="lazy" src="/wp-content/uploads/2025/10/Vector-291_red-1.svg" alt="icon" width="100" height="100">
         </div>
         <h2 class="modal__title" id="lowstock-title">Товар закінчується на складі</h2>
         <span class="modal__text">Кількість товару, що залишилась: <?php echo $count; ?>шт</span>
@@ -209,7 +209,7 @@ foreach ($attributes as $attribute) {
 						if (empty($attachment_ids) && empty($variation_images) && !$product->get_image_id()) {
 							// Если нет изображений, выводим заполнитель
 							echo '<div class="swiper-slide">';
-							echo '<img src="' . esc_url($placeholder_image) . '" class="swiper-lazy" alt="Product placeholder">';
+							echo '<img loading="lazy" src="' . esc_url($placeholder_image) . '" class="swiper-lazy" alt="Product placeholder">';
 							echo '</div>';
 						} else {
 							// Добавляем основное изображение товара или заполнитель, если его нет
@@ -217,7 +217,7 @@ foreach ($attributes as $attribute) {
 							if ($product->get_image_id()) {
 								echo wp_get_attachment_image($product->get_image_id(), 'thumbnail', false, array('class' => 'swiper-lazy'));
 							} else {
-								echo '<img src="' . esc_url($placeholder_image) . '" class="swiper-lazy" alt="Product placeholder">';
+								echo '<img loading="lazy" src="' . esc_url($placeholder_image) . '" class="swiper-lazy" alt="Product placeholder">';
 							}
 							echo '</div>';
 
@@ -238,7 +238,7 @@ foreach ($attributes as $attribute) {
 						if (empty($attachment_ids) && empty($variation_images) && !$product->get_image_id()) {
 							// Если нет изображений, выводим заполнитель
 							echo '<div class="swiper-slide">';
-							echo '<img src="' . esc_url($placeholder_image) . '" class="swiper-lazy" alt="Product placeholder">';
+							echo '<img loading="lazy" src="' . esc_url($placeholder_image) . '" class="swiper-lazy" alt="Product placeholder">';
 							echo '</div>';
 						} else {
 							// Добавляем основное изображение товара или заполнитель, если его нет
@@ -246,7 +246,7 @@ foreach ($attributes as $attribute) {
 							if ($product->get_image_id()) {
 								echo wp_get_attachment_image($product->get_image_id(), 'full', false, array('class' => 'swiper-lazy'));
 							} else {
-								echo '<img src="' . esc_url($placeholder_image) . '" class="swiper-lazy" alt="Product placeholder">';
+								echo '<img loading="lazy" src="' . esc_url($placeholder_image) . '" class="swiper-lazy" alt="Product placeholder">';
 							}
 							echo '</div>';
 
@@ -332,7 +332,7 @@ foreach ($attributes as $attribute) {
 <i class="fa-solid fa-heart"></i>
 </div> -->
                         <div class="ajax-loader">
-                            <!-- <img src="<?php //echo get_stylesheet_directory_uri();
+                            <!-- <img loading="lazy" src="<?php //echo get_stylesheet_directory_uri();
                             ?>/img/ripple.svg" alt=""> -->
                         </div>
 
@@ -677,7 +677,7 @@ foreach ($attributes as $attribute) {
 												if ($thumbnail_id) {
 													echo wp_get_attachment_image($thumbnail_id, 'full');
 												} else {
-													echo '<img src="' . get_stylesheet_directory_uri() . '/img/default-attribute.jpg" alt="default image" />';
+													echo '<img loading="lazy" src="' . get_stylesheet_directory_uri() . '/img/default-attribute.jpg" alt="default image" />';
 												}
 									?>
 									<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -703,7 +703,7 @@ foreach ($attributes as $attribute) {
 													 if ($thumbnail_id) {
 														 echo wp_get_attachment_image($thumbnail_id, 'full');
 													 } else {
-														 echo '<img src="' . get_stylesheet_directory_uri() . '/img/default-attribute.jpg" alt="default image" />';
+														 echo '<img loading="lazy" src="' . get_stylesheet_directory_uri() . '/img/default-attribute.jpg" alt="default image" />';
 													 }
 									?>
 									<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -779,7 +779,7 @@ foreach ($attributes as $attribute) {
                     <div class="crabs-bonus_popup" aria-hidden="true">
                           <div class="crabs-bonus_popup__inner">
                               <div class="crabs-bonus_popup__icon">
-                                  <img src="/wp-content/uploads/2025/10/Krab.webp" alt="Crabs bonus icon">
+                                  <img loading="lazy" src="/wp-content/uploads/2025/10/Krab.webp" alt="Crabs bonus icon">
                             </div>
                             <p>Як ви можете використати бонуси?<br><strong>1 краб = 1 грн</strong></p>
                           </div>
@@ -892,8 +892,8 @@ foreach ($attributes as $attribute) {
 <!--									</div>-->
 <!---->
 <!--									<div class="relate-slider__icon-right">-->
-<!--										<img src="--><?php //echo get_stylesheet_directory_uri(); ?><!--/img/percentage.png" alt="percentage"  width="35" height="35">-->
-<!--										<img src="--><?php //echo get_stylesheet_directory_uri(); ?><!--/img/paw.png" alt="paw"  width="35" height="35">-->
+<!--										<img loading="lazy" src="--><?php //echo get_stylesheet_directory_uri(); ?><!--/img/percentage.png" alt="percentage"  width="35" height="35">-->
+<!--										<img loading="lazy" src="--><?php //echo get_stylesheet_directory_uri(); ?><!--/img/paw.png" alt="paw"  width="35" height="35">-->
 <!--									</div>-->
 <!--									<button href="#" class="relate-slider__icon-heart wishlist-icon --><?php //echo wooeshop_in_wishlist2($product->get_id()) ? 'in-wishlist' : '' ?><!--" data-id="--><?php //echo $product->get_id(); ?><!--">-->
 <!--										<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">-->
@@ -1259,7 +1259,7 @@ foreach ($attributes as $attribute) {
 			<div class="faq-block mob">
 				<div class="item booking-item navigation-scroll-booking" id="booking-mob">
 					<div class="question"><span>Бронювання до пологів</span>
-						<div class="switcher"><img src="/wp-content/themes/carbs-theme/img/icons/arrow-faq.svg" alt="Arrow"></div>
+						<div class="switcher"><img loading="lazy" src="/wp-content/themes/carbs-theme/img/icons/arrow-faq.svg" alt="Arrow"></div>
 					</div>
 					<div class="answer">
 						<div class="answer-content">
@@ -1273,7 +1273,7 @@ foreach ($attributes as $attribute) {
 				
 				<div class="item delivery-item navigation-scroll-delivery" id="delivery-mob">
 					<div class="question"><span>Оплата і доставка</span>
-						<div class="switcher"><img src="/wp-content/themes/carbs-theme/img/icons/arrow-faq.svg" alt="Arrow"></div>
+						<div class="switcher"><img loading="lazy" src="/wp-content/themes/carbs-theme/img/icons/arrow-faq.svg" alt="Arrow"></div>
 					</div>
 					<div class="answer">
 						<div class="answer-content">
@@ -1289,7 +1289,7 @@ foreach ($attributes as $attribute) {
 				</div>
 				<div class="item reviews-item navigation-scroll-reviews" id="reviews-mob">
 					<div class="question"><span>Відгуки</span>
-						<div class="switcher"><img src="/wp-content/themes/carbs-theme/img/icons/arrow-faq.svg" alt="Arrow"></div>
+						<div class="switcher"><img loading="lazy" src="/wp-content/themes/carbs-theme/img/icons/arrow-faq.svg" alt="Arrow"></div>
 					</div>
 					<div class="answer">
 						<div class="answer-content">
@@ -1427,10 +1427,10 @@ foreach ($attributes as $attribute) {
 
 		<div class="cybex-action-nav">
 			<div class="swiper-button-prev-2">
-				<img src="/wp-content/themes/carbs-theme/img/icons/n-arrow-left.svg" alt="Prev">
+				<img loading="lazy" src="/wp-content/themes/carbs-theme/img/icons/n-arrow-left.svg" alt="Prev">
 			</div>
 			<div class="swiper-button-next-2">
-				<img src="/wp-content/themes/carbs-theme/img/icons/n-arrow-right.svg" alt="Next">
+				<img loading="lazy" src="/wp-content/themes/carbs-theme/img/icons/n-arrow-right.svg" alt="Next">
 			</div>
 		</div>
 		<div class="swiper cybex-action-gallery">
@@ -1531,7 +1531,7 @@ foreach ($attributes as $attribute) {
 								</a>
 								<?php else : ?>
 								<a class="card-swiper-slider__image" href="<?php the_permalink(); ?>">
-									<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/card.jpg" alt="slide-photo" />
+									<img loading="lazy" src="<?php echo get_stylesheet_directory_uri(); ?>/img/card.jpg" alt="slide-photo" />
 								</a>
 								<?php endif; ?>
 								<div class="card-swiper-slider__icons">
@@ -1556,7 +1556,7 @@ foreach ($attributes as $attribute) {
 								</div>
 								<div class="card-swiper-slider__footer-card">
 									<div class="card-swiper-slider__tag <?php echo esc_attr($classAv); ?>">
-										<img src="/wp-content/themes/carbs-theme/img/tag-available.svg" alt="percentage"  width="14" height="14">
+										<img loading="lazy" src="/wp-content/themes/carbs-theme/img/tag-available.svg" alt="percentage"  width="14" height="14">
 										<span><?php echo esc_html($textAv); ?></span>
 									</div>
 									<div class="card-swiper-slider__rating">
@@ -1729,7 +1729,7 @@ foreach ($attributes as $attribute) {
 									<?php else : ?>
 									<a class="card-swiper-slider__image" href="<?php the_permalink(); ?>">
 										<?php crabs_catalog_credit_badges(); ?>
-										<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/card.jpg" alt="slide-photo" />
+										<img loading="lazy" src="<?php echo get_stylesheet_directory_uri(); ?>/img/card.jpg" alt="slide-photo" />
 									</a>
 									<?php endif; ?>
 									<div class="card-swiper-slider__icons">
@@ -1741,7 +1741,7 @@ foreach ($attributes as $attribute) {
 										<div class="card-swiper-slider__icons">
                                             <div class="catalog-card__icon-right">
                                                 <div class="catalog-card__icon-single">
-                                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/pregnant-woman.png" alt="reserve before childbirth">
+                                                    <img loading="lazy" src="<?php echo get_stylesheet_directory_uri(); ?>/img/pregnant-woman.png" alt="reserve before childbirth">
                                                 </div>
                                             </div>
 											<button class="card-swiper-slider__icon-heart wishlist-icon <?php echo wooeshop_in_wishlist2($current_product->get_id()) ? 'in-wishlist' : '' ?>" data-id="<?php echo $current_product->get_id(); ?>">
@@ -1756,7 +1756,7 @@ foreach ($attributes as $attribute) {
 									</div>
 									<div class="card-swiper-slider__footer-card">
 										<div class="card-swiper-slider__tag <?php echo esc_attr($classAv); ?>">
-											<img src="/wp-content/themes/carbs-theme/img/tag-available.svg" alt="percentage"  width="14" height="14">
+											<img loading="lazy" src="/wp-content/themes/carbs-theme/img/tag-available.svg" alt="percentage"  width="14" height="14">
 											<span><?php echo esc_html($textAv); ?></span>
 										</div>
 										<div class="card-swiper-slider__rating">
@@ -1921,7 +1921,7 @@ foreach ($attributes as $attribute) {
                                                         </a>
                                                     <?php else : ?>
                                                         <a class="card-swiper-slider__image" href="<?php the_permalink(); ?>">
-                                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/card.jpg" alt="slide-photo" />
+                                                            <img loading="lazy" src="<?php echo get_stylesheet_directory_uri(); ?>/img/card.jpg" alt="slide-photo" />
                                                         </a>
                                                     <?php endif; ?>
 
@@ -1944,7 +1944,7 @@ foreach ($attributes as $attribute) {
                                                 </div>
                                                 <div class="card-swiper-slider__footer-card">
                                                     <div class="card-swiper-slider__tag <?php echo esc_attr($classAv); ?>">
-                                                        <img src="/wp-content/themes/carbs-theme/img/tag-available.svg" alt="percentage"  width="14" height="14">
+                                                        <img loading="lazy" src="/wp-content/themes/carbs-theme/img/tag-available.svg" alt="percentage"  width="14" height="14">
                                                         <span><?php echo esc_html($textAv); ?></span>
                                                     </div>
                                                     <div class="card-swiper-slider__rating">

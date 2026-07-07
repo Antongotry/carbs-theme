@@ -89,7 +89,7 @@ get_header(); ?>
                     <div class="feedback-card__left">
                         <div class="feedback-card__autor">
                             <div class="feedback-card__avatar">
-                                <img src="<?php echo $photo_urls ? $photo_urls[0] : get_stylesheet_directory_uri() . '/img/Лого-4.png'; ?>" alt="avatar" />
+                                <img loading="lazy" src="<?php echo $photo_urls ? $photo_urls[0] : get_stylesheet_directory_uri() . '/img/Лого-4.png'; ?>" alt="avatar" />
                             </div>
                             <h3><?php echo $first_name; ?></h3>
                         </div>
@@ -111,7 +111,7 @@ get_header(); ?>
                         <?php foreach ($photo_urls as $photo_url) : ?>
                             <div class="feedback-card__image">
                                 <a href="<?php echo $photo_url; ?>">
-                                    <img src="<?php echo $photo_url; ?>" alt="product" />
+                                    <img loading="lazy" src="<?php echo $photo_url; ?>" alt="product" />
                                 </a>
                             </div>
                         <?php endforeach; ?>

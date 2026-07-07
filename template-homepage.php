@@ -35,7 +35,7 @@ function render_product_slider($category_slug, $tab_id, $gallery_class, $prev_bt
                 'operator' => 'NOT IN',
             ),
         ),
-        // Exclude products without a featured image so the slider never outputs an empty <img src="">
+        // Exclude products without a featured image so the slider never outputs an empty <img loading="lazy" src="">
         'meta_query' => array(
             array(
                 'key'     => '_thumbnail_id',
@@ -71,13 +71,13 @@ function render_product_slider($category_slug, $tab_id, $gallery_class, $prev_bt
 			?>
 			<section class="swiper-slide">
 				<a href="<?php echo esc_url($product_permalink); ?>" class="new-slider__image">
-					<img src="<?php echo esc_url($product_thumbnail); ?>" alt="<?php echo esc_attr($product_title); ?>" />
+					<img loading="lazy" src="<?php echo esc_url($product_thumbnail); ?>" alt="<?php echo esc_attr($product_title); ?>" />
 					<div class="new-slider__icons">
 						<div class="new-slider__icon-right">
 							<?php if ($product->is_on_sale()) : ?>
-							<img src="<?php echo crabs_credit_badge_src( 'percentage.png' ); ?>" alt="percentage" />
+							<img loading="lazy" src="<?php echo crabs_credit_badge_src( 'percentage.png' ); ?>" alt="percentage" />
 							<?php endif; ?>
-							<img src="<?php echo crabs_credit_badge_src( 'paw.png' ); ?>" alt="paw" />
+							<img loading="lazy" src="<?php echo crabs_credit_badge_src( 'paw.png' ); ?>" alt="paw" />
 						</div>
 					</div>
 				</a>
@@ -269,7 +269,7 @@ function render_product_slider($category_slug, $tab_id, $gallery_class, $prev_bt
                     srcset="<?php echo esc_url($slide_v1_background_image_note); ?>">
                 <?php endif; ?>
             
-                <img 
+                <img loading="lazy" 
                   class="slide-bg-img"
                   src="<?php echo esc_url($slide_v1_background_image); ?>" 
                   alt="<?php echo esc_attr(strip_tags($slide_v1_content)); ?>"
@@ -425,22 +425,22 @@ function render_product_slider($category_slug, $tab_id, $gallery_class, $prev_bt
 			<div class="popular-slider__gallary">
 				<div class="popular-slider__wrapper swiper-wrapper">
 					<section class="swiper-slide">
-						<a href="<?php the_field('link1') ?>"><img src="<?php echo esc_url( get_field('img_slide1') ); ?>" alt="slide-photo"/></a>
+						<a href="<?php the_field('link1') ?>"><img loading="lazy" src="<?php echo esc_url( get_field('img_slide1') ); ?>" alt="slide-photo"/></a>
 					</section>
 					<section class="swiper-slide">
-						<a href="<?php the_field('link2') ?>"><img src="<?php echo esc_url( get_field('img_slide2') ); ?>" alt="slide-photo"/></a>
+						<a href="<?php the_field('link2') ?>"><img loading="lazy" src="<?php echo esc_url( get_field('img_slide2') ); ?>" alt="slide-photo"/></a>
 					</section>
 					<section class="swiper-slide">
-						<a href="<?php the_field('link3') ?>"><img src="<?php echo esc_url( get_field('img_slide3') ); ?>" alt="slide-photo"/></a>
+						<a href="<?php the_field('link3') ?>"><img loading="lazy" src="<?php echo esc_url( get_field('img_slide3') ); ?>" alt="slide-photo"/></a>
 					</section>
 					<section class="swiper-slide">
-						<a href="<?php the_field('link4') ?>"><img src="<?php echo esc_url( get_field('img_slide4') ); ?>" alt="slide-photo"/></a>
+						<a href="<?php the_field('link4') ?>"><img loading="lazy" src="<?php echo esc_url( get_field('img_slide4') ); ?>" alt="slide-photo"/></a>
 					</section>
 					<section class="swiper-slide">
-						<a href="<?php the_field('link5') ?>"><img src="<?php echo esc_url( get_field('img_slide5') ); ?>" alt="slide-photo"/></a>
+						<a href="<?php the_field('link5') ?>"><img loading="lazy" src="<?php echo esc_url( get_field('img_slide5') ); ?>" alt="slide-photo"/></a>
 					</section>
 					<section class="swiper-slide">
-						<a href="<?php the_field('link6') ?>"><img src="<?php echo esc_url( get_field('img_slide6') ); ?>" alt="slide-photo"/></a>
+						<a href="<?php the_field('link6') ?>"><img loading="lazy" src="<?php echo esc_url( get_field('img_slide6') ); ?>" alt="slide-photo"/></a>
 					</section>
 				</div>
 			</div>
@@ -631,10 +631,10 @@ function render_product_slider($category_slug, $tab_id, $gallery_class, $prev_bt
 						<div class="new-slider__icons">
 							<div class="new-slider__icon-right">
 								<?php if ($product->is_on_sale()) : ?>
-								<img src="<?php echo crabs_credit_badge_src( 'percentage.png' ); ?>" alt="percentage" />
+								<img loading="lazy" src="<?php echo crabs_credit_badge_src( 'percentage.png' ); ?>" alt="percentage" />
 								<?php endif; ?>
-									<img src="<?php echo crabs_credit_badge_src( 'percentage.png' ); ?>" alt="percentage"/>
-									<img src="<?php echo crabs_credit_badge_src( 'paw.png' ); ?>" alt="paw"/>
+									<img loading="lazy" src="<?php echo crabs_credit_badge_src( 'percentage.png' ); ?>" alt="percentage"/>
+									<img loading="lazy" src="<?php echo crabs_credit_badge_src( 'paw.png' ); ?>" alt="paw"/>
 							</div>
 						</div>
 					</a>
