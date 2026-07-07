@@ -1740,7 +1740,11 @@ add_action( 'woocommerce_add_to_cart', 'track_first_added_product', 10, 3 );
 function first_added_upsell_products_shortcode() {
     // $first_product_id = WC()->session->get( 'first_added_product_id' );
     $cart = WC()->cart->get_cart();
-    
+
+    if ( empty( $cart ) ) {
+        return '';
+    }
+
     $first_cart_item = reset( $cart );
     $first_product_id = $first_cart_item['product_id'];
 
