@@ -1084,7 +1084,6 @@ function render_product_slider($category_slug, $tab_id, $gallery_class, $prev_bt
 			</div>
 		</div>
 		<div class="contacts__picture">
-			<iframe src="" frameborder="0"></iframe>
 			<picture>
 				<source
 						srcset="<?php echo get_stylesheet_directory_uri(); ?>/img/contacts-photo.jpg"
