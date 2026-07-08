@@ -2066,6 +2066,46 @@ function wooeshop_get_wishlist() {
 
 
 
+/**
+ * Мин/макс цена варьируемого товара по вариациям, с защитой от вариацій без ціни
+ * (min()/max() на порожньому масиві валять сторінку на PHP8). Раніше цей розрахунок
+ * (подвійне створення WC_Product_Variation для проходу по цінах і по regular-цінах)
+ * був продубльований ~12 разів по темі (functions.php + 6 файлів шаблонів) — тепер
+ * один хелпер, викликається звідусіль. Повертає null, якщо показувати нічого.
+ */
+function crabs_get_variation_price_range( $product ) {
+    if ( ! $product || ! is_a( $product, 'WC_Product' ) || ! $product->is_type( 'variable' ) ) {
+        return null;
+    }
+
+    $available_variations = $product->get_available_variations();
+    $variation_prices = array();
+    foreach ( $available_variations as $variation ) {
+        $vo = new WC_Product_Variation( $variation['variation_id'] );
+        $p  = $vo->get_price();
+        if ( $p !== '' && $p !== null ) {
+            $variation_prices[] = $p;
+        }
+    }
+
+    if ( empty( $variation_prices ) ) {
+        return null;
+    }
+
+    $variation_regular_prices = array_filter( array_map( function( $variation ) {
+        $vo = new WC_Product_Variation( $variation['variation_id'] );
+        $rp = $vo->get_regular_price();
+        return ( $rp !== '' && $rp !== null ) ? $rp : null;
+    }, $available_variations ) );
+
+    return array(
+        'min_price'         => min( $variation_prices ),
+        'max_price'         => max( $variation_prices ),
+        'min_regular_price' => ! empty( $variation_regular_prices ) ? min( $variation_regular_prices ) : null,
+        'max_regular_price' => ! empty( $variation_regular_prices ) ? max( $variation_regular_prices ) : null,
+    );
+}
+
 add_action( 'wp_ajax_load_wishlist_products', 'load_wishlist_products_cb' );
 add_action( 'wp_ajax_nopriv_load_wishlist_products', 'load_wishlist_products_cb' );
 
@@ -2146,23 +2186,12 @@ function load_wishlist_products_cb() {
                         <div class="catalog-card__prices">
                         <?php
                         if ( $product->is_type( 'variable' ) ) {
-                            $available_variations = $product->get_available_variations();
-                            $variation_prices = array();
-                            foreach ( $available_variations as $variation ) {
-                                $vo = new WC_Product_Variation( $variation['variation_id'] );
-                                $p = $vo->get_price();
-                                if ( $p !== '' && $p !== null ) $variation_prices[] = $p;
-                            }
-                            if ( ! empty( $variation_prices ) ) {
-                                $min_price = min( $variation_prices );
-                                $max_price = max( $variation_prices );
-                                $variation_regular_prices = array_filter( array_map( function( $v ) {
-                                    $vo = new WC_Product_Variation( $v['variation_id'] );
-                                    $rp = $vo->get_regular_price();
-                                    return ( $rp !== '' && $rp !== null ) ? $rp : null;
-                                }, $available_variations ) );
-                                if ( ! empty( $variation_regular_prices ) ) {
-                                    $min_regular_price = min( $variation_regular_prices );
+                            $price_range = crabs_get_variation_price_range( $product );
+                            if ( $price_range ) {
+                                $min_price = $price_range['min_price'];
+                                $max_price = $price_range['max_price'];
+                                if ( $price_range['min_regular_price'] !== null ) {
+                                    $min_regular_price = $price_range['min_regular_price'];
                                     if ( $min_price != $min_regular_price ) {
                                         echo '<div class="catalog-card__current-pirce">' . wc_price( $min_price ) . '</div>';
                                         echo '<div class="catalog-card__old-pirce">' . wc_price( $min_regular_price ) . '</div>';
@@ -2652,17 +2681,11 @@ function get_cart_upsells_ajax_handler() {
                                     <div class="card-swiper-slider__prices">
                                         <?php
                                         if ( $current_product->is_type('variable') ) {
-                                            $vars = $current_product->get_available_variations();
-                                            $prices = $regulars = [];
-                                            foreach ( $vars as $v ) {
-                                                $pv = new WC_Product_Variation( $v['variation_id'] );
-                                                if ( $pv->get_price()   ) $prices[]   = $pv->get_price();
-                                                if ( $pv->get_regular_price() ) $regulars[] = $pv->get_regular_price();
-                                            }
-                                            if ( $prices ) {
-                                                $min = min($prices);
-                                                $max = max($prices);
-                                                $reg_min = $regulars ? min($regulars) : $min;
+                                            $price_range = crabs_get_variation_price_range( $current_product );
+                                            if ( $price_range ) {
+                                                $min = $price_range['min_price'];
+                                                $max = $price_range['max_price'];
+                                                $reg_min = $price_range['min_regular_price'] !== null ? $price_range['min_regular_price'] : $min;
                                                 if ( $min < $reg_min ) {
                                                     echo '<div class="card-swiper-slider__current-pirce card-swiper-price-cart">'
                                                         . wc_price($min) .'</div>';
