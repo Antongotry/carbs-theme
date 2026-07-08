@@ -205,34 +205,47 @@
 			<div class="side-menu category-list">
 				<div class="h3">Категорії</div>
 				<?php
+				// Мемоизация get_categories() по parent_id на весь запрос: footer.php рендерится
+				// на КАЖДОЙ странице сайта, а get_total_product_count() и display_category_tree()
+				// независимо друг от друга дергали get_categories() на каждом уровне одного и того
+				// же дерева категорий — теперь любой parent_id запрашивается из БД максимум 1 раз.
+				function get_product_cat_children($parent_id) {
+					static $cache = array();
+					if (!isset($cache[$parent_id])) {
+						$cache[$parent_id] = get_categories(array(
+							'taxonomy'   => 'product_cat',
+							'parent'     => $parent_id,
+							'hide_empty' => 0
+						));
+					}
+					return $cache[$parent_id];
+				}
+
 				// Функция для подсчета товаров в категории и её потомках
 				function get_total_product_count($category_id) {
+					static $count_cache = array();
+					if (isset($count_cache[$category_id])) {
+						return $count_cache[$category_id];
+					}
+
 					// Получаем количество товаров в текущей категории
 					$current_category = get_term($category_id, 'product_cat');
 					$total_count = $current_category->count;
 
 					// Получаем дочерние категории
-					$child_categories = get_categories(array(
-						'taxonomy' => 'product_cat',
-						'parent'   => $category_id,
-						'hide_empty' => 0
-					));
+					$child_categories = get_product_cat_children($category_id);
 
 					// Рекурсивно подсчитываем товары во всех дочерних категориях
 					foreach ($child_categories as $child) {
 						$total_count += get_total_product_count($child->term_id);
 					}
 
+					$count_cache[$category_id] = $total_count;
 					return $total_count;
 				}
-				
+
 				function display_category_tree($parent_id = 0, $level = 0) {
-					$args = array(
-						'taxonomy'     => 'product_cat',
-						'parent'       => $parent_id,
-						'hide_empty'   => 0
-					);
-					$categories = get_categories($args);
+					$categories = get_product_cat_children($parent_id);
 
 					// Сортировка категорий на основе кастомного поля ACF
 					usort($categories, function($a, $b) {
@@ -266,13 +279,9 @@
 						<img loading="lazy" src="<?php echo esc_url($image[0]); ?>" alt="<?php echo esc_attr($cat->name); ?>" class="category-icon">
 						<?php endif; ?>
 						<span class="category-name"><?php echo $cat->name; ?></span>
-						<?php 
-							$child_categories = get_categories(array(
-								'taxonomy' => 'product_cat',
-								'parent'   => $category_id,
-								'hide_empty' => 0
-							));
-							if (!empty($child_categories)): 
+						<?php
+							$child_categories = get_product_cat_children($category_id);
+							if (!empty($child_categories)):
 						?>
 						<img loading="lazy" src="/wp-content/uploads/2024/10/cr-arrow-right.svg" alt="Open" class="category-arrow">
 						<?php endif; ?>
