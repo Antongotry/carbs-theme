@@ -1408,12 +1408,6 @@ function delete_review_photo() {
 add_action('wp_ajax_delete_review_photo', 'delete_review_photo');
 
 
-function display_product_title_meta_box($post) {
-    $product_title = get_post_meta($post->ID, 'product_title', true);
-    echo '<input type="text" readonly value="' . esc_attr($product_title) . '" class="widefat" />';
-}
-
-
 function create_product_reviews_post_type() {
     register_post_type('product_reviews',
         array(
@@ -1439,6 +1433,18 @@ add_action('init', 'create_product_reviews_post_type');
 
 function get_custom_product_average_rating($product_id) {
     return get_product_review_stats($product_id)['average'];
+}
+
+// Рендер SVG-звёзд рейтинга — общий хелпер (раньше дублировался в display_product_reviews() и load_more_reviews())
+function crabs_render_rating_stars($rating) {
+    $stars_html = '';
+    for ($i = 1; $i <= 5; $i++) {
+        $star_color = $i <= $rating ? '#F4A804' : 'grey';
+        $stars_html .= '<svg class="star" width="36" height="33" viewBox="0 0 36 33" fill="'.$star_color.'" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 0L24.1365 9.55386L35.119 12.4377L27.929 21.2261L28.5801 32.5623L18 28.44L7.41987 32.5623L8.07097 21.2261L0.880983 12.4377L11.8635 9.55386L18 0Z"/>
+                        </svg>';
+    }
+    return $stars_html;
 }
 
 // Шорткод вывода отзывов в карусели на странице продукта
@@ -1475,14 +1481,8 @@ function display_product_reviews($atts) {
         $avatar_url = !empty($photo_urls[0]) ? $photo_urls[0] : '';
 
         // Вычисляем количество звезд
-        $stars_html = '';
-        for ($i = 1; $i <= 5; $i++) {
-            $star_color = $i <= $rating ? '#F4A804' : 'grey';
-            $stars_html .= '<svg class="star" width="36" height="33" viewBox="0 0 36 33" fill="'.$star_color.'" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M18 0L24.1365 9.55386L35.119 12.4377L27.929 21.2261L28.5801 32.5623L18 28.44L7.41987 32.5623L8.07097 21.2261L0.880983 12.4377L11.8635 9.55386L18 0Z"/>
-                            </svg>';
-        }
-        
+        $stars_html = crabs_render_rating_stars($rating);
+
         // Вывод отзыва
         ?>
         <section class="swiper-slide">
@@ -1554,13 +1554,7 @@ function load_more_reviews() {
             $photo_urls = get_post_meta(get_the_ID(), 'photos', true);
 
             // Вычисляем количество звезд
-            $stars_html = '';
-            for ($i = 1; $i <= 5; $i++) {
-                $star_color = $i <= $rating ? '#F4A804' : 'grey';
-                $stars_html .= '<svg class="star" width="36" height="33" viewBox="0 0 36 33" fill="'.$star_color.'" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M18 0L24.1365 9.55386L35.119 12.4377L27.929 21.2261L28.5801 32.5623L18 28.44L7.41987 32.5623L8.07097 21.2261L0.880983 12.4377L11.8635 9.55386L18 0Z"/>
-                                </svg>';
-            }
+            $stars_html = crabs_render_rating_stars($rating);
 
             // Выводим отзыв
             ?>
@@ -1731,188 +1725,6 @@ function track_first_added_product( $cart_item_key, $product_id, $quantity ) {
 }
 add_action( 'woocommerce_add_to_cart', 'track_first_added_product', 10, 3 );
 
-
-function first_added_upsell_products_shortcode() {
-    // $first_product_id = WC()->session->get( 'first_added_product_id' );
-    $cart = WC()->cart->get_cart();
-
-    if ( empty( $cart ) ) {
-        return '';
-    }
-
-    $first_cart_item = reset( $cart );
-    $first_product_id = $first_cart_item['product_id'];
-
-    if ( ! $first_product_id ) {
-        return '';
-    }
-
-    $product = wc_get_product( $first_product_id );
-    
-    if ( ! $product ) {
-        return '';
-    }
-
-    ob_start();
-
-    $upsells = $product->get_upsell_ids();
-
-    if ( ! empty( $upsells ) ) {
-        $args = array(
-            'post_type'           => 'product',
-            'posts_per_page'      => 4, // количество выводимых продуктов
-            'post__in'            => $upsells,
-            'orderby'             => 'post__in',
-        );
-
-        $upsell_products = new WP_Query( $args );
-
-        if ( $upsell_products->have_posts() ) : ?>
-                <div class="cart-slider">
-                    <h2>З цим товаром також купують</h2>
-                    <article>
-                        <div class="cart-slider__gallary">
-                            <div class="relate-slider__wrapper swiper-wrapper">
-                                
-                                <?php while ( $upsell_products->have_posts() ) : $upsell_products->the_post(); 
-                                
-                                    $current_product = wc_get_product( get_the_ID() ); ?>
-                                    <section class="swiper-slide">
-
-                                            <div class="cart-slider__image">
-                                                <?php the_post_thumbnail('full'); ?>
-                                                <a class="heart-icon wishlist-icon <?php echo wooeshop_in_wishlist2( $current_product->get_id() ) ? 'in-wishlist' : '' ?>" data-id="<?php echo $current_product->get_id(); ?>">
-                                                
-                                                    <svg class="heart-icon"><use xlink:href="#heart-icon"></use></svg>
-                                                    
-                                                
-                                                </a>
-                                            </div>
-
-                                            <div class="cart-slider__footer-card">
-                                                <div class="cart-slider__rating">
-                                                    <div class="cart-slider__stars">
-                                                        <?php 
-                                                            $average_rating = get_custom_product_average_rating($current_product->get_id()); 
-                                                            $ratings_count = get_ratings_count($current_product->get_id()); 
-                                                        ?>
-                                                        <?php for ($i = 1; $i <= 5; $i++) : ?>
-                                                            <svg class="star" width="36" height="33" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
-                                                                <path fill="<?php echo ($i <= $average_rating) ? '#F4A804' : 'grey'; ?>"  d="M18 0L24.1365 9.55386L35.119 12.4377L27.929 21.2261L28.5801 32.5623L18 28.44L7.41987 32.5623L8.07097 21.2261L0.880983 12.4377L11.8635 9.55386L18 0Z"/>
-                                                            </svg>
-                                                        <?php endfor; ?>
-                                                    </div>
-                                                    <span><?php echo number_format($average_rating, 1); ?></span>
-                                                </div>
-                                                
-                                                <div class="cart-slider__mid">
-                                                    <a href="##" class="cart-slider__title"><?php the_title(); ?></a>
-
-                                                    <a href="<?php echo esc_url( $current_product->add_to_cart_url() ); ?>" class="add_to_cart_button ajax_add_to_cart bag" data-product_id="<?php echo esc_attr( $current_product->get_id() ); ?>" data-product_sku="<?php echo esc_attr( $current_product->get_sku() ); ?>" aria-label="<?php echo esc_attr( $current_product->add_to_cart_text() ); ?>" rel="nofollow">
-                                            
-                                                    <svg class="bag"><use xlink:href="#bag"></use></svg>
-                                                    </a>
-                                                </div>
-
-                                                <div class="cart-slider__prices">
-                                                <?php if ( $current_product->is_type( 'variable' ) ) {
-                                                    // Get the available variations
-                                                    $available_variations = $current_product->get_available_variations();
-                                                    $variation_prices = array();
-
-                                                    foreach ( $available_variations as $variation ) {
-                                                        $variation_obj = new WC_Product_Variation( $variation['variation_id'] );
-                                                        $variation_prices[] = $variation_obj->get_price();
-                                                    }
-
-                                                    // Get the minimum and maximum prices from the variations
-                                                    $min_price = min( $variation_prices );
-                                                    $max_price = max( $variation_prices );
-
-                                                    // Get the minimum and maximum regular prices from the variations
-                                                    $variation_regular_prices = array_map( function( $variation ) {
-                                                        $variation_obj = new WC_Product_Variation( $variation['variation_id'] );
-                                                        return $variation_obj->get_regular_price();
-                                                    }, $available_variations );
-
-                                                    $min_regular_price = min( $variation_regular_prices );
-                                                    $max_regular_price = max( $variation_regular_prices );
-
-                                                    if ( $min_price !== $min_regular_price ) {
-                                                        // Show sale price range
-                                                        ?>
-                                                        <div class="current-price"><?php echo wc_price( $min_price ); ?></div>
-                                                        <div class="old-price active"><?php echo wc_price( $min_regular_price ); ?> </div>
-                                                        <?php
-                                                    } else {
-                                                        // Show regular price range
-                                                        ?>
-                                                        <div class="current-price"><?php echo wc_price( $min_price ); ?> - <?php echo wc_price( $max_price ); ?></div>
-                                                        <?php
-                                                    }
-                                                } else {
-                                                    // For simple products
-                                                    if ( $current_product->get_sale_price() ) {
-                                                        ?>
-                                                        <div class="current-price"><?php echo wc_price( $current_product->get_sale_price() ); ?></div>
-                                                        <div class="old-price active"><?php echo wc_price( $current_product->get_regular_price() ); ?></div>
-                                                        <?php
-                                                    } else {
-                                                        ?>
-                                                        <div class="current-price"><?php echo wc_price( $current_product->get_price() ); ?></div>
-                                                        <?php
-                                                    }
-                                                }
-                                                ?>
-
-                                                </div>
-                                                
-                                                <a href="##" class="btn-black">В кошик
-                                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M4.62877 7.72073V4.17384C4.62877 2.21495 6.14744 0.626953 8.02082 0.626953C9.8942 0.626953 11.4129 2.21495 11.4129 4.17384V7.72073M3.10194 15.7012H12.9397C13.9399 15.7012 14.7229 14.8008 14.6281 13.7596L13.982 6.66587C13.8991 5.75567 13.168 5.06056 12.2936 5.06056H3.74805C2.87365 5.06056 2.14256 5.75568 2.05966 6.66587L1.41355 13.7596C1.31872 14.8008 2.10172 15.7012 3.10194 15.7012Z" stroke="white" stroke-width="1.16736" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    </svg>
-                                                </a>
-                                                
-
-                                            </div>
-                                    </section>
-                                <?php endwhile; ?>
-                               
-                            </div>
-                        </div>
-                        <div class="cart-slider__buttons">
-                            <div class="cart-btn-prev btn-swiper">
-                            <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="0.5" y="0.5" width="34" height="34" rx="2.5" stroke="#242424"/>
-                                <path d="M20.1927 11.668L14.3594 17.5013L20.1927 23.3346" stroke="#242424" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <svg width="55" height="55" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="0.5" y="0.5" width="54" height="54" rx="4.5" stroke="#242424"/>
-                                <path d="M31 18L22 27.5L31 37" stroke="#242424" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>                    
-                            </div>
-                            <div class="cart-btn-next btn-swiper">
-                            <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="0.5" y="0.5" width="34" height="34" rx="2.5" stroke="#242424"/>
-                                <path d="M14.3581 23.332L20.1914 17.4987L14.3581 11.6654" stroke="#242424" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <svg width="55" height="55" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="0.5" y="0.5" width="54" height="54" rx="4.5" stroke="#242424"/>
-                                <path d="M24 37L33 27.5L24 18" stroke="#242424" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>                    
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            
-            <?php
-            wp_reset_postdata();
-        endif;
-    }
-
-    return ob_get_clean();
-}
-add_shortcode( 'first_added_upsell_products', 'first_added_upsell_products_shortcode' );
 
 // Checkout Page
 
@@ -2219,47 +2031,6 @@ add_filter('wpcf7_autop_or_not', '__return_false');
 
 
 // Wishlist
-add_action( 'wp_ajax_wooeshop_wishlist_action', 'wooeshop_wishlist_action_cb' );
-add_action( 'wp_ajax_nopriv_wooeshop_wishlist_action', 'wooeshop_wishlist_action_cb' );
-
-function wooeshop_wishlist_action_cb() {
-
-	if ( ! isset( $_POST['nonce'] ) ) {
-		echo json_encode( [ 'status' => 'error', 'answer' => __( 'Security error 1', 'wooeshop' ) ] );
-		wp_die();
-	}
-
-	if ( ! wp_verify_nonce( $_POST['nonce'], 'wooeshop_wishlist_nonce' ) ) {
-		echo json_encode( [ 'status' => 'error', 'answer' => __( 'Security error 2', 'wooeshop' ) ] );
-		wp_die();
-	}
-
-	$product_id = (int) $_POST['product_id'];
-	$product = wc_get_product( $product_id );
-
-	if ( ! $product || $product->get_status() != 'publish' ) {
-		echo json_encode( [ 'status' => 'error', 'answer' => __( 'Error product', 'wooeshop' ) ] );
-		wp_die();
-	}
-
-	$wishlist = wooeshop_get_wishlist();
-
-	if ( false !== ( $key = array_search( $product_id, $wishlist ) ) ) {
-		unset( $wishlist[$key] );
-		$answer = json_encode( [ 'status' => 'success', 'answer' => __( 'The product hase been removed from wishlist', 'wooeshop' ) ] );
-	} else {
-		if ( count( $wishlist ) >= 8 ) {
-			array_shift( $wishlist );
-		}
-		$wishlist[] = $product_id;
-		$answer = json_encode( [ 'status' => 'success', 'answer' => __( 'The product hase been added to wishlist', 'wooeshop' ) ] );
-	}
-	$wishlist = implode( ',', $wishlist );
-	setcookie( 'wooeshop_wishlist', $wishlist, time() + 3600 * 24 * 30, '/' );
-
-	wp_die( $answer );
-}
-
 function wooeshop_in_wishlist( $product_id ) {
 	$wishlist = wooeshop_get_wishlist();
 	return false !== array_search( $product_id, $wishlist );
@@ -2280,25 +2051,6 @@ function wooeshop_get_wishlist2() {
 	// Захист від пошкодженої\/нетипової cookie — без цього count()\/array_search() на не-масиві
 	// кидають TypeError (PHP 8+) і валять всю сторінку (знайдено 07.07.2026, розвідка functions.php).
 	return is_array( $wishlist ) ? $wishlist : [];
-}
-
-// Регистрация AJAX-действий для получения количества товаров в избранном
-add_action( 'wp_ajax_get_wishlist_count', 'get_wishlist_count' );
-add_action( 'wp_ajax_nopriv_get_wishlist_count', 'get_wishlist_count' );
-
-function get_wishlist_count() {
-    // Проверка nonce для безопасности
-    if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'wooeshop_wishlist_nonce' ) ) {
-        wp_send_json_error( [ 'message' => 'Security error' ] );
-        wp_die();
-    }
-
-    // Получаем список товаров в избранном из cookie
-    $wishlist = wooeshop_get_wishlist();
-    $count = is_array( $wishlist ) ? count( $wishlist ) : 0;
-
-    // Возвращаем количество товаров
-    wp_send_json_success( [ 'count' => $count ] );
 }
 
 // Функция для получения избранного из cookie
@@ -2697,52 +2449,6 @@ function disable_review_page_redirect() {
         exit;
     }
 }
-function add_quick_buy_form_after_footer() {
-    if (is_product()) {
-        global $product;
-        
-        // Проверяем, является ли $product действительным объектом WC_Product
-        if (!$product || !is_a($product, 'WC_Product')) {
-            $product = wc_get_product(get_the_ID());
-        }
-        
-        // Если все еще нет действительного объекта продукта, выходим
-        if (!$product) {
-            return;
-        }
-		
-		// Отключил!
-		return;
-
-        ?>
-        <div class="form-lightbox-wrapper buy-one-click">
-            <div class="lightbox-background"></div>
-            <div class="lightbox-section">
-                <div class="lightbox-content">
-                    <div class="close-lightbox"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/close.svg" loading="lazy" width="14" height="14" alt="Закрити"></div>
-                    <div class="form-head">
-                        <div class="h2">Залиште заявку</div>
-                    </div>
-                    <div class="form-description">Залиште свої контактні дані і ми зв'яжемося <br>з вами найближчим часом</div>
-                    <form class="form-fields call-back-form" action="<?php echo get_stylesheet_directory_uri(); ?>/php/call-back-form.php" method="post">
-                        <div class="form-data-group">
-                            <input type="hidden" name="form_type" value="quick_buy">
-                            <input type="hidden" name="product_id" value="<?php echo esc_attr($product->get_id()); ?>">
-                            <input type="hidden" name="product_name" value="<?php echo esc_attr($product->get_name()); ?>">
-                            <input type="hidden" name="product_sku" value="<?php echo esc_attr($product->get_sku()); ?>">
-                            <input type="hidden" name="product_url" value="<?php echo esc_url(get_permalink($product->get_id())); ?>">
-                            <input class="form-input" type="text" name="name" placeholder="Ім'я*" required>
-                            <input class="form-input" type="tel" name="phone" placeholder="+38(0__)___-__-__" required>
-                        </div>
-                        <button type="submit" name="submit_one_click_order" class="btn btn-primary"><span>Залишити заявку</span></button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <?php
-    }
-}
-add_action('wp_footer', 'add_quick_buy_form_after_footer', 100);
 
 
 
@@ -3122,24 +2828,6 @@ add_action('wp_enqueue_scripts', function () {
 });
 
 
-
-/**
- * Банер «оплата частинами» зверху сітки товарів у #catalog-body.
- */
-function crabs_catalog_installment_banner() {
-	$base = trailingslashit( content_url( '/uploads/2026/04/' ) );
-	$alt  = __( 'Оплачуйте частинами до 5 платежів без відсотків', 'crabs_project' );
-	?>
-	<div class="catalog-body__installment-banner">
-		<picture>
-			<source media="(min-width: 1920px)" srcset="<?php echo esc_url( $base . '1920_result.webp' ); ?>" type="image/webp">
-			<source media="(min-width: 1440px)" srcset="<?php echo esc_url( $base . '1440_result.webp' ); ?>" type="image/webp">
-			<source media="(min-width: 1024px)" srcset="<?php echo esc_url( $base . '1024_result.webp' ); ?>" type="image/webp">
-			<img src="<?php echo esc_url( $base . '375_result.webp' ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="eager" decoding="async">
-		</picture>
-	</div>
-	<?php
-}
 
 /**
  * Кредитні / розстрочка плашки (каталог — поверх фото; $inline — у рядку біля тексту/іконок).
