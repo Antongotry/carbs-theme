@@ -670,8 +670,10 @@ function render_product_slider($category_slug, $tab_id, $gallery_class, $prev_bt
 	}
 
 	// Get the minimum and maximum prices from the variations
-	$min_price = min( $variation_prices );
-	$max_price = max( $variation_prices );
+	if ( !empty( $variation_prices ) ) {
+		$min_price = min( $variation_prices );
+		$max_price = max( $variation_prices );
+	}
 
 	// Get the minimum and maximum regular prices from the variations
 	$variation_regular_prices = array_map( function( $variation ) {
@@ -679,16 +681,18 @@ function render_product_slider($category_slug, $tab_id, $gallery_class, $prev_bt
 		return $variation_obj->get_regular_price();
 	}, $available_variations );
 
-	$min_regular_price = min( $variation_regular_prices );
-	$max_regular_price = max( $variation_regular_prices );
+	if ( !empty( $variation_regular_prices ) ) {
+		$min_regular_price = min( $variation_regular_prices );
+		$max_regular_price = max( $variation_regular_prices );
+	}
 
-	if ( $min_price !== $min_regular_price ) {
+	if ( isset( $min_price ) && $min_price !== $min_regular_price ) {
 		// Show sale price range
 								?>
 								<div class="new-slider__current-price"><?php echo wc_price( $min_price ); ?></div>
 								<div class="new-slider__old-price"><?php echo wc_price( $min_regular_price ); ?> </div>
 								<?php
-	} else {
+	} elseif ( isset( $min_price ) ) {
 		// Show regular price range
 								?>
 								<div class="new-slider__current-price"><?php echo wc_price( $min_price ); ?> - <?php echo wc_price( $max_price ); ?></div>
