@@ -2282,7 +2282,9 @@ function wooeshop_get_wishlist2() {
 	if ( $wishlist ) {
 		$wishlist = json_decode($wishlist);
 	}
-	return $wishlist;
+	// Захист від пошкодженої\/нетипової cookie — без цього count()\/array_search() на не-масиві
+	// кидають TypeError (PHP 8+) і валять всю сторінку (знайдено 07.07.2026, розвідка functions.php).
+	return is_array( $wishlist ) ? $wishlist : [];
 }
 
 // Регистрация AJAX-действий для получения количества товаров в избранном
@@ -2310,7 +2312,9 @@ function wooeshop_get_wishlist() {
     if ( $wishlist ) {
         $wishlist = json_decode( stripslashes( $wishlist ), true );
     }
-    return $wishlist;
+    // Захист від пошкодженої\/нетипової cookie — без цього count()\/array_search() на не-масиві
+    // кидають TypeError (PHP 8+) і валять всю сторінку (знайдено 07.07.2026, розвідка functions.php).
+    return is_array( $wishlist ) ? $wishlist : [];
 }
 
 
