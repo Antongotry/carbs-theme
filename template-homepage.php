@@ -1231,10 +1231,12 @@ function render_product_slider($category_slug, $tab_id, $gallery_class, $prev_bt
 			<div class="feedback-slider__gallary">
                 <div class="feedback-slider__wrapper swiper-wrapper">
                     <?php 
+                    // Слайдер показує максимум 4 картки за раз (swiper .feedback-slider__gallary) —
+                    // з запасом достатньо 24 останніх відгуків, не всі відгуки сайту.
                     $args = array(
                         'post_type' => 'product_reviews',
                         'post_status' => 'publish',
-                        'numberposts' => -1,
+                        'numberposts' => 24,
                         'orderby' => 'date',
                         'order' => 'DESC'
                     );
