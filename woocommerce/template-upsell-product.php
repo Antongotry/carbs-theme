@@ -46,39 +46,23 @@
 
         <div class="relate-slider__prices">
         <?php if ( $product->is_type( 'variable' ) ) {
-            // Get the available variations
-            $available_variations = $product->get_available_variations();
-            $variation_prices = array();
-
-            foreach ( $available_variations as $variation ) {
-                $variation_obj = new WC_Product_Variation( $variation['variation_id'] );
-                $variation_prices[] = $variation_obj->get_price();
-            }
-
-            // Get the minimum and maximum prices from the variations
-            $min_price = min( $variation_prices );
-            $max_price = max( $variation_prices );
-
-            // Get the minimum and maximum regular prices from the variations
-            $variation_regular_prices = array_map( function( $variation ) {
-                $variation_obj = new WC_Product_Variation( $variation['variation_id'] );
-                return $variation_obj->get_regular_price();
-            }, $available_variations );
-
-            $min_regular_price = min( $variation_regular_prices );
-            $max_regular_price = max( $variation_regular_prices );
-
-            if ( $min_price !== $min_regular_price ) {
-                // Show sale price range
-                ?>
-                <div class="relate-slider__current-pirce"><?php echo wc_price( $min_price ); ?></div>
-                <div class="relate-slider__old-pirce"><?php echo wc_price( $min_regular_price ); ?> </div>
-                <?php
-            } else {
-                // Show regular price range
-                ?>
-                <div class="relate-slider__current-pirce"><?php echo wc_price( $min_price ); ?> - <?php echo wc_price( $max_price ); ?></div>
-                <?php
+            $price_range = crabs_get_variation_price_range( $product );
+            if ( $price_range ) {
+                $min_price = $price_range['min_price'];
+                $max_price = $price_range['max_price'];
+                $min_regular_price = $price_range['min_regular_price'];
+                if ( $min_regular_price !== null && $min_price !== $min_regular_price ) {
+                    // Show sale price range
+                    ?>
+                    <div class="relate-slider__current-pirce"><?php echo wc_price( $min_price ); ?></div>
+                    <div class="relate-slider__old-pirce"><?php echo wc_price( $min_regular_price ); ?> </div>
+                    <?php
+                } else {
+                    // Show regular price range
+                    ?>
+                    <div class="relate-slider__current-pirce"><?php echo wc_price( $min_price ); ?> - <?php echo wc_price( $max_price ); ?></div>
+                    <?php
+                }
             }
         } else {
             // For simple products
