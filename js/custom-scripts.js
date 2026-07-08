@@ -1129,33 +1129,6 @@ jQuery(document).ready(function($) {
 		$('#btnCartHeader').click();
 	});
 
-	$(document).on('click', '.wpc-filters-section-445 li', function(e) {
-		if (!$(e.target).is('a') && !$(e.target).is('input')) {
-			e.preventDefault();
-			var link = $(this).find('a');
-			if (link.length) {
-				window.location.href = link.attr('href');
-			}
-		}
-	});
-
-	// Обработчик для кнопки "Вибір моделі"
-	$('.scroll-model').on('click', function(e) {
-		e.preventDefault();
-		$('html, body').animate({
-			scrollTop: $('.wpc-filters-section-445').offset().top - 80
-		}, 1000);
-	});
-
-	// Обработчик для кнопки "Вибір категорії"
-	$('.scroll-category').on('click', function(e) {
-		e.preventDefault();
-		$('html, body').animate({
-			scrollTop: $('.wpc-filters-section-446').offset().top - 60
-		}, 1000);
-	});
-
-
 });
 // Конструктор допрацювання - End
 
@@ -1209,25 +1182,6 @@ jQuery(document).ready(function($) {
 });
 // Side Меню - End
 
-
-// Обработка событий на страницах - Start
-jQuery(document).ready(function ($) {
-	//Активация формы лайтбокса
-	setTimeout(function () {
-		$('.form-lightbox-wrapper').addClass('ready');
-	}, 500);
-	$('.call-back-call').on('click', function () {
-		$('.form-lightbox-wrapper.call-back-call').addClass('active');
-	});
-	$('.lightbox-background').on('click', function () {
-		$(this).closest('.form-lightbox-wrapper').removeClass('active');
-	});
-	$('.close-lightbox').on('click', function () {
-		$(this).closest('.form-lightbox-wrapper').removeClass('active');
-	});
-	
-});
-// Обработка событий на страницах - End
 
 // Обработка событий на страницах - Start
 jQuery(document).ready(function ($) {

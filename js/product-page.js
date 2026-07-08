@@ -166,54 +166,6 @@ jQuery(document).ready(function ($) {
 });
 // FAQ - End
 
-jQuery(document).ready(function($) {
-// 	if (window.innerWidth < 768) {
-// 		// Функция для плавного скролла
-// 		$('[data-to-scroll]').on('click', function(e) {
-// 			e.preventDefault();
-
-// 			var targetClass = $(this).data('to-scroll');
-// 			var headerHeight = 60;
-// 			var offsetPadding = 45;
-
-// 			$('html, body').animate({
-// 				scrollTop: $('.' + targetClass).offset().top - headerHeight - offsetPadding
-// 			}, 500);
-// 		});
-
-// 		// Функция для отслеживания позиции скролла и добавления класса active
-// 		function updateActiveSection() {
-// 			var scrollPosition = $(window).scrollTop() + 100; // Добавляем небольшой отступ для лучшего определения текущей секции
-// 			var headerHeight = 60;
-// 			var offsetPadding = 0;
-
-// 			$('[data-to-scroll]').each(function() {
-// 				var targetClass = $(this).data('to-scroll');
-// 				var $target = $('.' + targetClass);
-// 				console.log(targetClass)
-
-// 				if ($target.length) {
-// 					var targetTop = $target.offset().top - headerHeight - offsetPadding;
-// 					var targetBottom = targetTop + $target.outerHeight();
-
-// 					if (scrollPosition >= targetTop && scrollPosition < targetBottom) {
-// 						$('[data-to-scroll]').removeClass('active');
-// 						$('[data-to-scroll="' + targetClass + '"]').addClass('active');
-// 					}
-// 				}
-// 			});
-// 		}
-
-// 		// Обновляем активную секцию при скролле
-// 		$(window).on('scroll', function() {
-// 			updateActiveSection();
-// 		});
-
-// 		// Обновляем активную секцию при загрузке страницы
-// 		updateActiveSection();
-// 	}
-});
-
 
 document.addEventListener('click', function (e) {
   const stickyBtn = e.target.closest('.go-to-cart-sticky');
