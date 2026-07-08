@@ -1208,9 +1208,21 @@ function review_form_shortcode() {
 add_shortcode('review_form', 'review_form_shortcode');
 
 
-// Get Raiting Count
-function get_ratings_count($product_id) {
+// Get Raiting Count + Custom Product Average Rating — общий запрос отзывов на product_id,
+// мемоизированный на весь request. Раньше get_ratings_count() и get_custom_product_average_rating()
+// независимо делали ОДИН И ТОТ ЖЕ get_posts() каждая, и обе вызывались по несколько раз за один
+// и тот же товар на странице (шапка + вкладка відгуків desktop\/mobile + 3 карусели) — до 70+
+// запросов на загрузку страницы товара. Теперь запрос выполняется максимум 1 раз на product_id.
+function get_product_review_stats($product_id) {
+    static $cache = array();
+    if (isset($cache[$product_id])) {
+        return $cache[$product_id];
+    }
+
     $ratings_count = array(1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0);
+    $rating_sum = 0;
+    $rating_count = 0;
+
     $reviews = get_posts(array(
         'post_type' => 'product_reviews',
         'meta_key' => 'product_id',
@@ -1223,10 +1235,21 @@ function get_ratings_count($product_id) {
         $rating = get_post_meta($review->ID, 'rating', true);
         if ($rating) {
             $ratings_count[$rating]++;
+            $rating_sum += $rating;
+            $rating_count++;
         }
     }
 
-    return $ratings_count;
+    $cache[$product_id] = array(
+        'counts'  => $ratings_count,
+        'average' => $rating_count ? round($rating_sum / $rating_count, 2) : 0,
+    );
+
+    return $cache[$product_id];
+}
+
+function get_ratings_count($product_id) {
+    return get_product_review_stats($product_id)['counts'];
 }
 
 function custom_review_image_size() {
@@ -1415,35 +1438,7 @@ add_action('init', 'create_product_reviews_post_type');
 
 
 function get_custom_product_average_rating($product_id) {
-    // Получение всех отзывов для текущего продукта
-    $reviews = get_posts(array(
-        'post_type' => 'product_reviews',
-        'meta_key' => 'product_id',
-        'meta_value' => $product_id,
-        'post_status' => 'publish', // Только опубликованные отзывы
-        'numberposts' => -1
-    ));
-
-    if (!$reviews) {
-        return 0; // Нет отзывов
-    }
-
-    $rating_sum = 0;
-    $rating_count = 0;
-
-    foreach ($reviews as $review) {
-        $rating = get_post_meta($review->ID, 'rating', true);
-        if ($rating) {
-            $rating_sum += $rating;
-            $rating_count++;
-        }
-    }
-
-    if ($rating_count === 0) {
-        return 0; // Нет оценок
-    }
-
-    return round($rating_sum / $rating_count, 2); // Средний рейтинг, округленный до двух знаков после запятой
+    return get_product_review_stats($product_id)['average'];
 }
 
 // Шорткод вывода отзывов в карусели на странице продукта
