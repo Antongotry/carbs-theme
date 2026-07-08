@@ -123,37 +123,17 @@ if ( empty( $product ) || ! $product->is_visible() ) {
                 <?php
                 if ( $product ) :
                     if ( $product->is_type( 'variable' ) ) {
-                        $available_variations = $product->get_available_variations();
-                        $variation_prices = array();
-                        foreach ( $available_variations as $variation ) {
-                            $variation_obj = new WC_Product_Variation( $variation['variation_id'] );
-                            $price = $variation_obj->get_price();
-                            if ( $price !== '' && $price !== null ) {
-                                $variation_prices[] = $price;
-                            }
-                        }
-                        if ( !empty( $variation_prices ) ) {
-                            $min_price = min( $variation_prices );
-                            $max_price = max( $variation_prices );
-                            $variation_regular_prices = array_map( function( $variation ) {
-                                $variation_obj = new WC_Product_Variation( $variation['variation_id'] );
-                                $regular_price = $variation_obj->get_regular_price();
-                                return $regular_price !== '' && $regular_price !== null ? $regular_price : null;
-                            }, $available_variations );
-                            $variation_regular_prices = array_filter( $variation_regular_prices );
-                            if ( !empty( $variation_regular_prices ) ) {
-                                $min_regular_price = min( $variation_regular_prices );
-                                if ( $min_price != $min_regular_price ) {
-                                    ?>
-                                    <div class="catalog-card__current-pirce"><?php echo wc_price( $min_price ); ?></div>
-                                    <div class="catalog-card__old-pirce"><?php echo wc_price( $min_regular_price ); ?> </div>
-                                    <?php
-                                } else {
-                                    ?>
-                                    <div class="catalog-card__current-pirce"><?php echo wc_price( $min_price ) . ( $min_price != $max_price ? ' - ' . wc_price( $max_price ) : '' ); ?></div>
-                                    <?php
-                                }
-                            } elseif ($min_price) {
+                        $price_range = crabs_get_variation_price_range( $product );
+                        if ( $price_range ) {
+                            $min_price = $price_range['min_price'];
+                            $max_price = $price_range['max_price'];
+                            $min_regular_price = $price_range['min_regular_price'];
+                            if ( $min_regular_price !== null && $min_price != $min_regular_price ) {
+                                ?>
+                                <div class="catalog-card__current-pirce"><?php echo wc_price( $min_price ); ?></div>
+                                <div class="catalog-card__old-pirce"><?php echo wc_price( $min_regular_price ); ?> </div>
+                                <?php
+                            } else {
                                 ?>
                                 <div class="catalog-card__current-pirce"><?php echo wc_price( $min_price ) . ( $min_price != $max_price ? ' - ' . wc_price( $max_price ) : '' ); ?></div>
                                 <?php
