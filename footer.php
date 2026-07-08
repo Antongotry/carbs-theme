@@ -359,8 +359,6 @@
 
 <?php include(get_stylesheet_directory() . '/php/form-lightbox.php'); ?>
 
-<?php wp_footer(); ?>
-
 
 <!-- логин форма -->
 <div id="login" class="login">
