@@ -3706,6 +3706,20 @@ add_action('woocommerce_api_wc_wayforpay', function () {
         return;
     }
 
+    // Перевірка підпису WayForPay (та сама логіка, що в офіційному плагіні,
+    // plugins/Word-Press-Woocommerce-master/woocommerce-gateway-wayforpay.php:213-245) —
+    // без цього будь-хто міг підробити "Approved" і позначити замовлення оплаченим у KeyCRM,
+    // не проводячи реальної оплати (знайдено 07.07.2026, розвідка functions.php).
+    $wfp_gateways = WC()->payment_gateways()->payment_gateways();
+    if (empty($wfp_gateways['wayforpay']) || empty($data['merchantSignature'])) {
+        return;
+    }
+    $wfp_expected_signature = $wfp_gateways['wayforpay']->getResponseSignature($data);
+    if (!hash_equals((string) $wfp_expected_signature, (string) $data['merchantSignature'])) {
+        wc_get_logger()->warning('WFP callback: invalid signature, rejected. orderReference=' . $data['orderReference'], ['source' => 'crabs-wfp']);
+        return;
+    }
+
     $parts    = explode('_woo_w4p_', $data['orderReference']);
     $order_id = isset($parts[0]) ? intval($parts[0]) : 0;
     if (!$order_id) {
