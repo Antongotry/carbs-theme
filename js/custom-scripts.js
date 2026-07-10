@@ -404,7 +404,10 @@ $(window).on('resize', function () {
 	window.addEventListener("pageshow", function(event) {
 		if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
 			// Если страница загружена из кэша, обновляем количество товаров в корзине
-			updateCartCount();
+			// (запрос нужен только когда корзина реально не пуста — cookie ставит WooCommerce)
+			if (document.cookie.indexOf('woocommerce_items_in_cart=1') !== -1) {
+				updateCartCount();
+			}
 		}
 	});
 
@@ -755,8 +758,12 @@ jQuery(function($) {
 	});
 
 
-	// Инициализация обновления числа товаров в корзине при загрузке страницы
-	updateCartCount();
+	// Инициализация обновления числа товаров в корзине при загрузке страницы:
+	// AJAX нужен только посетителям с непустой корзиной (cookie ставит WooCommerce),
+	// для остальных серверная разметка уже содержит "0" — экономим запрос на каждой загрузке
+	if (document.cookie.indexOf('woocommerce_items_in_cart=1') !== -1) {
+		updateCartCount();
+	}
 
 	// Обновление количества товаров в корзине при удалении товаров
 	$('body').on('click', '.remove', function(e) {
@@ -1480,35 +1487,13 @@ jQuery(document).ready(function($) {
 		loadCartUpsells();
 	});
 
-});
+	// Контейнер апселлов живёт внутри попапа корзины и наполняется при его открытии
+	// (btnCartHeader) и при изменениях корзины — отдельный запрос на каждой загрузке
+	// страницы не нужен (раньше здесь был второй дублирующий блок с updateCartUpsells)
+	$(document.body).on('removed_from_cart', function() {
+		loadCartUpsells();
+	});
 
-
-jQuery(function($) {
-	if ( $('#upsells-in-cart-container').length === 0 ) {
-		return;
-	}
-
-	function updateCartUpsells() {
-
-		$('#upsells-in-cart-container').html('<p>Оновлення рекомендованих товарів...</p>');
-
-		$.post(
-			wc_add_to_cart_params.ajax_url,
-			{
-				action: 'get_cart_upsells'
-			},
-			function(response) {
-				if (response.success) {
-					$('#upsells-in-cart-container').html(response.data.html);
-				} else {
-					$('#upsells-in-cart-container').html('');
-				}
-			}
-		);
-	}
-
-	$(document.body).on('removed_from_cart', updateCartUpsells);
-	updateCartUpsells();
 });
 
 document.addEventListener('DOMContentLoaded', function () {
